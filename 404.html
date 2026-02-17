@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+    <title>404 — Kaizōsha</title>
+    <link rel="icon" type="image/png" href="/icon.png">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:"Courier New",Courier,"Liberation Mono",monospace;display:flex;flex-direction:column;justify-content:center;align-items:center;min-height:100vh;background:#fff;color:#000}
+        .container{display:flex;gap:15px;align-items:flex-start}
+        .stripe-group{display:flex;flex-direction:column;align-items:center}
+        .stripe{width:30px;height:90px;background:#000}
+        .stripe-group:nth-child(2) .stripe{animation:stripeGrow 2.5s cubic-bezier(0.25,0.46,0.45,0.94) .6s both}
+        .stripe-group:first-child .stripe,.stripe-group:last-child .stripe{animation:stripeShrink 2.5s cubic-bezier(0.25,0.46,0.45,0.94) .6s both}
+        .stripe-group .char{margin-top:5px;font-size:24px;font-weight:bold}
+        @keyframes stripeShrink{from{height:90px;margin-top:0}to{height:54px;margin-top:36px}}
+        @keyframes stripeGrow{from{height:90px;margin-top:0}to{height:120px;margin-top:-30px}}
+        @media (prefers-color-scheme:dark){body{background:#000;color:#fff}.stripe{background:#fff}}
+        @media (max-width:768px){.stripe{width:20px;height:60px}.stripe-group:nth-child(2) .stripe{animation:stripeGrowMob 2.5s cubic-bezier(0.25,0.46,0.45,0.94) .6s both}.stripe-group:first-child .stripe,.stripe-group:last-child .stripe{animation:stripeShrinkMob 2.5s cubic-bezier(0.25,0.46,0.45,0.94) .6s both}.stripe-group .char{font-size:16px}.container{gap:10px}}
+        @keyframes stripeShrinkMob{from{height:60px;margin-top:0}to{height:36px;margin-top:24px}}
+        @keyframes stripeGrowMob{from{height:60px;margin-top:0}to{height:80px;margin-top:-20px}}
+    </style>
+</head>
+<body>
+    <a href="/" class="logo-link" style="text-decoration:none;color:inherit">
+        <div class="container">
+            <div class="stripe-group">
+                <div class="stripe"></div>
+                <div class="char">改</div>
+            </div>
+            <div class="stripe-group">
+                <div class="stripe"></div>
+                <div class="char">造</div>
+            </div>
+            <div class="stripe-group">
+                <div class="stripe"></div>
+                <div class="char">社</div>
+            </div>
+        </div>
+    </a>
+</body>
+</html>
