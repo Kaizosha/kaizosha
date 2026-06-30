@@ -1,33 +1,586 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-    <title>Privacy — Kaizōsha</title>
-    <link rel="icon" type="image/png" href="/icon.png">
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:"Courier New",Courier,"Liberation Mono",monospace;background:#fff;color:#000;min-height:100vh;padding:2rem 1.5rem;line-height:1.7;font-size:clamp(0.95rem,2vw,1.05rem)}
-        a{color:inherit;text-decoration:none}
-        a:hover{text-decoration:underline}
-        .wrap{max-width:42rem;margin:0 auto}
-        h1{margin-bottom:1.5rem;font-size:1.25rem}
-        p{margin-bottom:1rem}
-        .back{margin-bottom:1.5rem;opacity:0.8}
-        @media (prefers-color-scheme:dark){body{background:#000;color:#fff}}
-    </style>
-</head>
-<body>
-    <div class="wrap">
-        <a href="/" class="back">← back</a>
-        <h1>Privacy</h1>
-        <p>Kaizōsha builds and sells software — apps and websites. We care how that software handles data.</p>
-        <p>For our own sites and apps: we collect only what we need to run them and to respond to you (e.g. when you contact support). We do not sell your data. We may use cookies or similar tech where necessary; we keep things minimal.</p>
-        <p>For software we sell or build for others: each product may have its own data practices. Where we host or operate it, we follow the same principle: minimal collection, no selling of personal data. Where you or a client hosts it, you control the data.</p>
-        <p>If you have questions about your data or our software, see <a href="/contact.html">contact</a>.</p>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <title>Privacy Policy - Kaizōsha</title>
+    <meta
+      name="description"
+      content="Learn how Kaizōsha handles personal data across websites, applications, software, support, payments, analytics, accounts, and uploaded content."
+    />
+    <meta name="author" content="Kaizōsha" />
+    <meta name="publisher" content="Kaizōsha" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="application-name" content="Kaizōsha" />
+    <link rel="icon" type="image/png" href="/icon.png" />
+    <link rel="apple-touch-icon" href="/icon.png" />
+    <link rel="canonical" href="https://kaizosha.org/privacy.html" />
+    <meta property="og:title" content="Privacy Policy - Kaizōsha" />
+    <meta
+      property="og:description"
+      content="How Kaizōsha handles personal data across websites, applications, software, support, payments, analytics, accounts, and uploaded content."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kaizosha.org/privacy.html" />
+    <meta property="og:site_name" content="Kaizōsha" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="https://kaizosha.org/icon.png" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="1024" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="Kaizōsha icon" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://kaizosha.org/icon.png" />
+    <meta name="twitter:image:alt" content="Kaizōsha icon" />
+    <meta name="twitter:title" content="Privacy Policy - Kaizōsha" />
+    <meta
+      name="twitter:description"
+      content="How Kaizōsha handles personal data across websites, applications, software, support, payments, analytics, accounts, and uploaded content."
+    />
+    <meta name="twitter:site" content="@KaizoshaX" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+    <link rel="author" href="https://kaizosha.org/" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "https://kaizosha.org/privacy.html#webpage",
+        "url": "https://kaizosha.org/privacy.html",
+        "name": "Privacy Policy - Kaizōsha",
+        "description": "How Kaizōsha handles personal data across websites, applications, software, support, payments, analytics, accounts, and uploaded content.",
+        "dateModified": "2026-06-30",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://kaizosha.org/#website",
+          "url": "https://kaizosha.org/",
+          "name": "Kaizōsha"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "@id": "https://kaizosha.org/#organization",
+          "name": "Kaizōsha",
+          "legalName": "Kaizosha Private Limited",
+          "url": "https://kaizosha.org/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://kaizosha.org/icon.png",
+            "width": 1024,
+            "height": 1024
+          }
+        },
+        "inLanguage": "en"
+      }
+    </script>
+    <link rel="stylesheet" href="/assets/styles/legal-docs.css?v=20260630-mobile-doc-brand" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="page-grid">
+        <aside class="rail" aria-label="Page navigation">
+          <a class="rail-brand" href="/" aria-label="Kaizōsha home">
+            <span class="rail-brand-mark" aria-hidden="true">
+              <span class="rail-brand-unit">
+                <span class="rail-brand-bar"></span>
+                <span class="rail-brand-char">改</span>
+              </span>
+              <span class="rail-brand-unit">
+                <span class="rail-brand-bar"></span>
+                <span class="rail-brand-char">造</span>
+              </span>
+              <span class="rail-brand-unit">
+                <span class="rail-brand-bar"></span>
+                <span class="rail-brand-char">社</span>
+              </span>
+            </span>
+            <span class="rail-brand-text">Kaizōsha</span>
+          </a>
+          <nav class="toc" aria-label="Table of contents">
+            <a class="toc-link" href="#name" data-section="name" data-active="true">
+              <span class="toc-num">I</span>
+              <span class="toc-label">PRIVACY</span>
+            </a>
+            <a class="toc-link" href="#controller" data-section="controller">
+              <span class="toc-num">II</span>
+              <span class="toc-label">CONTROLLER</span>
+            </a>
+            <a class="toc-link" href="#scope" data-section="scope">
+              <span class="toc-num">III</span>
+              <span class="toc-label">SCOPE</span>
+            </a>
+            <a class="toc-link" href="#data" data-section="data">
+              <span class="toc-num">IV</span>
+              <span class="toc-label">DATA</span>
+            </a>
+            <a class="toc-link" href="#content" data-section="content">
+              <span class="toc-num">V</span>
+              <span class="toc-label">CONTENT</span>
+            </a>
+            <a class="toc-link" href="#purposes" data-section="purposes">
+              <span class="toc-num">VI</span>
+              <span class="toc-label">PURPOSES</span>
+            </a>
+            <a class="toc-link" href="#legal-basis" data-section="legal-basis">
+              <span class="toc-num">VII</span>
+              <span class="toc-label">BASIS</span>
+            </a>
+            <a class="toc-link" href="#cookies" data-section="cookies">
+              <span class="toc-num">VIII</span>
+              <span class="toc-label">COOKIES</span>
+            </a>
+            <a class="toc-link" href="#payments" data-section="payments">
+              <span class="toc-num">IX</span>
+              <span class="toc-label">PAYMENTS</span>
+            </a>
+            <a class="toc-link" href="#sharing" data-section="sharing">
+              <span class="toc-num">X</span>
+              <span class="toc-label">SHARING</span>
+            </a>
+            <a class="toc-link" href="#retention" data-section="retention">
+              <span class="toc-num">XI</span>
+              <span class="toc-label">RETENTION</span>
+            </a>
+            <a class="toc-link" href="#security" data-section="security">
+              <span class="toc-num">XII</span>
+              <span class="toc-label">SECURITY</span>
+            </a>
+            <a class="toc-link" href="#rights" data-section="rights">
+              <span class="toc-num">XIII</span>
+              <span class="toc-label">RIGHTS</span>
+            </a>
+            <a class="toc-link" href="#children" data-section="children">
+              <span class="toc-num">XIV</span>
+              <span class="toc-label">AGE</span>
+            </a>
+            <a class="toc-link" href="#international" data-section="international">
+              <span class="toc-num">XV</span>
+              <span class="toc-label">TRANSFER</span>
+            </a>
+            <a class="toc-link" href="#changes" data-section="changes">
+              <span class="toc-num">XVI</span>
+              <span class="toc-label">CHANGES</span>
+            </a>
+            <a class="toc-link" href="#contact" data-section="contact">
+              <span class="toc-num">XVII</span>
+              <span class="toc-label">CONTACT</span>
+            </a>
+            <a class="toc-link" href="#see-also" data-section="see-also">
+              <span class="toc-num">XVIII</span>
+              <span class="toc-label">SEE ALSO</span>
+            </a>
+          </nav>
+
+        </aside>
+
+        <main class="main">
+          <a class="mobile-doc-brand" href="/" aria-label="Kaizōsha home">
+            <span class="rail-brand-mark" aria-hidden="true">
+              <span class="rail-brand-unit">
+                <span class="rail-brand-bar"></span>
+                <span class="rail-brand-char">改</span>
+              </span>
+              <span class="rail-brand-unit">
+                <span class="rail-brand-bar"></span>
+                <span class="rail-brand-char">造</span>
+              </span>
+              <span class="rail-brand-unit">
+                <span class="rail-brand-bar"></span>
+                <span class="rail-brand-char">社</span>
+              </span>
+            </span>
+            <span class="rail-brand-text">Kaizōsha</span>
+          </a>
+          <div class="sof" id="start">
+            <span aria-hidden="true">(START)</span>
+            <a class="marker-link" href="#end">Scroll to bottom</a>
+          </div>
+
+          <section class="section" id="name" data-title="name">
+            <header class="section-head">
+              <span class="section-num">I</span>
+              <h1 class="section-title">Privacy Policy</h1>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                <span class="bright">Privacy Policy</span>
+                <span class="dim">-</span>
+                How Kaizōsha handles personal data across websites,
+                applications, software, services, support, payments, analytics,
+                and uploaded content.
+              </p>
+              <p>Last updated: 30 June 2026.</p>
+            </div>
+          </section>
+
+          <section class="section" id="controller" data-title="controller">
+            <header class="section-head">
+              <span class="section-num">II</span>
+              <h2 class="section-title">CONTROLLER</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                This privacy policy is issued by Kaizosha Private Limited, a
+                private limited company incorporated in India in 2026 and based
+                in Telangana. The company commonly operates as Kaizōsha.
+              </p>
+              <p>
+                For privacy requests, data questions, consent withdrawal, or
+                grievances, contact <a class="project-link" href="mailto:privacy@kaizosha.org">privacy@kaizosha.org</a>.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="scope" data-title="scope">
+            <header class="section-head">
+              <span class="section-num">III</span>
+              <h2 class="section-title">SCOPE</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                This policy applies to Kaizōsha websites, applications, software,
+                services, accounts, support, payment flows, subscriptions, custom
+                work, and communications that link to or refer to this policy.
+              </p>
+              <p>
+                Our products change over time. A product-specific privacy notice,
+                app-store disclosure, customer agreement, or in-product notice may
+                provide additional or different details for that product. If so,
+                that more specific notice applies to that product.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="data" data-title="data">
+            <header class="section-head">
+              <span class="section-num">IV</span>
+              <h2 class="section-title">DATA WE COLLECT</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                Depending on the product or service, we may collect account
+                details, name, email address, organisation, login identifiers,
+                billing details, order records, license details, support
+                messages, product preferences, device data, app logs, crash logs,
+                diagnostic data, analytics events, cookie identifiers, IP address,
+                approximate location, and usage data.
+              </p>
+              <p>
+                We collect information you provide directly, information created
+                by your use of a product, information from payment processors or
+                app stores, and information from service providers that help us
+                operate our products.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="content" data-title="content">
+            <header class="section-head">
+              <span class="section-num">V</span>
+              <h2 class="section-title">CONTENT AND MEDIA</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                Some products may process photos, videos, audio, chats,
+                translations, subtitles, AI prompts, generated outputs, uploaded
+                files, documents, contacts, or other content. Whether this data
+                stays on device, is uploaded, is stored, or is processed by a
+                provider depends on the product and the feature you use.
+              </p>
+              <p>
+                You should not upload content unless you have the right to do so
+                and the content is appropriate for the product. Product-specific
+                controls may allow you to delete, export, save, or manage some
+                content.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="purposes" data-title="purposes">
+            <header class="section-head">
+              <span class="section-num">VI</span>
+              <h2 class="section-title">WHY WE USE DATA</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                We use personal data to provide products and services, create and
+                manage accounts, process purchases, deliver subscriptions,
+                perform custom work, respond to support, secure systems, prevent
+                abuse, fix bugs, improve performance, communicate updates,
+                measure usage, comply with law, and enforce our terms.
+              </p>
+              <p>
+                Where a product uses AI, translation, search, recognition,
+                classification, generation, or media-processing features, data may
+                be used to provide the requested feature, maintain reliability,
+                prevent abuse, and troubleshoot issues.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="legal-basis" data-title="legal-basis">
+            <header class="section-head">
+              <span class="section-num">VII</span>
+              <h2 class="section-title">CONSENT AND BASIS</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                We process personal data when needed to provide requested goods
+                or services, perform a contract, comply with law, protect our
+                systems and users, operate our business, or where you have given
+                consent for a specified purpose.
+              </p>
+              <p>
+                Where processing is based on consent, you may withdraw consent
+                through product controls or by contacting us. Withdrawal does not
+                affect processing already completed and may limit our ability to
+                provide the relevant product or feature.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="cookies" data-title="cookies">
+            <header class="section-head">
+              <span class="section-num">VIII</span>
+              <h2 class="section-title">COOKIES AND ANALYTICS</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                We may use cookies, local storage, analytics, logs, and similar
+                technologies where needed to run websites, remember preferences,
+                secure sessions, understand usage, improve products, measure
+                performance, and diagnose errors.
+              </p>
+              <p>
+                Browser, device, operating-system, and product controls may let
+                you block or delete cookies and analytics identifiers. Some
+                features may not work correctly if required storage or
+                permissions are disabled.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="payments" data-title="payments">
+            <header class="section-head">
+              <span class="section-num">IX</span>
+              <h2 class="section-title">PAYMENTS</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                Payments may be processed through app stores, payment processors,
+                bank transfers, invoices, or other providers depending on the
+                product or service. We usually receive payment status, order
+                details, tax or invoice information, and limited transaction
+                identifiers rather than full card details.
+              </p>
+              <p>
+                Payment providers, app stores, and banks process payment data
+                under their own terms and privacy policies.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="sharing" data-title="sharing">
+            <header class="section-head">
+              <span class="section-num">X</span>
+              <h2 class="section-title">SHARING</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                We may share data with service providers, contractors, hosting
+                providers, payment processors, app stores, analytics providers,
+                support tools, communications services, AI or media-processing
+                providers, professional advisers, regulators, authorities, or
+                transaction partners where needed for the purposes in this policy.
+              </p>
+              <p>
+                We do not sell personal data. We require service providers to use
+                data only for authorised purposes and to apply appropriate
+                safeguards.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="retention" data-title="retention">
+            <header class="section-head">
+              <span class="section-num">XI</span>
+              <h2 class="section-title">RETENTION</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                We keep personal data for as long as needed to provide products
+                and services, maintain accounts, complete transactions, answer
+                support requests, meet legal, tax, accounting, security, and
+                compliance obligations, resolve disputes, and enforce agreements.
+              </p>
+              <p>
+                Retention periods vary by product and data type. Where practical,
+                we delete, anonymise, or reduce data when it is no longer needed.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="security" data-title="security">
+            <header class="section-head">
+              <span class="section-num">XII</span>
+              <h2 class="section-title">SECURITY</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                We use reasonable administrative, technical, and organisational
+                measures to protect personal data against unauthorised access,
+                loss, misuse, alteration, and disclosure. No system is perfectly
+                secure, and we cannot guarantee absolute security.
+              </p>
+              <p>
+                If you believe your account, data, or a Kaizōsha product has a
+                security issue, contact <a class="project-link" href="mailto:support@kaizosha.org">support@kaizosha.org</a>
+                promptly with enough detail for us to investigate.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="rights" data-title="rights">
+            <header class="section-head">
+              <span class="section-num">XIII</span>
+              <h2 class="section-title">YOUR RIGHTS</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                Depending on applicable law and the product involved, you may be
+                able to request access to your personal data, correction,
+                deletion, withdrawal of consent, a summary of processing,
+                grievance redressal, or other rights available under applicable
+                privacy law.
+              </p>
+              <p>
+                Send requests to <a class="project-link" href="mailto:privacy@kaizosha.org">privacy@kaizosha.org</a>.
+                We may need to verify your identity, understand the product
+                involved, and keep records needed for legal, security, fraud
+                prevention, or dispute purposes.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="children" data-title="children">
+            <header class="section-head">
+              <span class="section-num">XIV</span>
+              <h2 class="section-title">AGE AND CHILDREN</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                Age restrictions vary by product, app store, region, and service.
+                Some products may not be intended for children, and some may
+                require consent or supervision by a parent, guardian, school,
+                organisation, or customer administrator.
+              </p>
+              <p>
+                If you believe a child has provided personal data in a way that
+                should not have occurred, contact us so we can review and take
+                appropriate action.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="international" data-title="international">
+            <header class="section-head">
+              <span class="section-num">XV</span>
+              <h2 class="section-title">INTERNATIONAL PROCESSING</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                We are based in India, but our products and service providers may
+                operate in other countries. Personal data may be processed,
+                stored, supported, or transferred outside your state or country
+                where needed to provide the relevant product or service.
+              </p>
+              <p>
+                When we use providers in other locations, we take reasonable
+                steps to use appropriate contractual and operational safeguards.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="changes" data-title="changes">
+            <header class="section-head">
+              <span class="section-num">XVI</span>
+              <h2 class="section-title">CHANGES</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                We may update this policy as our products, services, providers,
+                business, or legal obligations change. The updated version will
+                be posted on this page with a new date.
+              </p>
+              <p>
+                Product-specific notices may also be updated inside the relevant
+                product, app store listing, account area, or customer agreement.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="contact" data-title="contact">
+            <header class="section-head">
+              <span class="section-num">XVII</span>
+              <h2 class="section-title">CONTACT</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <div class="entry-head">
+                <span><a class="project-link" href="mailto:privacy@kaizosha.org">privacy@kaizosha.org</a></span>
+                <span>Privacy and Grievance</span>
+              </div>
+              <div class="entry-sub">
+                <span>Data requests, consent, deletion, correction, complaints</span>
+                <span>Email</span>
+              </div>
+              <div class="entry-head">
+                <span><a class="project-link" href="mailto:support@kaizosha.org">support@kaizosha.org</a></span>
+                <span>Product Support</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="see-also" data-title="see-also">
+            <header class="section-head">
+              <span class="section-num">XVIII</span>
+              <h2 class="section-title">SEE ALSO</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <div class="see-also">
+                <a class="man-link" href="/terms.html">Terms of Service</a>
+                <a class="man-link" href="/contact.html">Contact</a>
+              </div>
+            </div>
+          </section>
+
+          <div class="eof" id="end">
+            <span aria-hidden="true">(END)</span>
+            <a class="marker-link" href="#start">Back to top</a>
+          </div>
+        </main>
+      </div>
+
     </div>
-</body>
+
+    <script src="/assets/scripts/legal-docs.js?v=20260630-structure" defer></script>
+  </body>
 </html>

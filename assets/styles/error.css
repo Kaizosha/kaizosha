@@ -1,0 +1,169 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  --site-bg: #f7f7f7;
+  --site-scanline: rgba(0, 0, 0, 0.018);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--site-bg);
+  color: #000;
+  font-family: "Courier New", Courier, "Liberation Mono", monospace;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    var(--site-scanline) 0,
+    var(--site-scanline) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+.u-screen-reader {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  border: 0;
+  white-space: nowrap;
+}
+
+.error-logo {
+  color: inherit;
+  text-decoration: none;
+}
+
+.brand-mark {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.brand-mark__unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.brand-mark__bar {
+  width: 30px;
+  height: 90px;
+  background: currentColor;
+}
+
+.brand-mark__unit:nth-child(2) .brand-mark__bar {
+  animation: stripe-grow 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s both;
+}
+
+.brand-mark__unit:first-child .brand-mark__bar,
+.brand-mark__unit:last-child .brand-mark__bar {
+  animation: stripe-shrink 2.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.6s both;
+}
+
+.brand-mark__char {
+  margin-top: 5px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+@keyframes stripe-shrink {
+  from {
+    height: 90px;
+    margin-top: 0;
+  }
+  to {
+    height: 54px;
+    margin-top: 36px;
+  }
+}
+
+@keyframes stripe-grow {
+  from {
+    height: 90px;
+    margin-top: 0;
+  }
+  to {
+    height: 120px;
+    margin-top: -30px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --site-bg: #0a0a0a;
+    --site-scanline: rgba(255, 255, 255, 0.012);
+    color: #fff;
+  }
+}
+
+@media (max-width: 768px) {
+  .brand-mark {
+    gap: 10px;
+  }
+
+  .brand-mark__bar {
+    width: 20px;
+    height: 60px;
+  }
+
+  .brand-mark__unit:nth-child(2) .brand-mark__bar {
+    animation-name: stripe-grow-mobile;
+  }
+
+  .brand-mark__unit:first-child .brand-mark__bar,
+  .brand-mark__unit:last-child .brand-mark__bar {
+    animation-name: stripe-shrink-mobile;
+  }
+
+  .brand-mark__char {
+    font-size: 16px;
+  }
+}
+
+@keyframes stripe-shrink-mobile {
+  from {
+    height: 60px;
+    margin-top: 0;
+  }
+  to {
+    height: 36px;
+    margin-top: 24px;
+  }
+}
+
+@keyframes stripe-grow-mobile {
+  from {
+    height: 60px;
+    margin-top: 0;
+  }
+  to {
+    height: 80px;
+    margin-top: -20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

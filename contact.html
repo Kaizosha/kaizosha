@@ -1,40 +1,386 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
-    <title>Contact — Kaizōsha</title>
-    <link rel="icon" type="image/png" href="/icon.png">
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:"Courier New",Courier,"Liberation Mono",monospace;background:#fff;color:#000;min-height:100vh;padding:2rem 1.5rem;line-height:1.7;font-size:clamp(0.95rem,2vw,1.05rem)}
-        a{color:inherit;text-decoration:none}
-        a:hover{text-decoration:underline}
-        .wrap{max-width:42rem;margin:0 auto}
-        h1{margin-bottom:1.5rem;font-size:1.25rem}
-        h2{margin-top:1.5rem;margin-bottom:0.5rem;font-size:1.1rem}
-        p{margin-bottom:1rem}
-        .back{margin-bottom:1.5rem;opacity:0.8}
-        @media (prefers-color-scheme:dark){body{background:#000;color:#fff}}
-    </style>
-</head>
-<body>
-    <div class="wrap">
-        <a href="/" class="back">← back</a>
-        <h1>Contact</h1>
-        <p>We build and sell software — apps and websites. For help with something we made, or to ask about buying or commissioning software, get in touch.</p>
-        <p>Product support, bugs, or questions about an app or site we’ve sold or built: include the product name and what you need. For sales — custom apps, websites, or licensing: describe what you’re looking for.</p>
-        <h2>Business</h2>
-        <p><a href="mailto:contact@kaizosha.org">contact@kaizosha.org</a></p>
-        <h2>Support</h2>
-        <p>
-            <a href="mailto:support@kaizosha.org">support@kaizosha.org</a><br>
-            GitHub: <a href="https://github.com/Kaizosha" target="_blank" rel="noopener">github.com/Kaizosha</a><br>
-            X: <a href="https://x.com/KaizoshaX" target="_blank" rel="noopener">@KaizoshaX</a>
-        </p>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <title>Contact - Kaizōsha</title>
+    <meta
+      name="description"
+      content="Contact Kaizōsha for business, product support, privacy requests, custom software, applications, websites, licensing, and public project channels."
+    />
+    <meta name="author" content="Kaizōsha" />
+    <meta name="publisher" content="Kaizōsha" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="application-name" content="Kaizōsha" />
+    <link rel="icon" type="image/png" href="/icon.png" />
+    <link rel="apple-touch-icon" href="/icon.png" />
+    <link rel="canonical" href="https://kaizosha.org/contact.html" />
+    <meta property="og:title" content="Contact - Kaizōsha" />
+    <meta
+      property="og:description"
+      content="Business, support, privacy, custom software, applications, websites, licensing, GitHub, and public channels for Kaizōsha."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://kaizosha.org/contact.html" />
+    <meta property="og:site_name" content="Kaizōsha" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="https://kaizosha.org/icon.png" />
+    <meta property="og:image:width" content="1024" />
+    <meta property="og:image:height" content="1024" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="Kaizōsha icon" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://kaizosha.org/icon.png" />
+    <meta name="twitter:image:alt" content="Kaizōsha icon" />
+    <meta name="twitter:title" content="Contact - Kaizōsha" />
+    <meta
+      name="twitter:description"
+      content="Business, support, privacy, custom software, applications, websites, licensing, GitHub, and public channels for Kaizōsha."
+    />
+    <meta name="twitter:site" content="@KaizoshaX" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+    <link rel="author" href="https://kaizosha.org/" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "@id": "https://kaizosha.org/contact.html#webpage",
+        "url": "https://kaizosha.org/contact.html",
+        "name": "Contact - Kaizōsha",
+        "description": "Business, support, privacy, custom software, applications, websites, licensing, GitHub, and public channels for Kaizōsha.",
+        "dateModified": "2026-06-30",
+        "isPartOf": {
+          "@type": "WebSite",
+          "@id": "https://kaizosha.org/#website",
+          "url": "https://kaizosha.org/",
+          "name": "Kaizōsha"
+        },
+        "mainEntity": {
+          "@type": "Organization",
+          "@id": "https://kaizosha.org/#organization",
+          "name": "Kaizōsha",
+          "legalName": "Kaizosha Private Limited",
+          "url": "https://kaizosha.org/",
+          "sameAs": [
+            "https://github.com/Kaizosha",
+            "https://x.com/KaizoshaX"
+          ],
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "contactType": "business",
+              "email": "contact@kaizosha.org"
+            },
+            {
+              "@type": "ContactPoint",
+              "contactType": "customer support",
+              "email": "support@kaizosha.org"
+            },
+            {
+              "@type": "ContactPoint",
+              "contactType": "privacy",
+              "email": "privacy@kaizosha.org"
+            }
+          ]
+        },
+        "inLanguage": "en"
+      }
+    </script>
+    <link rel="stylesheet" href="/assets/styles/legal-docs.css?v=20260630-mobile-doc-brand" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="page-grid">
+        <aside class="rail" aria-label="Page navigation">
+          <a class="rail-brand" href="/" aria-label="Kaizōsha home">
+            <span class="rail-brand-mark" aria-hidden="true">
+              <span class="rail-brand-unit">
+                <span class="rail-brand-bar"></span>
+                <span class="rail-brand-char">改</span>
+              </span>
+              <span class="rail-brand-unit">
+                <span class="rail-brand-bar"></span>
+                <span class="rail-brand-char">造</span>
+              </span>
+              <span class="rail-brand-unit">
+                <span class="rail-brand-bar"></span>
+                <span class="rail-brand-char">社</span>
+              </span>
+            </span>
+            <span class="rail-brand-text">Kaizōsha</span>
+          </a>
+          <nav class="toc" aria-label="Table of contents">
+            <a class="toc-link" href="#name" data-section="name" data-active="true">
+              <span class="toc-num">I</span>
+              <span class="toc-label">CONTACT</span>
+            </a>
+            <a class="toc-link" href="#company" data-section="company">
+              <span class="toc-num">II</span>
+              <span class="toc-label">COMPANY</span>
+            </a>
+            <a class="toc-link" href="#business" data-section="business">
+              <span class="toc-num">III</span>
+              <span class="toc-label">BUSINESS</span>
+            </a>
+            <a class="toc-link" href="#support" data-section="support">
+              <span class="toc-num">IV</span>
+              <span class="toc-label">SUPPORT</span>
+            </a>
+            <a class="toc-link" href="#privacy" data-section="privacy">
+              <span class="toc-num">V</span>
+              <span class="toc-label">PRIVACY</span>
+            </a>
+            <a class="toc-link" href="#requests" data-section="requests">
+              <span class="toc-num">VI</span>
+              <span class="toc-label">REQUESTS</span>
+            </a>
+            <a class="toc-link" href="#response" data-section="response">
+              <span class="toc-num">VII</span>
+              <span class="toc-label">RESPONSE</span>
+            </a>
+            <a class="toc-link" href="#social" data-section="social">
+              <span class="toc-num">VIII</span>
+              <span class="toc-label">SOCIAL</span>
+            </a>
+            <a class="toc-link" href="#see-also" data-section="see-also">
+              <span class="toc-num">IX</span>
+              <span class="toc-label">SEE ALSO</span>
+            </a>
+          </nav>
+
+        </aside>
+
+        <main class="main">
+          <a class="mobile-doc-brand" href="/" aria-label="Kaizōsha home">
+            <span class="rail-brand-mark" aria-hidden="true">
+              <span class="rail-brand-unit">
+                <span class="rail-brand-bar"></span>
+                <span class="rail-brand-char">改</span>
+              </span>
+              <span class="rail-brand-unit">
+                <span class="rail-brand-bar"></span>
+                <span class="rail-brand-char">造</span>
+              </span>
+              <span class="rail-brand-unit">
+                <span class="rail-brand-bar"></span>
+                <span class="rail-brand-char">社</span>
+              </span>
+            </span>
+            <span class="rail-brand-text">Kaizōsha</span>
+          </a>
+          <div class="sof" id="start">
+            <span aria-hidden="true">(START)</span>
+            <a class="marker-link" href="#end">Scroll to bottom</a>
+          </div>
+
+          <section class="section" id="name" data-title="name">
+            <header class="section-head">
+              <span class="section-num">I</span>
+              <h1 class="section-title">Contact</h1>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                <span class="bright">Contact</span>
+                <span class="dim">-</span>
+                How to reach Kaizōsha for business, support, privacy,
+                grievances, products, custom software, applications, websites,
+                and licensing.
+              </p>
+              <p>Last updated: 30 June 2026.</p>
+            </div>
+          </section>
+
+          <section class="section" id="company" data-title="company">
+            <header class="section-head">
+              <span class="section-num">II</span>
+              <h2 class="section-title">COMPANY</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <div class="entry-head">
+                <span>Kaizosha Private Limited</span>
+                <span>Legal Name</span>
+              </div>
+              <div class="entry-sub">
+                <span>Commonly called Kaizōsha</span>
+                <span>India</span>
+              </div>
+              <div class="entry-head">
+                <span>Telangana, India</span>
+                <span>Jurisdiction</span>
+              </div>
+              <div class="entry-sub">
+                <span>Private limited company incorporated in 2026</span>
+                <span>Company</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="section" id="business" data-title="business">
+            <header class="section-head">
+              <span class="section-num">III</span>
+              <h2 class="section-title">BUSINESS</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <div class="entry-head">
+                <span><a class="project-link" href="mailto:contact@kaizosha.org">contact@kaizosha.org</a></span>
+                <span>General and Business</span>
+              </div>
+              <div class="entry-sub">
+                <span>Custom software, applications, websites, licensing, sales, partnerships</span>
+                <span>Email</span>
+              </div>
+              <p>
+                For new work, include the product or service you want, your
+                timeline, platform, budget range if known, and whether you need a
+                fixed deliverable, consulting, maintenance, licensing, or a
+                longer-term product build.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="support" data-title="support">
+            <header class="section-head">
+              <span class="section-num">IV</span>
+              <h2 class="section-title">SUPPORT</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <div class="entry-head">
+                <span><a class="project-link" href="mailto:support@kaizosha.org">support@kaizosha.org</a></span>
+                <span>Product Support</span>
+              </div>
+              <div class="entry-sub">
+                <span>Bugs, product help, purchases, account issues, technical questions</span>
+                <span>Email</span>
+              </div>
+              <p>
+                For support, include the product name, platform, device or
+                browser, app version if available, account email if relevant,
+                screenshots or logs if safe to share, and clear steps to
+                reproduce the issue.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="privacy" data-title="privacy">
+            <header class="section-head">
+              <span class="section-num">V</span>
+              <h2 class="section-title">PRIVACY AND GRIEVANCE</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <div class="entry-head">
+                <span><a class="project-link" href="mailto:privacy@kaizosha.org">privacy@kaizosha.org</a></span>
+                <span>Privacy and Grievance</span>
+              </div>
+              <div class="entry-sub">
+                <span>Data requests, consent withdrawal, deletion, correction, complaints</span>
+                <span>Email</span>
+              </div>
+              <p>
+                For privacy requests, include the product or service involved,
+                the email or account identifier connected to the request, the
+                right you want to exercise, and enough information for us to
+                verify and respond.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="requests" data-title="requests">
+            <header class="section-head">
+              <span class="section-num">VI</span>
+              <h2 class="section-title">REQUESTS</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                If your message relates to a purchase, include the marketplace,
+                payment processor, invoice number, transaction reference, or
+                order email. Do not send passwords, one-time codes, payment card
+                numbers, private keys, or sensitive files unless we specifically
+                ask for them through an appropriate channel.
+              </p>
+              <p>
+                If your request is urgent because it involves security, account
+                access, payment fraud, legal notice, or data protection, say so
+                clearly in the subject line.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="response" data-title="response">
+            <header class="section-head">
+              <span class="section-num">VII</span>
+              <h2 class="section-title">RESPONSE</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <p>
+                We try to respond to genuine business, support, and privacy
+                requests in a reasonable time. Complex technical issues, custom
+                work, billing reviews, legal requests, and privacy verification
+                may take longer.
+              </p>
+              <p>
+                We may not respond to spam, abusive messages, automated sales
+                outreach, requests unrelated to Kaizōsha, or messages that do not
+                provide enough information to understand the issue.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="social" data-title="social">
+            <header class="section-head">
+              <span class="section-num">VIII</span>
+              <h2 class="section-title">PUBLIC CHANNELS</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <div class="entry-head">
+                <span><a class="project-link" href="https://github.com/Kaizosha" target="_blank" rel="noopener">github.com/Kaizosha</a></span>
+                <span>GitHub</span>
+              </div>
+              <div class="entry-head">
+                <span><a class="project-link" href="https://x.com/KaizoshaX" target="_blank" rel="noopener">@KaizoshaX</a></span>
+                <span>X</span>
+              </div>
+              <p>
+                Public channels are useful for public project information and
+                general updates. Do not post private account, payment, legal, or
+                personal data in public channels.
+              </p>
+            </div>
+          </section>
+
+          <section class="section" id="see-also" data-title="see-also">
+            <header class="section-head">
+              <span class="section-num">IX</span>
+              <h2 class="section-title">SEE ALSO</h2>
+              <span class="section-rule" aria-hidden="true"></span>
+            </header>
+            <div class="body-lines">
+              <div class="see-also">
+                <a class="man-link" href="/terms.html">Terms of Service</a>
+                <a class="man-link" href="/privacy.html">Privacy Policy</a>
+              </div>
+            </div>
+          </section>
+
+          <div class="eof" id="end">
+            <span aria-hidden="true">(END)</span>
+            <a class="marker-link" href="#start">Back to top</a>
+          </div>
+        </main>
+      </div>
+
     </div>
-</body>
+
+    <script src="/assets/scripts/legal-docs.js?v=20260630-structure" defer></script>
+  </body>
 </html>
