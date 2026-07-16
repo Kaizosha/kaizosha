@@ -42,7 +42,7 @@
         }
     }
     </script>
-    <link rel="stylesheet" href="/assets/styles/together-classic-teal.css">
+    <link rel="stylesheet" href="/assets/styles/together-classic-teal.css?v=modern-1">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -67,12 +67,13 @@
     </header>
 
     <main id="main-content">
-        <section class="hero" aria-labelledby="together-title">
-            <div class="hero__copy">
+        <section class="hero" aria-labelledby="together-title" data-scroll-scene data-pointer-field>
+            <div class="hero__signal-field" aria-hidden="true"><span></span><span></span><i></i><b></b></div>
+            <div class="hero__copy" data-reveal>
                 <p class="eyebrow"><span>01</span> Native video translation</p>
                 <h1 id="together-title">together<span>.</span></h1>
-                <p class="hero__statement">Bring worlds<br>together.</p>
-                <p class="hero__description">Nothing gets lost in translation. Watch anything. Hear everything.</p>
+                <p class="hero__statement">Watch anything.<br>Hear everything.</p>
+                <p class="hero__description">Together turns speech into translated, timed captions while your video plays. Private, native, and built for every screen you use.</p>
                 <div class="hero__actions">
                     <a class="text-link" href="#workflow"><span>See how it works</span><span aria-hidden="true">↓</span></a>
                     <a class="text-link" href="#platforms"><span>iOS + iPadOS + macOS</span><span aria-hidden="true">↘</span></a>
@@ -84,9 +85,10 @@
                 </dl>
             </div>
 
-            <figure class="player-visual" data-player-demo data-demo-mode="transcribe" data-motion>
+            <figure class="player-visual" data-player-demo data-demo-mode="transcribe" data-motion data-scroll-scene data-pointer-field>
                 <div class="player-visual__topline" aria-hidden="true"><span data-demo-kicker>02 / Transcribe</span><span data-demo-status>Listening / On device</span></div>
                 <div class="player-visual__stage" aria-hidden="true">
+                    <div class="player-blueprint"><span></span><span></span><span></span><i></i><i></i><i></i><i></i><i></i></div>
                     <div class="player-route">
                         <span class="player-route__line"></span>
                         <span class="player-route__node player-route__node--one"><i></i></span>
@@ -127,6 +129,7 @@
                     </div>
                     <span class="player-visual__orbit player-visual__orbit--one"></span>
                     <span class="player-visual__orbit player-visual__orbit--two"></span>
+                    <span class="player-cursor"><i></i><b>Live captions</b></span>
                 </div>
                 <figcaption class="player-demo">
                     <div class="player-demo__modes" role="group" aria-label="Explore how Together works">
@@ -141,38 +144,62 @@
             </figure>
         </section>
 
-        <section class="workflow" id="workflow" aria-labelledby="workflow-heading">
-            <header class="section-header">
+        <div class="signal-transition" aria-hidden="true" data-scroll-scene><span></span><i></i></div>
+
+        <section class="workflow" id="workflow" aria-labelledby="workflow-heading" data-scroll-scene>
+            <header class="section-header" data-reveal>
                 <p class="eyebrow"><span>02</span> From video to understanding</p>
                 <h2 id="workflow-heading">One video.<br>Every word.</h2>
                 <p>Open a video, choose the languages, and let Together build captions while you watch. Keep the original, show the translation, or see both at once.</p>
             </header>
-            <div class="workflow-system" data-motion>
+            <div class="workflow-system" data-motion data-active-step="1">
                 <div class="workflow-signal" aria-hidden="true">
                     <span class="workflow-signal__line"></span>
                     <span class="workflow-signal__pulse"></span>
                     <i></i><i></i><i></i><i></i>
                 </div>
+                <div class="workflow-stage" aria-hidden="true" data-pointer-field>
+                    <div class="workflow-stage__topline"><span>TOGETHER / SIGNAL PATH</span><span>ON DEVICE</span></div>
+                    <div class="workflow-stage__canvas">
+                        <span class="workflow-stage__grid"></span>
+                        <svg class="workflow-stage__thread" viewBox="0 0 800 430" preserveAspectRatio="xMidYMid meet">
+                            <path class="workflow-stage__thread-base" pathLength="1" d="M78 290 C160 290 152 126 250 126 S337 290 410 290 S494 126 566 126 S622 290 722 290" />
+                            <path class="workflow-stage__thread-live" pathLength="1" d="M78 290 C160 290 152 126 250 126 S337 290 410 290 S494 126 566 126 S622 290 722 290" />
+                            <circle cx="78" cy="290" r="8" /><circle cx="250" cy="126" r="8" /><circle cx="410" cy="290" r="8" /><circle cx="566" cy="126" r="8" /><circle cx="722" cy="290" r="8" />
+                        </svg>
+                        <span class="workflow-stage__source"><i></i><b>Video</b></span>
+                        <span class="workflow-stage__language workflow-stage__language--source">EN</span>
+                        <span class="workflow-stage__core"><i></i><b></b></span>
+                        <span class="workflow-stage__language workflow-stage__language--output">FR</span>
+                        <span class="workflow-stage__files"><i>VTT</i><i>SRT</i><i>TXT</i></span>
+                        <span class="workflow-stage__pulse"></span>
+                        <span class="workflow-stage__status workflow-stage__status--one">Choose a video</span>
+                        <span class="workflow-stage__status workflow-stage__status--two">Set the languages</span>
+                        <span class="workflow-stage__status workflow-stage__status--three">Watch meaning appear</span>
+                        <span class="workflow-stage__status workflow-stage__status--four">Export every word</span>
+                    </div>
+                    <div class="workflow-stage__footer"><span>VIDEO</span><span>SPEECH</span><span>MEANING</span><span>CAPTIONS</span><span>FILES</span></div>
+                </div>
                 <ol class="workflow-list">
-                    <li>
+                    <li data-reveal data-pointer-field>
                         <span class="workflow-list__number">01</span>
                         <div class="workflow-graphic workflow-graphic--choose" aria-hidden="true"><i></i><i></i><i></i><b></b></div>
                         <strong>Choose</strong>
                         <p>Pick a video from Photos or Files, or open it directly in Together.</p>
                     </li>
-                    <li>
+                    <li data-reveal data-pointer-field>
                         <span class="workflow-list__number">02</span>
                         <div class="workflow-graphic workflow-graphic--set" aria-hidden="true"><span>EN</span><i><b></b></i><span>FR</span></div>
                         <strong>Set</strong>
                         <p>Choose the spoken language, translation, caption mode, and appearance.</p>
                     </li>
-                    <li>
+                    <li data-reveal data-pointer-field>
                         <span class="workflow-list__number">03</span>
                         <div class="workflow-graphic workflow-graphic--watch" aria-hidden="true"><i></i><span></span><span></span><b></b></div>
                         <strong>Watch</strong>
                         <p>Play with native controls as on-device captions appear in context.</p>
                     </li>
-                    <li>
+                    <li data-reveal data-pointer-field>
                         <span class="workflow-list__number">04</span>
                         <div class="workflow-graphic workflow-graphic--export" aria-hidden="true"><span>VTT</span><span>SRT</span><span>TXT</span><i></i></div>
                         <strong>Export</strong>
@@ -182,19 +209,30 @@
             </div>
         </section>
 
-        <section class="translation-modes" aria-labelledby="translation-heading">
-            <div class="translation-modes__intro">
+        <div class="signal-transition signal-transition--reverse" aria-hidden="true" data-scroll-scene><span></span><i></i></div>
+
+        <section class="translation-modes" aria-labelledby="translation-heading" data-scroll-scene>
+            <div class="translation-modes__intro" data-reveal>
                 <p class="eyebrow"><span>03</span> Choose the right pace</p>
                 <h2 id="translation-heading">Fast when it matters.<br>Natural when it counts.</h2>
+                <div class="translation-engine" aria-hidden="true" data-pointer-field>
+                    <span class="translation-engine__grid"></span>
+                    <span class="translation-engine__node translation-engine__node--source">EN</span>
+                    <span class="translation-engine__beam translation-engine__beam--in"><i></i></span>
+                    <span class="translation-engine__core"><i></i><b></b></span>
+                    <span class="translation-engine__beam translation-engine__beam--out"><i></i></span>
+                    <span class="translation-engine__node translation-engine__node--output">FR</span>
+                    <span class="translation-engine__caption">Meaning, carried forward.</span>
+                </div>
             </div>
             <div class="translation-modes__list" data-motion>
-                <article>
+                <article data-reveal>
                     <p>01 / Low latency</p>
                     <h3>Start sooner.</h3>
                     <p>On-device Translation resources begin translating quickly, without requiring Apple Intelligence.</p>
                     <div class="mode-graphic mode-graphic--latency" aria-hidden="true"><span></span><i></i><i></i><i></i><i></i><i></i><b></b></div>
                 </article>
-                <article>
+                <article data-reveal>
                     <p>02 / High fidelity</p>
                     <h3>Say it naturally.</h3>
                     <p>Apple Intelligence adds more natural, context-aware wording when it is available.</p>
@@ -204,30 +242,35 @@
         </section>
 
         <section class="feature-grid" id="platforms" aria-label="Together for iOS, iPadOS, and macOS" data-motion>
-            <article>
+            <article data-reveal data-pointer-field>
+                <span class="feature-tag">01 / iPhone + iPad</span>
                 <div class="feature-graphic feature-graphic--phone" aria-hidden="true"><span><i></i><b></b><b></b></span><em></em></div>
                 <p class="feature-number">iOS</p>
                 <div><h3>Made for iPhone + iPad</h3><p>On iOS and iPadOS, choose from Photos or Files, set up captions, and watch full screen with native controls.</p></div>
             </article>
-            <article>
+            <article data-reveal data-pointer-field>
+                <span class="feature-tag">02 / Mac</span>
                 <div class="feature-graphic feature-graphic--desktop" aria-hidden="true"><span><i></i><b></b><b></b></span><em></em></div>
                 <p class="feature-number">macOS</p>
                 <div><h3>Made for the Mac</h3><p>Open videos with a native picker, play in a dedicated window, and reveal exports in Finder.</p></div>
             </article>
-            <article>
+            <article data-reveal data-pointer-field>
+                <span class="feature-tag">03 / Files</span>
                 <div class="feature-graphic feature-graphic--files" aria-hidden="true"><span>VTT</span><span>SRT</span><span>TXT</span><i></i></div>
                 <p class="feature-number">3×</p>
                 <div><h3>Export your words</h3><p>Take captions with you as WebVTT, SubRip, or a plain text transcript.</p></div>
             </article>
         </section>
 
-        <section class="privacy" id="privacy" aria-labelledby="privacy-heading">
-            <div class="privacy__copy">
+        <section class="privacy" id="privacy" aria-labelledby="privacy-heading" data-scroll-scene data-pointer-field>
+            <div class="privacy__signal-field" aria-hidden="true"><span></span><i></i><b></b></div>
+            <div class="privacy__copy" data-reveal>
                 <p class="eyebrow"><span>04</span> Private by architecture</p>
                 <h2 id="privacy-heading">Your video stays<br>with your device.</h2>
                 <p>Speech transcription, subtitles, and translation stay on device. Together clears its temporary media and keeps only the caption files you intentionally export.</p>
             </div>
-            <div class="privacy__diagram" aria-hidden="true" data-motion>
+            <div class="privacy__diagram" aria-hidden="true" data-motion data-reveal>
+                <span class="privacy__mesh"><i></i><i></i><i></i><i></i></span>
                 <span class="privacy__device"><i></i><b>Device</b></span>
                 <span class="privacy__flow"><i></i><i></i><i></i></span>
                 <span class="privacy__output"><b>Captions</b><i>VTT</i><i>SRT</i><i>TXT</i></span>
@@ -235,12 +278,15 @@
             </div>
         </section>
 
-        <section class="closing" aria-labelledby="closing-heading">
+        <section class="closing" aria-labelledby="closing-heading" data-scroll-scene data-pointer-field>
             <div class="closing__signal" aria-hidden="true" data-motion><span></span><span></span><i></i><b></b></div>
-            <p class="eyebrow"><span>05</span> Coming soon from Kaizōsha</p>
-            <h2 id="closing-heading">Watch anything.<br>Hear everything.</h2>
-            <p>Together is in development across Apple platforms: iOS, iPadOS, and macOS.</p>
-            <a class="text-link text-link--large" href="mailto:contact@kaizosha.org?subject=Together"><span>Ask about Together</span><span aria-hidden="true">↗</span></a>
+            <div class="closing__copy" data-reveal>
+                <p class="eyebrow"><span>05</span> Coming soon from Kaizōsha</p>
+                <h2 id="closing-heading">Watch anything.<br>Hear everything.</h2>
+                <p>Together is in development across Apple platforms: iOS, iPadOS, and macOS.</p>
+                <a class="text-link text-link--large" href="mailto:contact@kaizosha.org?subject=Together"><span>Ask about Together</span><span aria-hidden="true">↗</span></a>
+            </div>
+            <span class="closing__cursor" aria-hidden="true"><i></i><b>Built to understand</b></span>
         </section>
     </main>
 
@@ -252,6 +298,6 @@
             <a href="/contact.html">contact</a>
         </nav>
     </footer>
-    <script src="/assets/scripts/together-classic-motion.js" defer></script>
+    <script src="/assets/scripts/together-classic-motion.js?v=modern-1" defer></script>
 </body>
 </html>
