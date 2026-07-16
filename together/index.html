@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#f3f8f6" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#07110f" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#05625d" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#032f2c" media="(prefers-color-scheme: dark)">
     <title>Together — Watch Anything. Hear Everything.</title>
     <meta name="description" content="Together is a native iOS, iPadOS, and macOS app for generating on-device captions, translating video, and exporting subtitle files.">
     <meta name="author" content="Kaizōsha">
@@ -42,10 +42,16 @@
         }
     }
     </script>
-    <link rel="stylesheet" href="/assets/styles/together.css?v=20260715-teal">
+    <link rel="stylesheet" href="/assets/styles/together.css?v=20260715-signal">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="page-signal" aria-hidden="true">
+        <span class="page-signal__track"></span>
+        <span class="page-signal__fill"></span>
+        <span class="page-signal__node"></span>
+        <i></i><i></i><i></i><i></i><i></i>
+    </div>
 
     <header class="site-header">
         <a class="site-brand" href="/" aria-label="Kaizōsha home">
@@ -67,7 +73,7 @@
     </header>
 
     <main id="main-content">
-        <section class="hero" aria-labelledby="together-title">
+        <section class="hero" aria-labelledby="together-title" data-scroll-scene data-scene-name="Listen">
             <div class="hero__copy">
                 <p class="eyebrow"><span>01</span> Native video translation</p>
                 <h1 id="together-title">together<span>.</span></h1>
@@ -134,14 +140,14 @@
                         <button type="button" data-demo-button="translate" data-demo-kicker="03 / Translate" data-demo-status="High fidelity / Active" data-demo-description="Choose Low Latency translation or more natural, context-aware wording with Apple Intelligence." aria-pressed="false"><span>02</span> Translate</button>
                         <button type="button" data-demo-button="export" data-demo-kicker="04 / Export" data-demo-status="Three formats / Ready" data-demo-description="Export original, translated, or bilingual captions as VTT, SRT, or plain text." aria-pressed="false"><span>03</span> Export</button>
                     </div>
-                    <button class="player-demo__pause" type="button" data-demo-toggle aria-pressed="false"><i aria-hidden="true"></i><span>Pause motion</span></button>
+                    <button class="player-demo__pause" type="button" data-demo-toggle aria-pressed="false"><i aria-hidden="true"></i><span>Pause player motion</span></button>
                     <p class="player-demo__description" data-demo-description-output>Together extracts speech and turns it into timed captions on your device.</p>
                     <p class="u-screen-reader" aria-live="polite" data-demo-live></p>
                 </figcaption>
             </figure>
         </section>
 
-        <section class="workflow" id="workflow" aria-labelledby="workflow-heading">
+        <section class="workflow" id="workflow" aria-labelledby="workflow-heading" data-scroll-scene data-scene-name="Understand">
             <header class="section-header">
                 <p class="eyebrow"><span>02</span> From video to understanding</p>
                 <h2 id="workflow-heading">One video.<br>Every word.</h2>
@@ -182,7 +188,7 @@
             </div>
         </section>
 
-        <section class="translation-modes" aria-labelledby="translation-heading">
+        <section class="translation-modes" aria-labelledby="translation-heading" data-scroll-scene data-scene-name="Translate">
             <div class="translation-modes__intro">
                 <p class="eyebrow"><span>03</span> Choose the right pace</p>
                 <h2 id="translation-heading">Fast when it matters.<br>Natural when it counts.</h2>
@@ -203,7 +209,7 @@
             </div>
         </section>
 
-        <section class="feature-grid" id="platforms" aria-label="Together on iOS, iPadOS, and macOS" data-motion>
+        <section class="feature-grid" id="platforms" aria-label="Together on iOS, iPadOS, and macOS" data-motion data-scroll-scene data-scene-name="Everywhere">
             <article>
                 <div class="feature-graphic feature-graphic--phone" aria-hidden="true"><span><i></i><b></b><b></b></span><em></em></div>
                 <p class="feature-number">iOS</p>
@@ -221,7 +227,7 @@
             </article>
         </section>
 
-        <section class="privacy" id="privacy" aria-labelledby="privacy-heading">
+        <section class="privacy" id="privacy" aria-labelledby="privacy-heading" data-scroll-scene data-scene-name="Private">
             <div class="privacy__copy">
                 <p class="eyebrow"><span>04</span> Private by architecture</p>
                 <h2 id="privacy-heading">Your video stays<br>with your device.</h2>
@@ -235,7 +241,7 @@
             </div>
         </section>
 
-        <section class="closing" aria-labelledby="closing-heading">
+        <section class="closing" aria-labelledby="closing-heading" data-scroll-scene data-scene-name="Together">
             <div class="closing__signal" aria-hidden="true" data-motion><span></span><span></span><i></i><b></b></div>
             <p class="eyebrow"><span>05</span> Coming soon from Kaizōsha</p>
             <h2 id="closing-heading">Watch anything.<br>Hear everything.</h2>
@@ -252,6 +258,6 @@
             <a href="/contact.html">contact</a>
         </nav>
     </footer>
-    <script src="/assets/scripts/together-motion.js?v=20260715" defer></script>
+    <script src="/assets/scripts/together-motion.js?v=20260715-signal" defer></script>
 </body>
 </html>
