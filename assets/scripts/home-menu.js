@@ -13,26 +13,37 @@
   let pointerId = null;
   let isOpen = false;
 
+  function getFocusableItems() {
+    return [...appMenu.querySelectorAll("a[href], button:not([disabled])")];
+  }
+
   function setMenuProgress(value) {
     const progress = Math.max(0, Math.min(1, value));
     body.style.setProperty("--menu-progress", String(progress));
   }
 
-  function openMenu() {
+  function openMenu(moveFocus = false) {
     body.classList.add("is-app-menu-open");
     body.classList.remove("is-app-menu-dragging");
     appMenu.classList.add("is-open");
+    appMenu.removeAttribute("inert");
     appMenu.setAttribute("aria-hidden", "false");
     logoButton.setAttribute("aria-expanded", "true");
     logoButton.setAttribute("aria-label", "Close projects");
     body.style.removeProperty("--menu-progress");
     isOpen = true;
+
+    if (moveFocus) {
+      const [firstItem] = getFocusableItems();
+      (firstItem || appMenu).focus({ preventScroll: true });
+    }
   }
 
   function closeMenu(restoreFocus = false) {
     body.classList.remove("is-app-menu-open");
     body.classList.remove("is-app-menu-dragging");
     appMenu.classList.remove("is-open");
+    appMenu.setAttribute("inert", "");
     appMenu.setAttribute("aria-hidden", "true");
     logoButton.setAttribute("aria-expanded", "false");
     logoButton.setAttribute("aria-label", "Open projects");
@@ -56,8 +67,7 @@
   logoButton.addEventListener("click", (event) => {
     if (event.detail !== 0 || isOpen) return;
     event.preventDefault();
-    openMenu();
-    appMenu.focus({ preventScroll: true });
+    openMenu(true);
   });
 
   logoButton.addEventListener("keydown", (event) => {
@@ -67,8 +77,7 @@
     }
 
     event.preventDefault();
-    openMenu();
-    appMenu.focus({ preventScroll: true });
+    openMenu(true);
   });
 
   appMenu.addEventListener("pointerdown", (event) => {
@@ -125,6 +134,27 @@
     if (event.key === "Escape" && isOpen) {
       event.preventDefault();
       closeMenu(true);
+      return;
+    }
+
+    if (event.key === "Tab" && isOpen) {
+      const focusableItems = getFocusableItems();
+      const firstItem = focusableItems[0];
+      const lastItem = focusableItems[focusableItems.length - 1];
+
+      if (!firstItem || !lastItem) {
+        event.preventDefault();
+        appMenu.focus({ preventScroll: true });
+      } else if (event.shiftKey && document.activeElement === firstItem) {
+        event.preventDefault();
+        lastItem.focus({ preventScroll: true });
+      } else if (!event.shiftKey && document.activeElement === lastItem) {
+        event.preventDefault();
+        firstItem.focus({ preventScroll: true });
+      } else if (!appMenu.contains(document.activeElement)) {
+        event.preventDefault();
+        firstItem.focus({ preventScroll: true });
+      }
     }
   });
 

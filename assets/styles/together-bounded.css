@@ -96,26 +96,6 @@ button:focus-visible {
   padding: 1.5rem 1.25rem 1rem;
 }
 
-.site-brand {
-  display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--site-text);
-  text-decoration: none;
-}
-
-.brand-mark { display: flex; align-items: flex-start; }
-.brand-mark__unit { display: flex; flex-direction: column; align-items: center; color: var(--site-accent); }
-.brand-mark__bar { width: 0.34rem; height: 1.2rem; background: currentColor; transition: transform 180ms ease; }
-.brand-mark__char { margin-top: 0.14rem; color: var(--site-text); font-family: var(--mono-ui); font-size: 0.5rem; font-weight: 600; line-height: 1; }
-.brand-mark--header { justify-self: end; gap: 0.18rem; }
-.site-brand:hover .brand-mark__bar { transform: translateY(-2px); }
-
-.site-brand__copy { display: flex; flex-direction: column; gap: 0.22rem; }
-.site-brand__name { font-family: var(--mono-ui); font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em; line-height: 1; text-transform: uppercase; }
-.site-brand__detail { color: var(--site-faint); font-size: 0.52rem; letter-spacing: 0.06em; line-height: 1; text-transform: uppercase; }
-
 .site-nav { display: flex; align-items: center; gap: clamp(0.8rem, 2.2vw, 2.2rem); }
 .site-nav a, .site-nav span {
   display: flex;
@@ -268,6 +248,10 @@ button:focus-visible {
 }
 
 .player-visual__topline span:last-child { color: var(--together-signal); }
+
+@media (min-width: 1101px) {
+  .player-visual__topline { margin-top: 4.25rem; }
+}
 
 .player-visual__stage {
   position: relative;
@@ -800,7 +784,7 @@ html:not(.motion-ready) .player-demo__pause { display: none; }
 }
 
 @media (max-width: 640px) {
-  .site-brand__detail, .site-nav a { display: none; }
+  .site-nav a { display: none; }
   .site-nav { gap: 0; }
   .site-nav span { font-size: 0.52rem; }
   .hero__copy { min-height: 45rem; padding-top: 7rem; }

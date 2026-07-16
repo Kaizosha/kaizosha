@@ -7,20 +7,21 @@
     <meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
     <title>Kaizōsha - Independent Software Studio</title>
-    <meta name="description" content="Kaizōsha is an independent software studio building applications, websites, AI media tools, translation utilities, and custom software.">
+    <meta name="description" content="Kaizōsha is an independent software studio by Kaizō Konpaku, building Apple-platform apps, on-device AI, translation tools, and open-source software.">
     <meta name="author" content="Kaizō Konpaku">
-    <meta name="keywords" content="Kaizōsha, 改造社, Kaizosha Private Limited, software studio, apps, websites, AI media tools, translation software, custom software">
     <meta name="creator" content="Kaizō Konpaku">
     <meta name="publisher" content="Kaizōsha">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="application-name" content="Kaizōsha">
     <meta name="language" content="English">
     <meta name="generator" content="Kaizōsha">
-    <link rel="icon" type="image/png" href="/icon.png">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="icon" type="image/png" sizes="1024x1024" href="https://kaizosha.org/icon.png">
+    <link rel="shortcut icon" type="image/png" href="https://kaizosha.org/icon.png">
+    <link rel="apple-touch-icon" href="https://kaizosha.org/icon.png">
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="canonical" href="https://kaizosha.org/">
     <meta property="og:title" content="Kaizōsha - Independent Software Studio">
-    <meta property="og:description" content="Applications, websites, AI media tools, translation utilities, and custom software from Kaizōsha.">
+    <meta property="og:description" content="Independent software studio by Kaizō Konpaku, building Apple-platform apps, on-device AI, translation tools, and open-source software.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kaizosha.org/">
     <meta property="og:site_name" content="Kaizōsha">
@@ -30,15 +31,14 @@
     <meta property="og:image:height" content="1024">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:alt" content="Kaizōsha icon">
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="summary">
     <meta name="twitter:image" content="https://kaizosha.org/icon.png">
     <meta name="twitter:image:alt" content="Kaizōsha icon">
     <meta name="twitter:title" content="Kaizōsha - Independent Software Studio">
-    <meta name="twitter:description" content="Applications, websites, AI media tools, translation utilities, and custom software from Kaizōsha.">
+    <meta name="twitter:description" content="Independent software studio by Kaizō Konpaku, building Apple-platform apps and open-source software.">
     <meta name="twitter:site" content="@KaizoshaX">
-    <meta name="twitter:creator" content="@KaizoshaX">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
-    <link rel="author" href="https://kaizosha.org/">
+    <link rel="author" href="https://kaizosha.org/creator.html">
     <link rel="license" href="/terms.html">
     <script type="application/ld+json">
     {
@@ -54,24 +54,37 @@
                 "logo": {
                     "@type": "ImageObject",
                     "url": "https://kaizosha.org/icon.png",
+                    "contentUrl": "https://kaizosha.org/icon.png",
                     "width": 1024,
                     "height": 1024
                 },
+                "image": "https://kaizosha.org/icon.png",
+                "email": "contact@kaizosha.org",
                 "sameAs": [
                     "https://github.com/Kaizosha",
                     "https://x.com/KaizoshaX"
                 ],
-                "foundingDate": "2026",
                 "address": {
                     "@type": "PostalAddress",
                     "addressRegion": "Telangana",
                     "addressCountry": "IN"
                 },
-                "description": "Kaizōsha is an independent software studio building applications, websites, AI media tools, translation utilities, and custom software.",
+                "description": "Kaizōsha is an independent software studio by Kaizō Konpaku, building Apple-platform apps, on-device AI, translation tools, and open-source software.",
                 "founder": {
-                    "@type": "Person",
-                    "name": "Kaizō Konpaku",
-                    "alternateName": "Kon"
+                    "@id": "https://kaizosha.org/creator.html#person"
+                }
+            },
+            {
+                "@type": "Person",
+                "@id": "https://kaizosha.org/creator.html#person",
+                "name": "Kaizō Konpaku",
+                "alternateName": ["Kon", "Kaizo Konpaku", "KaizoKonpaku"],
+                "url": "https://kaizosha.org/creator.html",
+                "sameAs": ["https://github.com/KaizoKonpaku"],
+                "jobTitle": "Software Engineer",
+                "description": "Software engineer and creator of Kaizōsha, focused on native Apple-platform software, on-device intelligence, translation, developer tools, and web experiences.",
+                "worksFor": {
+                    "@id": "https://kaizosha.org/#organization"
                 }
             },
             {
@@ -79,7 +92,7 @@
                 "@id": "https://kaizosha.org/#website",
                 "url": "https://kaizosha.org/",
                 "name": "Kaizōsha",
-                "alternateName": "改造社",
+                "alternateName": ["Kaizosha", "改造社", "kaizosha.org"],
                 "publisher": {
                     "@id": "https://kaizosha.org/#organization"
                 },
@@ -90,55 +103,64 @@
                 "@id": "https://kaizosha.org/#webpage",
                 "url": "https://kaizosha.org/",
                 "name": "Kaizōsha - Independent Software Studio",
-                "description": "Kaizōsha is an independent software studio building applications, websites, AI media tools, translation utilities, and custom software.",
+                "description": "Kaizōsha is an independent software studio by Kaizō Konpaku, building Apple-platform apps, on-device AI, translation tools, and open-source software.",
                 "isPartOf": {
                     "@id": "https://kaizosha.org/#website"
                 },
                 "publisher": {
                     "@id": "https://kaizosha.org/#organization"
                 },
+                "author": {
+                    "@id": "https://kaizosha.org/creator.html#person"
+                },
+                "dateModified": "2026-07-16",
                 "inLanguage": "en"
             }
         ]
     }
     </script>
-    <link rel="stylesheet" href="/assets/styles/home.css?v=20260630-structure">
+    <link rel="stylesheet" href="/assets/styles/brand.css?v=20260716-brand">
+    <link rel="stylesheet" href="/assets/styles/home.css?v=20260716-brand">
 </head>
 <body>
-    <h1 class="u-screen-reader">Kaizōsha - Independent Software Studio</h1>
+    <h1 class="u-screen-reader">Kaizōsha - Independent Software Studio by Kaizō Konpaku</h1>
     <button type="button" class="home-logo-button" id="home-logo-button" aria-label="Open projects" aria-controls="app-menu" aria-expanded="false">
-        <div class="brand-mark brand-mark--hero">
-            <div class="brand-mark__unit">
-                <div class="brand-mark__bar"></div>
-                <div class="brand-mark__char">改</div>
-            </div>
-            <div class="brand-mark__unit">
-                <div class="brand-mark__bar"></div>
-                <div class="brand-mark__char">造</div>
-            </div>
-            <div class="brand-mark__unit">
-                <div class="brand-mark__bar"></div>
-                <div class="brand-mark__char">社</div>
-            </div>
-        </div>
-    </button>
-    <div id="app-menu" class="app-menu" role="dialog" aria-label="Projects" aria-hidden="true" tabindex="-1">
-        <div class="app-menu__brand" aria-hidden="true">
-            <span class="brand-mark brand-mark--rail">
-                <span class="brand-mark__unit">
-                    <span class="brand-mark__bar"></span>
-                    <span class="brand-mark__char">改</span>
+        <span class="brand-lockup brand-lockup--icon brand-lockup--display" aria-hidden="true">
+            <span class="brand-lockup__mark">
+                <span class="brand-lockup__unit">
+                    <span class="brand-lockup__bar"></span>
+                    <span class="brand-lockup__glyph">改</span>
                 </span>
-                <span class="brand-mark__unit">
-                    <span class="brand-mark__bar"></span>
-                    <span class="brand-mark__char">造</span>
+                <span class="brand-lockup__unit">
+                    <span class="brand-lockup__bar"></span>
+                    <span class="brand-lockup__glyph">造</span>
                 </span>
-                <span class="brand-mark__unit">
-                    <span class="brand-mark__bar"></span>
-                    <span class="brand-mark__char">社</span>
+                <span class="brand-lockup__unit">
+                    <span class="brand-lockup__bar"></span>
+                    <span class="brand-lockup__glyph">社</span>
                 </span>
             </span>
-            <span class="app-menu__brand-text">Kaizōsha</span>
+        </span>
+    </button>
+    <div id="app-menu" class="app-menu" role="dialog" aria-modal="true" aria-label="Projects" aria-hidden="true" tabindex="-1" inert>
+        <div class="app-menu__brand brand-lockup brand-lockup--compact" aria-hidden="true">
+            <span class="brand-lockup__mark">
+                <span class="brand-lockup__unit">
+                    <span class="brand-lockup__bar"></span>
+                    <span class="brand-lockup__glyph">改</span>
+                </span>
+                <span class="brand-lockup__unit">
+                    <span class="brand-lockup__bar"></span>
+                    <span class="brand-lockup__glyph">造</span>
+                </span>
+                <span class="brand-lockup__unit">
+                    <span class="brand-lockup__bar"></span>
+                    <span class="brand-lockup__glyph">社</span>
+                </span>
+            </span>
+            <span class="brand-lockup__copy">
+                <span class="brand-lockup__name">Kaizōsha</span>
+            </span>
         </div>
         <div class="app-menu__content">
             <ul class="app-list">
@@ -154,15 +176,17 @@
         </div>
         <footer class="site-footer">
             <p class="site-footer__quote">FROM ME COMES THE FUTURE</p>
-            <nav class="site-footer__links">
-                <a href="/terms.html" onclick="event.stopPropagation()">terms</a>
+            <nav class="site-footer__links" aria-label="Site information">
+                <a href="/creator.html" rel="author">creator</a>
                 <span aria-hidden="true">·</span>
-                <a href="/privacy.html" onclick="event.stopPropagation()">privacy</a>
+                <a href="/terms.html">terms</a>
                 <span aria-hidden="true">·</span>
-                <a href="/contact.html" onclick="event.stopPropagation()">contact</a>
+                <a href="/privacy.html">privacy</a>
+                <span aria-hidden="true">·</span>
+                <a href="/contact.html">contact</a>
             </nav>
         </footer>
     </div>
-    <script src="/assets/scripts/home-menu.js?v=20260630-structure-a11y" defer></script>
+    <script src="/assets/scripts/home-menu.js?v=20260716-polish" defer></script>
 </body>
 </html>

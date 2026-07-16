@@ -4,8 +4,8 @@
   --text-bright: #e8e8e8;
   --text: #d0d0d0;
   --text-dim: #888;
-  --text-faint: #555;
-  --text-trace: #333;
+  --text-faint: #797979;
+  --text-trace: #797979;
   --rule: #222;
   --rule-soft: #1a1a1a;
   --accent: #ff9f1c;
@@ -25,8 +25,8 @@
     --text-bright: #111;
     --text: #2b2b2b;
     --text-dim: #626262;
-    --text-faint: #8a8a8a;
-    --text-trace: #b7b7b7;
+    --text-faint: #6f6f6f;
+    --text-trace: #6f6f6f;
     --rule: #dedede;
     --rule-soft: #ededed;
     --accent: #a84f00;
@@ -42,6 +42,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 1rem;
 }
 
 body {
@@ -75,6 +76,23 @@ a {
 
 button {
   font: inherit;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 100;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.65rem 0.8rem;
+  background: var(--text-bright);
+  color: var(--bg);
+  font-size: 0.7rem;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
 }
 
 ::selection {
@@ -126,65 +144,17 @@ button {
 }
 
 .rail-brand {
-  display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
-  align-items: center;
-  gap: 0.4rem;
+  width: 100%;
   margin: 0 0 1.1rem;
   padding: 0 0 1rem;
   border-bottom: 1px solid var(--rule);
-  color: var(--text-bright);
-  font-family: var(--mono-ui);
-  text-decoration: none;
   transition: color 120ms ease;
 }
 
 .rail-brand:hover,
 .rail-brand:focus-visible {
-  color: var(--accent);
+  --brand-text: var(--accent);
   outline: none;
-}
-
-.rail-brand-mark {
-  justify-self: end;
-  display: flex;
-  gap: 0.18rem;
-  align-items: flex-start;
-  color: var(--accent);
-}
-
-.rail-brand-unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.rail-brand-bar {
-  width: 0.34rem;
-  height: 1.2rem;
-  background: currentColor;
-}
-
-.rail-brand-char {
-  margin-top: 0.14rem;
-  color: var(--text-bright);
-  font-size: 0.5rem;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.rail-brand-text {
-  align-self: center;
-  min-width: 0;
-  overflow: hidden;
-  color: currentColor;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  line-height: 1;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  white-space: nowrap;
 }
 
 .mobile-doc-brand {
@@ -271,7 +241,7 @@ button {
 .section-title {
   margin: 0;
   color: var(--text-bright);
-  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  font-size: 1.05rem;
   font-weight: 500;
   line-height: 1;
   text-transform: uppercase;
@@ -488,6 +458,16 @@ button.entry-head {
   outline: none;
 }
 
+.rail-brand:focus-visible,
+.toc-link:focus-visible,
+.mobile-doc-brand:focus-visible,
+.project-link:focus-visible,
+.man-link:focus-visible,
+.marker-link:focus-visible {
+  outline: 1px dashed var(--accent);
+  outline-offset: 0.25rem;
+}
+
 @media (max-width: 900px) {
   .page-grid {
     grid-template-columns: minmax(0, 1fr);
@@ -503,26 +483,15 @@ button.entry-head {
   }
 
   .mobile-doc-brand {
-    display: grid;
-    grid-template-columns: auto auto;
-    align-items: center;
+    width: fit-content;
     justify-content: center;
-    gap: 0.65rem;
     margin: 0 auto 2rem;
-    color: var(--text-bright);
-    font-family: var(--mono-ui);
     text-align: center;
-    text-decoration: none;
   }
 
   .mobile-doc-brand:hover,
   .mobile-doc-brand:focus-visible {
-    color: var(--accent);
-    outline: none;
-  }
-
-  .mobile-doc-brand .rail-brand-mark {
-    justify-self: center;
+    --brand-text: var(--accent);
   }
 }
 
@@ -532,7 +501,14 @@ button.entry-head {
   }
 
   .section-head {
+    grid-template-columns: auto minmax(0, auto) minmax(1rem, 1fr);
     gap: 0.55rem;
+  }
+
+  .section-title {
+    overflow-wrap: anywhere;
+    line-height: 1.25;
+    white-space: normal;
   }
 
   .body-lines > :not(.job),

@@ -8,56 +8,73 @@
     <meta name="theme-color" content="#08090b" media="(prefers-color-scheme: dark)">
     <title>TL;Pinch — See Less. Know More.</title>
     <meta name="description" content="TL;Pinch summarizes webpages and explains highlighted text in Safari, powered on device by Apple Intelligence.">
-    <meta name="author" content="Kaizōsha">
+    <meta name="author" content="Kaizō Konpaku">
+    <meta name="creator" content="Kaizō Konpaku">
+    <meta name="publisher" content="Kaizōsha">
     <meta name="robots" content="index, follow, max-image-preview:large">
-    <link rel="icon" type="image/png" href="/icon.png">
-    <link rel="apple-touch-icon" href="/icon.png">
-    <link rel="canonical" href="https://kaizosha.org/tlpinch">
+    <link rel="icon" type="image/png" sizes="1024x1024" href="https://kaizosha.org/icon.png">
+    <link rel="shortcut icon" type="image/png" href="https://kaizosha.org/icon.png">
+    <link rel="apple-touch-icon" href="https://kaizosha.org/icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="canonical" href="https://kaizosha.org/tlpinch/">
+    <link rel="author" href="https://kaizosha.org/creator.html">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
     <meta property="og:title" content="TL;Pinch — See Less. Know More.">
     <meta property="og:description" content="Summarize long pages or explain highlighted text right inside Safari, powered on device by Apple Intelligence.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://kaizosha.org/tlpinch">
+    <meta property="og:url" content="https://kaizosha.org/tlpinch/">
     <meta property="og:site_name" content="Kaizōsha">
+    <meta property="og:locale" content="en_US">
     <meta property="og:image" content="https://kaizosha.org/assets/media/tlpinch/og.png">
     <meta property="og:image:width" content="1536">
     <meta property="og:image:height" content="1024">
+    <meta property="og:image:type" content="image/png">
     <meta property="og:image:alt" content="TL;Pinch — See less. Know more.">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="TL;Pinch — See Less. Know More.">
     <meta name="twitter:description" content="On-device webpage summaries and explanations for Safari.">
     <meta name="twitter:image" content="https://kaizosha.org/assets/media/tlpinch/og.png">
+    <meta name="twitter:image:alt" content="TL;Pinch — See less. Know more.">
+    <meta name="twitter:site" content="@KaizoshaX">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "TL;Pinch",
         "description": "A Safari extension that summarizes webpages and explains highlighted text with Apple Intelligence on device.",
-        "url": "https://kaizosha.org/tlpinch",
+        "url": "https://kaizosha.org/tlpinch/",
+        "image": "https://kaizosha.org/assets/media/tlpinch/og.png",
         "applicationCategory": "UtilitiesApplication",
         "operatingSystem": "iOS 26, iPadOS 26, macOS 26",
         "softwareVersion": "1.0",
         "author": {
-            "@type": "Organization",
-            "name": "Kaizōsha",
-            "url": "https://kaizosha.org/"
-        }
+            "@type": "Person",
+            "@id": "https://kaizosha.org/creator.html#person",
+            "name": "Kaizō Konpaku",
+            "url": "https://kaizosha.org/creator.html"
+        },
+        "creator": { "@id": "https://kaizosha.org/creator.html#person" },
+        "publisher": { "@id": "https://kaizosha.org/#organization" },
+        "isPartOf": { "@id": "https://kaizosha.org/#website" },
+        "dateModified": "2026-07-16"
     }
     </script>
-    <link rel="stylesheet" href="/assets/styles/tlpinch-pinch.css?v=1">
+    <link rel="stylesheet" href="/assets/styles/brand.css?v=20260716-brand">
+    <link rel="stylesheet" href="/assets/styles/tlpinch-pinch.css?v=20260716-brand">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
 
     <header class="site-header">
-        <a class="site-brand" href="/" aria-label="Kaizōsha home">
-            <span class="brand-mark brand-mark--header" aria-hidden="true">
-                <span class="brand-mark__unit"><span class="brand-mark__bar"></span><span class="brand-mark__char">改</span></span>
-                <span class="brand-mark__unit"><span class="brand-mark__bar"></span><span class="brand-mark__char">造</span></span>
-                <span class="brand-mark__unit"><span class="brand-mark__bar"></span><span class="brand-mark__char">社</span></span>
+        <a class="site-brand brand-lockup brand-lockup--full" href="/" aria-label="Kaizōsha home">
+            <span class="brand-lockup__mark" aria-hidden="true">
+                <span class="brand-lockup__unit"><span class="brand-lockup__bar"></span><span class="brand-lockup__glyph">改</span></span>
+                <span class="brand-lockup__unit"><span class="brand-lockup__bar"></span><span class="brand-lockup__glyph">造</span></span>
+                <span class="brand-lockup__unit"><span class="brand-lockup__bar"></span><span class="brand-lockup__glyph">社</span></span>
             </span>
-            <span class="site-brand__copy">
-                <span class="site-brand__name">Kaizōsha</span>
-                <span class="site-brand__detail">Independent Software Studio</span>
+            <span class="brand-lockup__copy">
+                <span class="brand-lockup__name">Kaizōsha</span>
+                <span class="brand-lockup__descriptor">Independent Software Studio</span>
             </span>
         </a>
         <nav class="site-nav" aria-label="TL;Pinch navigation">
@@ -294,7 +311,8 @@
 
     <footer class="site-footer">
         <p class="site-footer__quote">FROM ME COMES THE FUTURE</p>
-        <nav class="site-footer__links" aria-label="Legal and contact">
+        <nav class="site-footer__links" aria-label="Site information">
+            <a href="/creator.html" rel="author">creator</a><span aria-hidden="true">·</span>
             <a href="/terms.html">terms</a><span aria-hidden="true">·</span>
             <a href="/privacy.html">privacy</a><span aria-hidden="true">·</span>
             <a href="/contact.html">contact</a>

@@ -1,0 +1,145 @@
+/*
+ * Kaizosha brand lockups
+ * Content: wordmark, icon, compact, full
+ * Scale: add brand-lockup--display only for large icon presentations
+ */
+
+.brand-lockup {
+  --brand-accent: var(--site-accent, var(--accent, #a84f00));
+  --brand-text: var(--site-text, var(--text-bright, currentColor));
+  --brand-muted: var(--site-faint, var(--text-dim, #6f6f6f));
+  --brand-font: var(
+    --mono-ui,
+    "Courier New",
+    Courier,
+    "Liberation Mono",
+    monospace
+  );
+  min-width: 0;
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--brand-text);
+  font-family: var(--brand-font);
+  text-decoration: none;
+}
+
+.brand-lockup__mark {
+  display: flex;
+  flex: none;
+  align-items: flex-start;
+  gap: 0.18rem;
+  color: var(--brand-accent);
+  transition: color 180ms ease;
+}
+
+.brand-lockup__unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.brand-lockup__bar {
+  width: 0.34rem;
+  height: 1.2rem;
+  background: currentColor;
+  transition: transform 180ms ease;
+}
+
+.brand-lockup__glyph {
+  margin-top: 0.14rem;
+  color: var(--brand-text);
+  font-size: 0.5rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.brand-lockup__copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+}
+
+.brand-lockup__name {
+  overflow: hidden;
+  color: var(--brand-text);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.brand-lockup__descriptor {
+  overflow: hidden;
+  color: var(--brand-muted);
+  font-size: 0.52rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  line-height: 1.15;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.brand-lockup--icon,
+.brand-lockup--wordmark {
+  display: inline-flex;
+  gap: 0;
+}
+
+.brand-lockup--compact .brand-lockup__descriptor {
+  display: none;
+}
+
+.brand-lockup--display .brand-lockup__mark {
+  gap: 15px;
+}
+
+.brand-lockup--display .brand-lockup__bar {
+  width: 30px;
+  height: 90px;
+}
+
+.brand-lockup--display .brand-lockup__glyph {
+  margin-top: 5px;
+  font-size: 24px;
+}
+
+a.brand-lockup:hover .brand-lockup__bar,
+a.brand-lockup:focus-visible .brand-lockup__bar {
+  transform: translateY(-0.14rem);
+}
+
+@media (max-width: 768px) {
+  .brand-lockup--display .brand-lockup__mark {
+    gap: 10px;
+  }
+
+  .brand-lockup--display .brand-lockup__bar {
+    width: 20px;
+    height: 60px;
+  }
+
+  .brand-lockup--display .brand-lockup__glyph {
+    margin-top: 4px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-brand.brand-lockup--full .brand-lockup__descriptor {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-lockup__mark,
+  .brand-lockup__bar {
+    transition-duration: 1ms;
+  }
+}

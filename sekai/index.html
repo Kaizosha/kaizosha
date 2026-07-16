@@ -8,24 +8,34 @@
     <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
     <title>Sekai — The Whole World, Made Native</title>
     <meta name="description" content="Sekai is a native SwiftUI optical-glass globe for every Apple platform, built by Kaizōsha.">
-    <meta name="author" content="Kaizōsha">
+    <meta name="author" content="Kaizō Konpaku">
+    <meta name="creator" content="Kaizō Konpaku">
+    <meta name="publisher" content="Kaizōsha">
     <meta name="robots" content="index, follow, max-image-preview:large">
-    <link rel="icon" type="image/png" href="/icon.png">
-    <link rel="apple-touch-icon" href="/icon.png">
-    <link rel="canonical" href="https://kaizosha.org/sekai">
+    <link rel="icon" type="image/png" sizes="1024x1024" href="https://kaizosha.org/icon.png">
+    <link rel="shortcut icon" type="image/png" href="https://kaizosha.org/icon.png">
+    <link rel="apple-touch-icon" href="https://kaizosha.org/icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="canonical" href="https://kaizosha.org/sekai/">
+    <link rel="author" href="https://kaizosha.org/creator.html">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
     <meta property="og:title" content="Sekai — The Whole World, Made Native">
     <meta property="og:description" content="A native SwiftUI optical-glass globe for every Apple platform.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://kaizosha.org/sekai">
+    <meta property="og:url" content="https://kaizosha.org/sekai/">
     <meta property="og:site_name" content="Kaizōsha">
-    <meta property="og:image" content="https://kaizosha.org/assets/media/sekai/sekai-demo-ios.gif">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image" content="https://kaizosha.org/assets/media/sekai/sekai-og.png">
     <meta property="og:image:width" content="320">
     <meta property="og:image:height" content="695">
+    <meta property="og:image:type" content="image/png">
     <meta property="og:image:alt" content="Sekai interactive optical-glass globe demo on iPhone">
-    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="Sekai — The Whole World, Made Native">
     <meta name="twitter:description" content="A native SwiftUI optical-glass globe for every Apple platform.">
-    <meta name="twitter:image" content="https://kaizosha.org/assets/media/sekai/sekai-demo-ios.gif">
+    <meta name="twitter:image" content="https://kaizosha.org/assets/media/sekai/sekai-og.png">
+    <meta name="twitter:image:alt" content="Sekai interactive optical-glass globe demo on iPhone">
+    <meta name="twitter:site" content="@KaizoshaX">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -33,32 +43,40 @@
         "name": "Sekai",
         "alternateName": "SekaiKit",
         "description": "A native SwiftUI optical-glass globe for every Apple platform.",
-        "url": "https://kaizosha.org/sekai",
+        "url": "https://kaizosha.org/sekai/",
+        "image": "https://kaizosha.org/assets/media/sekai/sekai-og.png",
         "codeRepository": "https://github.com/Kaizosha/Sekai",
+        "sameAs": "https://github.com/Kaizosha/Sekai",
         "programmingLanguage": "Swift",
         "license": "https://opensource.org/license/mit",
         "author": {
-            "@type": "Organization",
-            "name": "Kaizōsha",
-            "url": "https://kaizosha.org/"
+            "@type": "Person",
+            "@id": "https://kaizosha.org/creator.html#person",
+            "name": "Kaizō Konpaku",
+            "url": "https://kaizosha.org/creator.html"
         },
+        "creator": { "@id": "https://kaizosha.org/creator.html#person" },
+        "publisher": { "@id": "https://kaizosha.org/#organization" },
+        "isPartOf": { "@id": "https://kaizosha.org/#website" },
+        "dateModified": "2026-07-16",
         "operatingSystem": "iOS, iPadOS, macOS, tvOS, watchOS, visionOS"
     }
     </script>
-    <link rel="stylesheet" href="/assets/styles/sekai.css?v=20260715-kaizosha">
+    <link rel="stylesheet" href="/assets/styles/brand.css?v=20260716-brand">
+    <link rel="stylesheet" href="/assets/styles/sekai.css?v=20260716-brand">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
-        <a class="site-brand" href="/" aria-label="Kaizōsha home">
-            <span class="brand-mark brand-mark--header" aria-hidden="true">
-                <span class="brand-mark__unit"><span class="brand-mark__bar"></span><span class="brand-mark__char">改</span></span>
-                <span class="brand-mark__unit"><span class="brand-mark__bar"></span><span class="brand-mark__char">造</span></span>
-                <span class="brand-mark__unit"><span class="brand-mark__bar"></span><span class="brand-mark__char">社</span></span>
+        <a class="site-brand brand-lockup brand-lockup--full" href="/" aria-label="Kaizōsha home">
+            <span class="brand-lockup__mark" aria-hidden="true">
+                <span class="brand-lockup__unit"><span class="brand-lockup__bar"></span><span class="brand-lockup__glyph">改</span></span>
+                <span class="brand-lockup__unit"><span class="brand-lockup__bar"></span><span class="brand-lockup__glyph">造</span></span>
+                <span class="brand-lockup__unit"><span class="brand-lockup__bar"></span><span class="brand-lockup__glyph">社</span></span>
             </span>
-            <span class="site-brand__copy">
-                <span class="site-brand__name">Kaizōsha</span>
-                <span class="site-brand__detail">Independent Software Studio</span>
+            <span class="brand-lockup__copy">
+                <span class="brand-lockup__name">Kaizōsha</span>
+                <span class="brand-lockup__descriptor">Independent Software Studio</span>
             </span>
         </a>
         <nav class="site-nav" aria-label="Sekai navigation">
@@ -90,7 +108,7 @@
                 <div class="hero__device">
                     <span class="hero__orbit hero__orbit--one" aria-hidden="true"></span>
                     <span class="hero__orbit hero__orbit--two" aria-hidden="true"></span>
-                    <img src="/assets/media/sekai/sekai-demo-ios.gif" width="320" height="695" alt="Sekai interactive optical-glass globe demo on iPhone">
+                    <img src="/assets/media/sekai/sekai-demo-ios.webp" width="320" height="695" alt="Sekai interactive optical-glass globe demo on iPhone" decoding="async" fetchpriority="high">
                 </div>
                 <figcaption><span>Drag / Tilt / Pinch</span><span>Rendered with Metal</span></figcaption>
             </figure>
@@ -182,7 +200,8 @@
 
     <footer class="site-footer">
         <p class="site-footer__quote">FROM ME COMES THE FUTURE</p>
-        <nav class="site-footer__links" aria-label="Legal and contact">
+        <nav class="site-footer__links" aria-label="Site information">
+            <a href="/creator.html" rel="author">creator</a><span aria-hidden="true">·</span>
             <a href="/terms.html">terms</a><span aria-hidden="true">·</span>
             <a href="/privacy.html">privacy</a><span aria-hidden="true">·</span>
             <a href="/contact.html">contact</a>

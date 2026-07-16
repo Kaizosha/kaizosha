@@ -115,72 +115,6 @@ button:focus-visible {
   padding: 1.5rem 1.25rem 1rem;
 }
 
-.site-brand {
-  display: grid;
-  grid-template-columns: 3rem minmax(0, 1fr);
-  align-items: center;
-  gap: 0.4rem;
-  color: var(--site-text);
-  text-decoration: none;
-}
-
-.brand-mark {
-  display: flex;
-  align-items: flex-start;
-}
-
-.brand-mark__unit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: var(--site-accent);
-}
-
-.brand-mark__bar {
-  width: 0.34rem;
-  height: 1.2rem;
-  background: currentColor;
-  transition: transform 180ms ease;
-}
-
-.brand-mark__char {
-  margin-top: 0.14rem;
-  color: var(--site-text);
-  font-family: var(--mono-ui);
-  font-size: 0.5rem;
-  font-weight: 600;
-  line-height: 1;
-}
-
-.brand-mark--header {
-  justify-self: end;
-  gap: 0.18rem;
-}
-
-.site-brand:hover .brand-mark__bar,
-.site-brand:focus-visible .brand-mark__bar {
-  transform: translateY(-0.14rem);
-}
-
-.site-brand__copy {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-}
-
-.site-brand__name {
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-}
-
-.site-brand__detail {
-  color: var(--site-faint);
-  font-size: 0.45rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 .site-nav {
   display: flex;
   align-items: center;
@@ -390,6 +324,12 @@ button:focus-visible {
 
 .reader-visual__topline span:last-child {
   color: var(--pinch-signal);
+}
+
+@media (min-width: 981px) {
+  .reader-visual__topline {
+    margin-top: 4.25rem;
+  }
 }
 
 .reader-visual__stage {
@@ -1980,11 +1920,6 @@ button:focus-visible {
     padding: 1rem;
   }
 
-  .site-brand {
-    grid-template-columns: 2.65rem minmax(0, 1fr);
-  }
-
-  .site-brand__detail,
   .site-nav a {
     display: none;
   }

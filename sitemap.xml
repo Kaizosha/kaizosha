@@ -1,44 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
     <url>
         <loc>https://kaizosha.org/</loc>
         <lastmod>2026-07-16</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
+        <image:image>
+            <image:loc>https://kaizosha.org/icon.png</image:loc>
+            <image:title>Kaizōsha logo</image:title>
+        </image:image>
     </url>
     <url>
-        <loc>https://kaizosha.org/sekai</loc>
-        <lastmod>2026-07-15</lastmod>
+        <loc>https://kaizosha.org/sekai/</loc>
+        <lastmod>2026-07-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://kaizosha.org/together</loc>
-        <lastmod>2026-07-15</lastmod>
+        <loc>https://kaizosha.org/creator.html</loc>
+        <lastmod>2026-07-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://kaizosha.org/tlpinch</loc>
+        <loc>https://kaizosha.org/together/</loc>
+        <lastmod>2026-07-16</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://kaizosha.org/tlpinch/</loc>
         <lastmod>2026-07-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://kaizosha.org/terms.html</loc>
-        <lastmod>2026-06-30</lastmod>
+        <lastmod>2026-07-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://kaizosha.org/privacy.html</loc>
-        <lastmod>2026-06-30</lastmod>
+        <lastmod>2026-07-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.5</priority>
     </url>
     <url>
         <loc>https://kaizosha.org/contact.html</loc>
-        <lastmod>2026-06-30</lastmod>
+        <lastmod>2026-07-16</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>

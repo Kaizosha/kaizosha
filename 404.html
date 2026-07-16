@@ -10,27 +10,33 @@
     <meta name="description" content="The requested Kaizōsha page could not be found. Return to the Kaizōsha homepage." />
     <meta name="robots" content="noindex, nofollow" />
     <meta name="application-name" content="Kaizōsha" />
-    <link rel="icon" type="image/png" href="/icon.png">
-    <link rel="apple-touch-icon" href="/icon.png">
-    <link rel="stylesheet" href="/assets/styles/error.css?v=20260630-structure">
+    <link rel="icon" type="image/png" sizes="1024x1024" href="https://kaizosha.org/icon.png">
+    <link rel="shortcut icon" type="image/png" href="https://kaizosha.org/icon.png">
+    <link rel="apple-touch-icon" href="https://kaizosha.org/icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/assets/styles/brand.css?v=20260716-brand">
+    <link rel="stylesheet" href="/assets/styles/error.css?v=20260716-brand">
 </head>
 <body>
-    <h1 class="u-screen-reader">Page Not Found - Kaizōsha</h1>
-    <a href="/" class="error-logo" aria-label="Kaizōsha home">
-        <div class="brand-mark">
-            <div class="brand-mark__unit">
-                <div class="brand-mark__bar"></div>
-                <div class="brand-mark__char">改</div>
-            </div>
-            <div class="brand-mark__unit">
-                <div class="brand-mark__bar"></div>
-                <div class="brand-mark__char">造</div>
-            </div>
-            <div class="brand-mark__unit">
-                <div class="brand-mark__bar"></div>
-                <div class="brand-mark__char">社</div>
-            </div>
-        </div>
-    </a>
+    <main class="error-main">
+        <a href="/" class="error-logo brand-lockup brand-lockup--icon brand-lockup--display" aria-label="Kaizōsha home">
+            <span class="brand-lockup__mark" aria-hidden="true">
+                <span class="brand-lockup__unit">
+                    <span class="brand-lockup__bar"></span>
+                    <span class="brand-lockup__glyph">改</span>
+                </span>
+                <span class="brand-lockup__unit">
+                    <span class="brand-lockup__bar"></span>
+                    <span class="brand-lockup__glyph">造</span>
+                </span>
+                <span class="brand-lockup__unit">
+                    <span class="brand-lockup__bar"></span>
+                    <span class="brand-lockup__glyph">社</span>
+                </span>
+            </span>
+        </a>
+        <h1>404 / Page not found</h1>
+        <a class="error-home" href="/">Return to Kaizōsha</a>
+    </main>
 </body>
 </html>
