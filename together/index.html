@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#05625d" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#032f2c" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0b0d0c" media="(prefers-color-scheme: dark)">
     <title>Together — Watch Anything. Hear Everything.</title>
     <meta name="description" content="Together is a native iOS, iPadOS, and macOS app for generating on-device captions, translating video, and exporting subtitle files.">
     <meta name="author" content="Kaizōsha">
@@ -42,16 +42,10 @@
         }
     }
     </script>
-    <link rel="stylesheet" href="/assets/styles/together.css?v=20260715-signal">
+    <link rel="stylesheet" href="/assets/styles/together.css?v=20260715-system">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <div class="page-signal" aria-hidden="true">
-        <span class="page-signal__track"></span>
-        <span class="page-signal__fill"></span>
-        <span class="page-signal__node"></span>
-        <i></i><i></i><i></i><i></i><i></i>
-    </div>
 
     <header class="site-header">
         <a class="site-brand" href="/" aria-label="Kaizōsha home">
@@ -147,43 +141,54 @@
             </figure>
         </section>
 
-        <section class="workflow" id="workflow" aria-labelledby="workflow-heading" data-scroll-scene data-scene-name="Understand">
-            <header class="section-header">
-                <p class="eyebrow"><span>02</span> From video to understanding</p>
-                <h2 id="workflow-heading">One video.<br>Every word.</h2>
-                <p>Open a video, choose the languages, and let Together build captions while you watch. Keep the original, show the translation, or see both at once.</p>
-            </header>
-            <div class="workflow-system" data-motion>
-                <div class="workflow-signal" aria-hidden="true">
-                    <span class="workflow-signal__line"></span>
-                    <span class="workflow-signal__pulse"></span>
-                    <i></i><i></i><i></i><i></i>
+        <section class="signal-story" id="workflow" aria-labelledby="signal-story-heading" data-scroll-scene data-signal-story data-story-step="0">
+            <div class="signal-story__sticky">
+                <header class="signal-story__header">
+                    <p class="eyebrow"><span>02</span> Follow the signal</p>
+                    <h2 id="signal-story-heading">A video becomes<br>understanding.</h2>
+                    <p>One private line carries the work from a video on your device to captions you can watch, translate, and keep.</p>
+                </header>
+
+                <div class="signal-story__visual" aria-hidden="true">
+                    <span class="signal-story__baseline"><i></i><b></b></span>
+                    <div class="signal-story__modes">
+                        <span class="signal-story__mode signal-story__mode--fast"><i>Low latency</i></span>
+                        <span class="signal-story__mode signal-story__mode--context"><i>High fidelity</i></span>
+                    </div>
+
+                    <div class="signal-node signal-node--video is-passed is-active" data-story-node>
+                        <span class="signal-node__art signal-video"><i></i><b></b></span>
+                        <span class="signal-node__point"></span>
+                        <span class="signal-node__name">Video</span>
+                    </div>
+                    <div class="signal-node signal-node--speech" data-story-node>
+                        <span class="signal-node__art signal-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+                        <span class="signal-node__point"></span>
+                        <span class="signal-node__name">Speech</span>
+                    </div>
+                    <div class="signal-node signal-node--language" data-story-node>
+                        <span class="signal-node__art signal-language"><i>EN</i><b></b><i>FR</i></span>
+                        <span class="signal-node__point"></span>
+                        <span class="signal-node__name">Translate</span>
+                    </div>
+                    <div class="signal-node signal-node--captions" data-story-node>
+                        <span class="signal-node__art signal-captions"><i></i><i></i><i></i></span>
+                        <span class="signal-node__point"></span>
+                        <span class="signal-node__name">Captions</span>
+                    </div>
+                    <div class="signal-node signal-node--files" data-story-node>
+                        <span class="signal-node__art signal-files"><i>VTT</i><i>SRT</i><i>TXT</i></span>
+                        <span class="signal-node__point"></span>
+                        <span class="signal-node__name">Export</span>
+                    </div>
                 </div>
-                <ol class="workflow-list">
-                    <li>
-                        <span class="workflow-list__number">01</span>
-                        <div class="workflow-graphic workflow-graphic--choose" aria-hidden="true"><i></i><i></i><i></i><b></b></div>
-                        <strong>Choose</strong>
-                        <p>Pick a video from Photos or Files, or open it directly in Together.</p>
-                    </li>
-                    <li>
-                        <span class="workflow-list__number">02</span>
-                        <div class="workflow-graphic workflow-graphic--set" aria-hidden="true"><span>EN</span><i><b></b></i><span>FR</span></div>
-                        <strong>Set</strong>
-                        <p>Choose the spoken language, translation, caption mode, and appearance.</p>
-                    </li>
-                    <li>
-                        <span class="workflow-list__number">03</span>
-                        <div class="workflow-graphic workflow-graphic--watch" aria-hidden="true"><i></i><span></span><span></span><b></b></div>
-                        <strong>Watch</strong>
-                        <p>Play with native controls as on-device captions appear in context.</p>
-                    </li>
-                    <li>
-                        <span class="workflow-list__number">04</span>
-                        <div class="workflow-graphic workflow-graphic--export" aria-hidden="true"><span>VTT</span><span>SRT</span><span>TXT</span><i></i></div>
-                        <strong>Export</strong>
-                        <p>Save original, translated, or bilingual captions as VTT, SRT, or text.</p>
-                    </li>
+
+                <ol class="signal-story__legend">
+                    <li class="is-passed is-active" data-story-label><span>01</span><strong>Open</strong><p>Choose a video from Photos or Files.</p></li>
+                    <li data-story-label><span>02</span><strong>Listen</strong><p>Speech becomes timed text on device.</p></li>
+                    <li data-story-label><span>03</span><strong>Translate</strong><p>Choose immediate or context-aware wording.</p></li>
+                    <li data-story-label><span>04</span><strong>Watch</strong><p>Show the original, translation, or both.</p></li>
+                    <li data-story-label><span>05</span><strong>Export</strong><p>Keep VTT, SRT, or plain text files.</p></li>
                 </ol>
             </div>
         </section>
@@ -258,6 +263,6 @@
             <a href="/contact.html">contact</a>
         </nav>
     </footer>
-    <script src="/assets/scripts/together-motion.js?v=20260715-signal" defer></script>
+    <script src="/assets/scripts/together-motion.js?v=20260715-system" defer></script>
 </body>
 </html>

@@ -3,6 +3,13 @@
   const player = document.querySelector("[data-player-demo]");
   const motionItems = [...document.querySelectorAll("[data-motion]")];
   const scrollScenes = [...document.querySelectorAll("[data-scroll-scene]")];
+  const signalStory = document.querySelector("[data-signal-story]");
+  const storyNodes = signalStory
+    ? [...signalStory.querySelectorAll("[data-story-node]")]
+    : [];
+  const storyLabels = signalStory
+    ? [...signalStory.querySelectorAll("[data-story-label]")]
+    : [];
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let scrollFrame = null;
   let scrollMotionBound = false;
@@ -11,6 +18,46 @@
 
   function clamp(value, minimum = 0, maximum = 1) {
     return Math.min(maximum, Math.max(minimum, value));
+  }
+
+  function updateSignalStory(progress) {
+    if (!signalStory || storyNodes.length === 0) return;
+
+    const settledProgress = clamp(progress);
+    const finalIndex = storyNodes.length - 1;
+    const activeIndex = Math.min(
+      finalIndex,
+      Math.floor(settledProgress * storyNodes.length)
+    );
+
+    signalStory.style.setProperty(
+      "--story-progress",
+      settledProgress.toFixed(4)
+    );
+    signalStory.style.setProperty(
+      "--story-x",
+      `${(settledProgress * 100).toFixed(2)}%`
+    );
+    signalStory.dataset.storyStep = String(activeIndex);
+
+    storyNodes.forEach((node, index) => {
+      const threshold = finalIndex === 0 ? 0 : index / finalIndex;
+      node.classList.toggle("is-passed", settledProgress + 0.025 >= threshold);
+      node.classList.toggle("is-active", index === activeIndex);
+    });
+
+    storyLabels.forEach((label, index) => {
+      const threshold = finalIndex === 0 ? 0 : index / finalIndex;
+      const active = index === activeIndex;
+      label.classList.toggle("is-passed", settledProgress + 0.025 >= threshold);
+      label.classList.toggle("is-active", active);
+
+      if (active) {
+        label.setAttribute("aria-current", "step");
+      } else {
+        label.removeAttribute("aria-current");
+      }
+    });
   }
 
   function settleScrollScenes() {
@@ -25,6 +72,8 @@
       scene.style.setProperty("--scene-angle-reverse", "-18deg");
       scene.classList.add("is-scroll-active");
     });
+
+    updateSignalStory(1);
   }
 
   function updateScrollScenes() {
@@ -66,6 +115,14 @@
         "is-scroll-active",
         rect.bottom > 0 && rect.top < viewportHeight
       );
+
+      if (scene === signalStory) {
+        const storyDistance = Math.max(1, rect.height - viewportHeight);
+        const storyProgress = window.innerWidth <= 900
+          ? 1
+          : clamp(-rect.top / storyDistance);
+        updateSignalStory(storyProgress);
+      }
     });
   }
 
@@ -79,6 +136,7 @@
     scrollMotionBound = true;
     window.addEventListener("scroll", requestScrollUpdate, { passive: true });
     window.addEventListener("resize", requestScrollUpdate, { passive: true });
+    window.addEventListener("pageshow", requestScrollUpdate, { passive: true });
     window.visualViewport?.addEventListener("resize", requestScrollUpdate, {
       passive: true,
     });
@@ -89,6 +147,7 @@
     scrollMotionBound = false;
     window.removeEventListener("scroll", requestScrollUpdate);
     window.removeEventListener("resize", requestScrollUpdate);
+    window.removeEventListener("pageshow", requestScrollUpdate);
     window.visualViewport?.removeEventListener("resize", requestScrollUpdate);
 
     if (scrollFrame !== null) {
@@ -113,6 +172,7 @@
     updateScrollScenes();
     updateScrollPreference();
     reducedMotion.addEventListener("change", updateScrollPreference);
+    document.fonts?.ready.then(requestScrollUpdate);
   }
 
   if ("IntersectionObserver" in window) {
