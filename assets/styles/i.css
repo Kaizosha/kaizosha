@@ -2,13 +2,11 @@
   color-scheme: dark;
   --void: #000;
   --bone: #f1f1ef;
-  --ash: #8d8d89;
+  --ash: #83837f;
   --site-accent: #a84f00;
   --site-text: var(--bone);
   --site-faint: var(--ash);
   --mono-ui: "Courier New", Courier, "Liberation Mono", monospace;
-  --shift-x: 0px;
-  --shift-y: 0px;
 }
 
 * {
@@ -78,16 +76,11 @@ body {
   height: 100vh;
   height: 100svh;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 55% 46%, #090a0b 0, #020202 31%, #000 68%),
-    #000;
+  background: #000;
 }
 
-.i-scene__canvas,
-.i-scene__breath,
-.i-portrait,
-.i-scene__veil,
-.i-scene__scratches,
+.i-darkness,
+.i-character,
 .i-scene__grain,
 .i-scene__vignette {
   position: absolute;
@@ -97,101 +90,111 @@ body {
   pointer-events: none;
 }
 
-.i-scene__canvas {
+.i-darkness {
   z-index: 0;
-}
-
-.i-scene__breath {
-  z-index: 1;
-  inset: -16%;
-  width: 132%;
-  height: 132%;
+  inset: -8%;
+  width: 116%;
+  height: 116%;
   background:
-    radial-gradient(ellipse at 57% 48%, transparent 0 17%, rgba(27, 28, 29, 0.22) 30%, transparent 55%),
-    conic-gradient(from 150deg at 54% 49%, transparent, rgba(92, 93, 94, 0.06), transparent 18%, rgba(45, 46, 47, 0.08), transparent 46%);
-  filter: blur(26px);
-  opacity: 0.8;
-  animation: void-breathe 13s cubic-bezier(0.4, 0, 0.2, 1) infinite alternate;
+    radial-gradient(ellipse 19% 54% at 55% 54%, #070707 0, #030303 42%, #010101 68%, #000 100%),
+    #000;
+  transform-origin: 55% 54%;
+  animation: darkness-breathe 14s cubic-bezier(0.42, 0, 0.2, 1) infinite alternate;
 }
 
-.i-portrait {
+.i-darkness::before,
+.i-darkness::after {
+  content: "";
+  position: absolute;
+  width: 52%;
+  height: 96%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(20, 20, 20, 0.14), rgba(4, 4, 4, 0.04) 48%, transparent 74%);
+  filter: blur(4rem);
+  opacity: 0.44;
+}
+
+.i-darkness::before {
+  top: -28%;
+  left: -25%;
+  animation: black-drift-one 19s ease-in-out infinite alternate;
+}
+
+.i-darkness::after {
+  right: -31%;
+  bottom: -29%;
+  animation: black-drift-two 23s ease-in-out infinite alternate;
+}
+
+.i-character {
   z-index: 2;
-  display: grid;
-  place-items: center;
   overflow: hidden;
 }
 
-.i-portrait__frame {
-  width: 100%;
-  height: 100%;
-  transform: translate3d(var(--shift-x), var(--shift-y), 0) scale(1.025);
-  animation: portrait-drift 18s ease-in-out infinite alternate;
-  will-change: transform;
-}
-
-.i-portrait__image {
+.i-character__fallback,
+.i-character__canvas {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   display: block;
+}
+
+.i-character__fallback {
   object-fit: cover;
   object-position: 50% 50%;
-  opacity: 0.91;
-  filter: brightness(0.82) contrast(1.24) grayscale(1);
+  opacity: 0.9;
+  filter: grayscale(1) contrast(2.65) brightness(0.72);
   mix-blend-mode: screen;
-  -webkit-mask-image: radial-gradient(ellipse 82% 76% at 53% 50%, #000 0 58%, rgba(0, 0, 0, 0.78) 72%, transparent 100%);
-  mask-image: radial-gradient(ellipse 82% 76% at 53% 50%, #000 0 58%, rgba(0, 0, 0, 0.78) 72%, transparent 100%);
+  -webkit-mask-image:
+    radial-gradient(ellipse 23% 29% at 53% 37%, #000 0 61%, transparent 100%),
+    radial-gradient(ellipse 25% 44% at 51% 68%, #000 0 61%, transparent 100%),
+    radial-gradient(ellipse 20% 20% at 43% 42%, #000 0 58%, transparent 100%);
+  -webkit-mask-composite: source-over;
+  mask-image:
+    radial-gradient(ellipse 23% 29% at 53% 37%, #000 0 61%, transparent 100%),
+    radial-gradient(ellipse 25% 44% at 51% 68%, #000 0 61%, transparent 100%),
+    radial-gradient(ellipse 20% 20% at 43% 42%, #000 0 58%, transparent 100%);
+  mask-composite: add;
+  transform-origin: 53% 72%;
+  animation: fallback-sway 10s cubic-bezier(0.42, 0, 0.2, 1) infinite alternate;
+  transition: opacity 500ms ease;
 }
 
-.i-scene__veil {
-  z-index: 3;
-  inset: -20%;
-  width: 140%;
-  height: 140%;
-  background:
-    repeating-conic-gradient(
-      from 8deg at 55% 50%,
-      transparent 0 8deg,
-      rgba(0, 0, 0, 0.28) 9deg 16deg,
-      transparent 17deg 29deg
-    );
-  filter: blur(18px);
-  opacity: 0.55;
-  transform-origin: 55% 50%;
-  animation: veil-turn 42s linear infinite;
+.i-character__canvas {
+  opacity: 0;
+  filter: drop-shadow(0 0 1.8rem rgba(225, 225, 217, 0.045));
+  transition: opacity 600ms ease;
 }
 
-.i-scene__scratches {
-  z-index: 4;
-  background:
-    repeating-linear-gradient(103deg, transparent 0 11%, rgba(231, 231, 225, 0.025) 11.08%, transparent 11.16% 23%),
-    repeating-linear-gradient(78deg, transparent 0 17%, rgba(231, 231, 225, 0.018) 17.08%, transparent 17.17% 34%);
-  mix-blend-mode: screen;
-  opacity: 0.58;
-  transform: scale(1.15);
-  animation: scratches-wander 19s ease-in-out infinite alternate;
+.i-character.is-ready .i-character__fallback {
+  opacity: 0;
+}
+
+.i-character.is-ready .i-character__canvas {
+  opacity: 0.96;
 }
 
 .i-scene__grain {
-  z-index: 5;
-  inset: -12%;
-  width: 124%;
-  height: 124%;
+  z-index: 4;
+  inset: -10%;
+  width: 120%;
+  height: 120%;
   background-image:
-    repeating-radial-gradient(circle at 23% 37%, rgba(255, 255, 255, 0.2) 0 0.45px, transparent 0.7px 3.8px),
-    repeating-radial-gradient(circle at 74% 61%, rgba(255, 255, 255, 0.12) 0 0.35px, transparent 0.65px 4.4px);
-  background-size: 13px 11px, 17px 19px;
+    repeating-radial-gradient(circle at 24% 35%, rgba(255, 255, 255, 0.18) 0 0.42px, transparent 0.68px 4px),
+    repeating-radial-gradient(circle at 71% 62%, rgba(255, 255, 255, 0.1) 0 0.32px, transparent 0.62px 4.8px);
+  background-size: 15px 13px, 19px 21px;
   mix-blend-mode: soft-light;
-  opacity: 0.19;
-  animation: grain-jump 220ms steps(2, end) infinite;
+  opacity: 0.075;
+  animation: grain-jump 260ms steps(2, end) infinite;
 }
 
 .i-scene__vignette {
-  z-index: 6;
+  z-index: 5;
   background:
-    radial-gradient(ellipse 57% 70% at 55% 49%, transparent 0 40%, rgba(0, 0, 0, 0.35) 68%, #000 100%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 18%, transparent 76%, rgba(0, 0, 0, 0.72));
+    radial-gradient(ellipse 44% 68% at 54% 52%, transparent 0 48%, rgba(0, 0, 0, 0.42) 72%, #000 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.74), transparent 24%, transparent 72%, rgba(0, 0, 0, 0.88));
   box-shadow: inset 0 0 18vw 6vw #000;
-  animation: exposure-fall 11s steps(1, end) infinite;
 }
 
 .i-brand,
@@ -253,45 +256,48 @@ body {
   font-style: italic;
   font-weight: 400;
   line-height: 0.75;
-  opacity: 0.64;
-  animation: title-wake 9s ease-in-out infinite;
+  opacity: 0.5;
+  animation: title-wake 10s ease-in-out infinite;
 }
 
-@keyframes void-breathe {
+@keyframes darkness-breathe {
   0% {
-    opacity: 0.42;
-    transform: scale(0.9) rotate(-1.5deg);
+    transform: scale(0.94);
+    filter: brightness(0.68);
   }
   100% {
-    opacity: 0.9;
-    transform: scale(1.08) rotate(1.5deg);
+    transform: scale(1.08);
+    filter: brightness(1.08);
   }
 }
 
-@keyframes portrait-drift {
+@keyframes black-drift-one {
   0% {
-    transform: translate3d(calc(var(--shift-x) - 5px), calc(var(--shift-y) + 2px), 0) scale(1.025);
+    transform: translate3d(-4%, -2%, 0) scale(0.92);
+  }
+  100% {
+    transform: translate3d(26%, 14%, 0) scale(1.12);
+  }
+}
+
+@keyframes black-drift-two {
+  0% {
+    transform: translate3d(9%, 6%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(-26%, -16%, 0) scale(0.94);
+  }
+}
+
+@keyframes fallback-sway {
+  0% {
+    transform: translate3d(-0.25%, 0.45%, 0) scale(1.025) rotate(-0.28deg);
   }
   50% {
-    transform: translate3d(var(--shift-x), calc(var(--shift-y) - 4px), 0) scale(1.04);
+    transform: translate3d(0.15%, -0.5%, 0) scale(1.038) rotate(0.12deg);
   }
   100% {
-    transform: translate3d(calc(var(--shift-x) + 5px), calc(var(--shift-y) + 1px), 0) scale(1.03);
-  }
-}
-
-@keyframes veil-turn {
-  to {
-    transform: rotate(360deg) scale(1.05);
-  }
-}
-
-@keyframes scratches-wander {
-  0% {
-    transform: translate3d(-1.2%, -0.8%, 0) scale(1.15);
-  }
-  100% {
-    transform: translate3d(1.2%, 0.8%, 0) scale(1.19);
+    transform: translate3d(0.42%, 0.2%, 0) scale(1.03) rotate(0.32deg);
   }
 }
 
@@ -313,47 +319,27 @@ body {
   }
 }
 
-@keyframes exposure-fall {
-  0%,
-  57%,
-  100% {
-    opacity: 1;
-  }
-  58% {
-    opacity: 0.88;
-  }
-  59% {
-    opacity: 1;
-  }
-  81% {
-    opacity: 0.94;
-  }
-  82% {
-    opacity: 1;
-  }
-}
-
 @keyframes title-wake {
   0%,
   100% {
-    opacity: 0.42;
+    opacity: 0.32;
     transform: translateY(0);
   }
   50% {
-    opacity: 0.75;
+    opacity: 0.58;
     transform: translateY(-2px);
   }
 }
 
 @media (max-aspect-ratio: 4 / 5) {
-  .i-portrait__image {
-    object-position: 55% 50%;
+  .i-character__fallback {
+    object-position: 54% 50%;
   }
 
   .i-scene__vignette {
     background:
-      radial-gradient(ellipse 82% 63% at 56% 49%, transparent 0 36%, rgba(0, 0, 0, 0.35) 67%, #000 100%),
-      linear-gradient(180deg, rgba(0, 0, 0, 0.5), transparent 20%, transparent 75%, rgba(0, 0, 0, 0.78));
+      radial-gradient(ellipse 72% 58% at 54% 52%, transparent 0 44%, rgba(0, 0, 0, 0.42) 73%, #000 100%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.78), transparent 25%, transparent 70%, rgba(0, 0, 0, 0.9));
   }
 }
 
@@ -370,12 +356,11 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .i-scene__breath,
-  .i-portrait__frame,
-  .i-scene__veil,
-  .i-scene__scratches,
+  .i-darkness,
+  .i-darkness::before,
+  .i-darkness::after,
+  .i-character__fallback,
   .i-scene__grain,
-  .i-scene__vignette,
   .i-title,
   .i-brand,
   .i-brand .brand-lockup__copy {
@@ -383,11 +368,11 @@ body {
     transition-duration: 1ms !important;
   }
 
-  .i-portrait__frame {
+  .i-character__fallback {
     transform: none;
   }
 
   .i-scene__grain {
-    opacity: 0.1;
+    opacity: 0.04;
   }
 }

@@ -33,33 +33,29 @@
     <meta name="twitter:image:alt" content="A solitary girl surrounded by an immense black ink-like void">
     <meta name="twitter:site" content="@KaizoshaX">
     <link rel="stylesheet" href="/assets/styles/brand.css?v=20260716-brand">
-    <link rel="stylesheet" href="/assets/styles/i.css?v=20260716-brand-hover">
+    <link rel="stylesheet" href="/assets/styles/i.css?v=20260716-character-cutout">
 </head>
 <body>
     <a class="skip-link" href="#i-story">Enter the story</a>
 
     <main class="i-scene" id="i-story" data-i-scene>
-        <canvas class="i-scene__canvas" data-void-canvas aria-hidden="true"></canvas>
+        <div class="i-darkness" aria-hidden="true"></div>
 
-        <div class="i-scene__breath" aria-hidden="true"></div>
-
-        <figure class="i-portrait">
-            <div class="i-portrait__frame">
-                <img
-                    class="i-portrait__image"
-                    src="/assets/media/i/i-hero.png"
-                    width="1686"
-                    height="933"
-                    alt="A solitary girl in a black dress looking back from an immense ink-dark void"
-                    decoding="async"
-                    fetchpriority="high"
-                >
-            </div>
-            <figcaption class="u-screen-reader">The first image from <i>i</i>, a psychological horror story.</figcaption>
+        <figure class="i-character" data-character>
+            <img
+                class="i-character__fallback"
+                data-character-source
+                src="/assets/media/i/i-hero.png"
+                width="1686"
+                height="933"
+                alt="A solitary girl in a black dress looking back from the darkness"
+                decoding="async"
+                fetchpriority="high"
+            >
+            <canvas class="i-character__canvas" data-character-canvas aria-hidden="true"></canvas>
+            <figcaption class="u-screen-reader">The girl from <i>i</i>, isolated and moving alone in the dark.</figcaption>
         </figure>
 
-        <div class="i-scene__veil" aria-hidden="true"></div>
-        <div class="i-scene__scratches" aria-hidden="true"></div>
         <div class="i-scene__grain" aria-hidden="true"></div>
         <div class="i-scene__vignette" aria-hidden="true"></div>
 
@@ -87,6 +83,6 @@
         <p class="u-screen-reader">A psychological horror story by Kaizōsha.</p>
     </main>
 
-    <script src="/assets/scripts/i-void.js?v=20260716-void" defer></script>
+    <script src="/assets/scripts/i-character.js?v=20260716-character-cutout" defer></script>
 </body>
 </html>
