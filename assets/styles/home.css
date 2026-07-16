@@ -290,6 +290,11 @@ body.is-app-menu-dragging .app-menu {
   text-transform: uppercase;
 }
 
+a.app-list__item {
+  cursor: pointer;
+  text-decoration: none;
+}
+
 .app-list__name {
   min-width: 0;
   overflow: hidden;

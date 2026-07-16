@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f4f2ee" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+    <title>Sekai — The Whole World, Made Native</title>
+    <meta name="description" content="Sekai is a native SwiftUI optical-glass globe for every Apple platform, built by Kaizōsha.">
+    <meta name="author" content="Kaizōsha">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="icon" type="image/png" href="/icon.png">
+    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="canonical" href="https://kaizosha.org/sekai">
+    <meta property="og:title" content="Sekai — The Whole World, Made Native">
+    <meta property="og:description" content="A native SwiftUI optical-glass globe for every Apple platform.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kaizosha.org/sekai">
+    <meta property="og:site_name" content="Kaizōsha">
+    <meta property="og:image" content="https://kaizosha.org/assets/media/sekai/sekai-demo-ios.gif">
+    <meta property="og:image:width" content="320">
+    <meta property="og:image:height" content="695">
+    <meta property="og:image:alt" content="Sekai interactive optical-glass globe demo on iPhone">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sekai — The Whole World, Made Native">
+    <meta name="twitter:description" content="A native SwiftUI optical-glass globe for every Apple platform.">
+    <meta name="twitter:image" content="https://kaizosha.org/assets/media/sekai/sekai-demo-ios.gif">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareSourceCode",
+        "name": "Sekai",
+        "alternateName": "SekaiKit",
+        "description": "A native SwiftUI optical-glass globe for every Apple platform.",
+        "url": "https://kaizosha.org/sekai",
+        "codeRepository": "https://github.com/Kaizosha/Sekai",
+        "programmingLanguage": "Swift",
+        "license": "https://opensource.org/license/mit",
+        "author": {
+            "@type": "Organization",
+            "name": "Kaizōsha",
+            "url": "https://kaizosha.org/"
+        },
+        "operatingSystem": "iOS, iPadOS, macOS, tvOS, watchOS, visionOS"
+    }
+    </script>
+    <link rel="stylesheet" href="/assets/styles/sekai.css?v=20260715">
+</head>
+<body>
+    <header class="site-header">
+        <a class="wordmark" href="/" aria-label="Kaizōsha home">
+            <span class="wordmark__kanji" aria-hidden="true">改造社</span>
+            <span>Kaizōsha</span>
+        </a>
+        <a class="header-link" href="https://github.com/Kaizosha/Sekai" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main>
+        <section class="hero" aria-labelledby="sekai-title">
+            <div class="hero__copy">
+                <p class="eyebrow">Open-source Swift package · MIT</p>
+                <h1 id="sekai-title">Sekai</h1>
+                <p class="hero__statement">The whole world,<br>made native.</p>
+                <p class="hero__description">A source-aware optical-glass globe built in SwiftUI and Metal for every current Apple platform.</p>
+                <div class="hero__actions">
+                    <a class="button button--primary" href="https://github.com/Kaizosha/Sekai" target="_blank" rel="noreferrer">View on GitHub <span aria-hidden="true">↗</span></a>
+                    <a class="button button--quiet" href="#install">Add the package <span aria-hidden="true">↓</span></a>
+                </div>
+            </div>
+            <figure class="hero__visual">
+                <span class="hero__orbit hero__orbit--one" aria-hidden="true"></span>
+                <span class="hero__orbit hero__orbit--two" aria-hidden="true"></span>
+                <p class="hero__visual-label" aria-hidden="true">Native / Optical / Geographic</p>
+                <img src="/assets/media/sekai/sekai-demo-ios.gif" width="320" height="695" alt="Sekai interactive optical-glass globe demo on iPhone">
+                <figcaption>Live iOS demo · SekaiKit 1.0.0</figcaption>
+            </figure>
+        </section>
+
+        <section class="platform-strip" aria-label="Supported platforms">
+            <span>iOS</span><span>iPadOS</span><span>macOS</span><span>tvOS</span><span>watchOS</span><span>visionOS</span>
+        </section>
+
+        <section class="intro content-grid" aria-labelledby="native-heading">
+            <p class="section-index">01 / Native by design</p>
+            <div class="section-copy">
+                <h2 id="native-heading">One globe.<br>Zero web runtime.</h2>
+                <p>SekaiKit owns its shaders, geographic data, controls, interaction model, and resources. Host apps import one package—without JavaScript, WebView, WebGL, MapKit, network access, or location permission.</p>
+            </div>
+        </section>
+
+        <section class="feature-grid" aria-label="Sekai features">
+            <article>
+                <p class="feature-number">29,821</p>
+                <h3>Full-density points</h3>
+                <p>Every country, continent, and land source remains crisp at maximum density.</p>
+            </article>
+            <article>
+                <p class="feature-number">177</p>
+                <h3>Countries included</h3>
+                <p>Bundled, offline geographic data with particle and boundary rendering modes.</p>
+            </article>
+            <article>
+                <p class="feature-number">60 FPS</p>
+                <h3>Metal performance</h3>
+                <p>Particles, boundaries, markers, and routes share a single transparent render pass.</p>
+            </article>
+        </section>
+
+        <section class="capabilities content-grid" aria-labelledby="capabilities-heading">
+            <p class="section-index">02 / Built for SwiftUI</p>
+            <div class="section-copy">
+                <h2 id="capabilities-heading">A world you can shape.</h2>
+                <div class="capability-list">
+                    <p><span>01</span> Particles and geographic boundaries</p>
+                    <p><span>02</span> Markers and great-circle routes</p>
+                    <p><span>03</span> Drag, tilt, pinch, and auto-rotation</p>
+                    <p><span>04</span> Native Liquid Glass controls</p>
+                    <p><span>05</span> Light, dark, minimal, and neon themes</p>
+                    <p><span>06</span> SwiftUI content anchored to the globe</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="install" id="install" aria-labelledby="install-heading">
+            <div>
+                <p class="section-index">03 / Start building</p>
+                <h2 id="install-heading">Add SekaiKit.</h2>
+                <p>Requires Swift 6.2 and the version 26 SDKs or later.</p>
+            </div>
+            <div class="code-card">
+                <div class="code-card__top"><span>Package.swift</span><span>Swift 6.2+</span></div>
+                <pre><code><span class="code-dim">dependencies: [</span>
+    .package(
+        url: <span class="code-string">"https://github.com/Kaizosha/Sekai.git"</span>,
+        from: <span class="code-string">"1.0.0"</span>
+    )
+<span class="code-dim">]</span></code></pre>
+            </div>
+        </section>
+
+        <section class="closing">
+            <p class="eyebrow">Made by Kaizōsha</p>
+            <h2>Bring the world<br>into your app.</h2>
+            <a class="button button--primary" href="https://github.com/Kaizosha/Sekai" target="_blank" rel="noreferrer">Explore Sekai on GitHub <span aria-hidden="true">↗</span></a>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <a href="/">Kaizōsha</a>
+        <p>FROM ME COMES THE FUTURE</p>
+        <div><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/contact.html">Contact</a></div>
+    </footer>
+</body>
+</html>
