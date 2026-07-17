@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Kaizosha</title>
+  <desc id="description">The Kaizosha mark with the phrase From me comes the future.</desc>
+  <rect width="1200" height="630" fill="#f7f7f7"/>
+  <g fill="#a84f00">
+    <rect x="476" y="154" width="64" height="190"/>
+    <rect x="568" y="154" width="64" height="190"/>
+    <rect x="660" y="154" width="64" height="190"/>
+  </g>
+  <g fill="#111111" font-family="Courier New, Courier, monospace" font-size="40" font-weight="700" text-anchor="middle">
+    <text x="508" y="394">&#x6539;</text>
+    <text x="600" y="394">&#x9020;</text>
+    <text x="692" y="394">&#x793E;</text>
+  </g>
+  <text x="600" y="494" fill="#111111" font-family="Courier New, Courier, monospace" font-size="24" font-weight="700" letter-spacing="3.4" text-anchor="middle">FROM ME COMES THE FUTURE</text>
+</svg>
