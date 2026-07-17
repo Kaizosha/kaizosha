@@ -442,16 +442,14 @@ button:focus-visible {
 .player-visual__orbit--two { transform: rotate(-38deg) scaleY(0.17); }
 
 .player-demo {
-  min-height: 0;
+  min-height: 9.3rem;
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 0.85rem;
-  padding: 1.25rem 1.5rem;
+  grid-template-columns: 1fr auto;
+  gap: 0.9rem 1rem;
   border-top: 1px solid var(--site-rule);
   background: color-mix(in srgb, var(--site-bg) 94%, transparent);
 }
 
-.player-demo__controls { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
 .player-demo__modes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.4rem; }
 .player-demo__modes button, .player-demo__pause { min-height: 2.75rem; border: 1px solid var(--site-rule); background: transparent; color: var(--site-dim); font: inherit; cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase; transition: border-color 180ms ease, background 180ms ease, color 180ms ease; }
 .player-demo__modes button { padding: 0.65rem 0.7rem; text-align: left; }
@@ -461,7 +459,7 @@ button:focus-visible {
 .player-demo__pause { min-width: 8.8rem; display: flex; align-items: center; justify-content: center; gap: 0.65rem; padding: 0.65rem 0.8rem; }
 .player-demo__pause i { width: 0.5rem; height: 0.6rem; border-right: 2px solid currentColor; border-left: 2px solid currentColor; }
 .player-demo__pause[aria-pressed="true"] i { width: 0; height: 0; border: 0; border-top: 0.34rem solid transparent; border-bottom: 0.34rem solid transparent; border-left: 0.55rem solid currentColor; }
-.player-demo__description { max-width: 44rem; color: var(--site-dim); font-size: 0.62rem; line-height: 1.65; text-transform: none; }
+.player-demo__description { grid-column: 1 / -1; max-width: 44rem; color: var(--site-dim); font-size: 0.62rem; line-height: 1.65; text-transform: none; }
 .player-visual.is-paused * { animation-play-state: paused !important; }
 html:not(.motion-ready) .player-demo__modes,
 html:not(.motion-ready) .player-demo__pause { display: none; }
@@ -627,10 +625,10 @@ html:not(.motion-ready) .player-demo__pause { display: none; }
 .closing__signal.is-in-view span:nth-child(2) { animation: closing-orbit-two 16s ease-in-out infinite; }
 .closing__signal.is-in-view i { animation: orbit-turn 22s linear infinite; }
 
-.site-footer { min-height: 9rem; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 2rem; padding: clamp(2.5rem, 4vw, 4rem) clamp(1.25rem, 6vw, 7rem); border-top: 1px solid var(--site-rule); background: color-mix(in srgb, var(--site-bg) 94%, var(--site-text)); color: var(--site-dim); font-family: var(--mono-ui); font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase; }
-.site-footer__quote { color: var(--site-text); font-size: 0.72rem; font-weight: 600; }
-.site-footer__links { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 0.75rem; }
-.site-footer__links a { color: var(--site-dim); text-decoration: none; transition: color 150ms ease; }
+.site-footer { padding: 1.5rem 1rem; color: var(--site-dim); font-family: var(--mono-ui); font-size: 0.75rem; text-align: center; }
+.site-footer__quote { margin-bottom: 0.75rem; color: var(--site-faint); }
+.site-footer__links { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.8rem; }
+.site-footer__links a { color: var(--site-dim); text-decoration: none; text-transform: uppercase; transition: color 150ms ease; }
 .site-footer__links a:hover, .site-footer__links a:focus-visible { color: var(--site-accent); }
 .site-footer__links span { color: var(--site-faint); }
 
@@ -824,12 +822,9 @@ html:not(.motion-ready) .player-demo__pause { display: none; }
   .privacy__diagram { min-height: 25rem; padding: 2rem 1.25rem; }
   .privacy__device { width: 5rem; }
   .privacy__output { width: 6.4rem; min-height: 6.4rem; }
-  .site-footer { min-height: 0; grid-template-columns: 1fr; align-items: start; gap: 1.25rem; padding: 2.5rem 1.25rem; }
-  .site-footer__links { justify-content: flex-start; }
 }
 
 @media (max-width: 480px) {
-  .player-demo__controls { display: grid; grid-template-columns: 1fr; }
   .player-demo__modes { grid-template-columns: 1fr; }
   .player-demo__modes button { text-align: center; }
   .privacy__diagram { min-height: 22rem; padding: 1.5rem 0.75rem; }

@@ -391,32 +391,24 @@ a:focus-visible {
 }
 
 .creator-footer {
-  min-height: 9rem;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: 2rem;
-  padding: clamp(2.5rem, 4vw, 4rem) clamp(1.25rem, 6vw, 7rem);
-  border-top: 1px solid var(--site-rule);
-  background: color-mix(in srgb, var(--site-panel) 42%, var(--site-bg));
+  padding: 2rem 1.25rem;
   color: var(--site-dim);
-  font-size: 0.64rem;
-  letter-spacing: 0.08em;
+  font-size: 0.65rem;
+  text-align: center;
   text-transform: uppercase;
 }
 
 .creator-footer p {
-  color: var(--site-text);
-  font-size: 0.72rem;
-  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--site-faint);
 }
 
 .creator-footer nav {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-end;
-  gap: 0.75rem;
+  justify-content: center;
+  gap: 0.8rem;
 }
 
 .creator-footer a {
@@ -536,18 +528,6 @@ a:focus-visible {
 
   .work-list p {
     grid-column: 2 / -1;
-  }
-
-  .creator-footer {
-    min-height: 0;
-    grid-template-columns: 1fr;
-    align-items: start;
-    gap: 1.25rem;
-    padding: 2.5rem 1.25rem;
-  }
-
-  .creator-footer nav {
-    justify-content: flex-start;
   }
 }
 
