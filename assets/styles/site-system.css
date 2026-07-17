@@ -30,6 +30,7 @@
 body[data-page="sekai"] { --page-signal: var(--sekai-signal); }
 body[data-page="together"] { --page-signal: var(--together-signal); }
 body[data-page="tlpinch"] { --page-signal: var(--pinch-signal); }
+body[data-page="hush"] { --page-signal: var(--hush-signal); }
 
 body[data-page-family] {
   min-width: 0;
