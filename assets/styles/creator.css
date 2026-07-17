@@ -23,6 +23,13 @@ html {
   -webkit-tap-highlight-color: transparent;
 }
 
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
 body {
   min-width: 0;
   background: var(--site-bg);

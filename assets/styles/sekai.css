@@ -363,6 +363,9 @@ a:focus-visible {
   .platforms, .native-section, .capabilities, .install { padding-right: 1.25rem; padding-left: 1.25rem; }
   .section-header h2, .install h2, .closing h2 { font-size: clamp(2.7rem, 14vw, 4.3rem); }
   .capability-list p { grid-template-columns: 2.6rem 1fr; }
+  .code-card { max-width: 100%; overflow: hidden; }
+  .code-card pre { overflow-x: hidden; }
+  .code-card code { display: block; white-space: pre-wrap; overflow-wrap: anywhere; }
 }
 
 @media (prefers-reduced-motion: reduce) {

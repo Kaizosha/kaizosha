@@ -354,10 +354,10 @@ a.app-list__item:focus-visible {
   }
 
   .app-menu__content {
-    min-height: 34rem;
-    flex: none;
-    padding-top: 5.5rem;
-    padding-bottom: 7rem;
+    min-height: 0;
+    flex: 1 0 auto;
+    padding-top: 4.5rem;
+    padding-bottom: 1.25rem;
     touch-action: pan-y;
   }
 
