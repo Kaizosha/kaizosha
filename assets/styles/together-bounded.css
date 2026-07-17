@@ -757,6 +757,7 @@ html:not(.motion-ready) .player-demo__pause { display: none; }
 }
 
 @media (max-width: 1500px) {
+  .hero h1 { font-size: 6rem; white-space: nowrap; }
   .translation-modes__list article { grid-template-columns: minmax(6rem, 7rem) minmax(0, 1fr); }
   .translation-modes__list article > p:last-child { grid-column: 2; }
   .mode-graphic { grid-column: 1; grid-row: 2 / span 2; width: 7rem; }
@@ -769,6 +770,7 @@ html:not(.motion-ready) .player-demo__pause { display: none; }
 }
 
 @media (max-width: 1100px) {
+  .hero h1 { font-size: clamp(4rem, 8.8vw, 9rem); }
   .hero { grid-template-columns: 1fr; }
   .hero__copy { min-height: 47rem; padding-right: 1.25rem; padding-left: 1.25rem; }
   .player-visual { min-height: 48rem; border-top: 1px solid var(--site-rule); border-left: 0; }

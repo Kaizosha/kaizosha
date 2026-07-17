@@ -109,16 +109,6 @@ button {
   font-size: 13.5px;
   line-height: 1.65;
   letter-spacing: 0;
-  animation: fade-in 360ms ease-out both;
-}
-
-@keyframes fade-in {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
 .page-grid {
@@ -484,6 +474,7 @@ button.entry-head {
 
   .mobile-doc-brand {
     width: fit-content;
+    display: grid;
     justify-content: center;
     margin: 0 auto 2rem;
     text-align: center;

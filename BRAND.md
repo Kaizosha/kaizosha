@@ -1,5 +1,8 @@
 # Kaizōsha Brand System
 
+For page structure, typography, spacing, navigation, controls, responsive
+behavior, and accessibility, see `DESIGN_SYSTEM.md`.
+
 Use only the lockups below. Their structure and sizing live in
 `assets/styles/brand.css`; page styles may set color variables, but should not
 redefine the mark, wordmark, spacing, or typography.

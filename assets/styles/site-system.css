@@ -1,0 +1,178 @@
+/*
+ * Kaizosha site system
+ * Loaded after page styles to keep shared shell and accessibility rules stable.
+ * Product artwork and page-specific composition remain in their own files.
+ */
+
+:root {
+  --ks-font-mono: var(
+    --mono,
+    "Courier New",
+    Courier,
+    "Liberation Mono",
+    monospace
+  );
+  --ks-font-ui: var(--mono-ui, var(--ks-font-mono));
+  --ks-shell-edge: clamp(1rem, 2.5vw, 1.5rem);
+  --ks-section-edge: clamp(1.25rem, 6vw, 7rem);
+  --ks-header-height: 4.5rem;
+  --ks-reading-width: 76ch;
+  --ks-control-height: 2.75rem;
+  --ks-footer-height: 7.5rem;
+  --ks-rule: var(--site-rule, var(--rule, #dedede));
+  --ks-text: var(--site-text, var(--text-bright, #111));
+  --ks-muted: var(--site-dim, var(--text-dim, #626262));
+  --ks-faint: var(--site-faint, var(--text-faint, #6f6f6f));
+  --ks-surface: var(--site-bg, var(--bg, #f7f7f7));
+  --ks-focus: var(--page-signal, var(--site-accent, var(--accent, #a84f00)));
+}
+
+body[data-page="sekai"] { --page-signal: var(--sekai-signal); }
+body[data-page="together"] { --page-signal: var(--together-signal); }
+body[data-page="tlpinch"] { --page-signal: var(--pinch-signal); }
+
+body[data-page-family] {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+body[data-page-family] :where(main, section, article, header, footer, nav, div) {
+  min-width: 0;
+}
+
+body[data-page-family] :where(img, picture, video, canvas, svg) {
+  max-width: 100%;
+}
+
+body[data-page-family]:not([data-page-family="immersive"])
+  :where(p, li) {
+  overflow-wrap: break-word;
+}
+
+body[data-page-family]:not([data-page-family="immersive"])
+  :where(h1, h2, h3) {
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+body[data-page-family]:not([data-page-family="immersive"])
+  :where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--ks-focus);
+  outline-offset: 4px;
+}
+
+body[data-page-family="product"] .site-header {
+  min-height: var(--ks-header-height);
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.5rem var(--ks-shell-edge) 1rem;
+}
+
+body[data-page-family="product"] .site-header .site-brand {
+  flex: 0 1 auto;
+}
+
+body[data-page-family="product"] .site-nav {
+  min-width: 0;
+  justify-content: flex-end;
+  padding-top: 0.25rem;
+}
+
+body[data-page-family="product"] .site-nav :where(a, span) {
+  white-space: nowrap;
+}
+
+body[data-page-family="product"] :where(button, [role="button"]) {
+  min-height: var(--ks-control-height);
+}
+
+body[data-page-family="product"] .site-footer,
+body[data-page-family="identity"] .creator-footer {
+  min-height: var(--ks-footer-height);
+  display: grid;
+  place-content: center;
+  gap: 0.75rem;
+  padding: 2rem var(--ks-shell-edge);
+  border-top: 1px solid var(--ks-rule);
+  color: var(--ks-muted);
+  font-family: var(--ks-font-ui);
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+body[data-page-family="product"] .site-footer__quote,
+body[data-page-family="identity"] .creator-footer > p {
+  margin: 0;
+  color: var(--ks-faint);
+}
+
+body[data-page-family="product"] .site-footer__links,
+body[data-page-family="identity"] .creator-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+body[data-page-family="product"] .site-footer__links a,
+body[data-page-family="identity"] .creator-footer a {
+  color: var(--ks-muted);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+body[data-page-family="product"] .site-footer__links a:hover,
+body[data-page-family="product"] .site-footer__links a:focus-visible,
+body[data-page-family="identity"] .creator-footer a:hover,
+body[data-page-family="identity"] .creator-footer a:focus-visible {
+  color: var(--ks-focus);
+}
+
+body[data-page-family="product"] .site-footer__links span,
+body[data-page-family="identity"] .creator-footer nav span {
+  color: var(--ks-faint);
+}
+
+body[data-page-family="document"] .main {
+  width: 100%;
+  max-width: var(--ks-reading-width);
+}
+
+body[data-page-family="document"] .section-num,
+body[data-page-family="document"] .toc-num,
+body[data-page-family="product"] :where(.section-label span, .eyebrow span) {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --ks-header-height: 4rem;
+    --ks-footer-height: 6.5rem;
+  }
+
+  body[data-page-family="product"] .site-header {
+    align-items: center;
+    padding: 1rem;
+  }
+
+  body[data-page-family="product"] .site-nav {
+    padding-top: 0;
+  }
+
+  body[data-page-family="product"] .site-footer,
+  body[data-page-family="identity"] .creator-footer {
+    padding: 1.75rem 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-page-family] *,
+  body[data-page-family] *::before,
+  body[data-page-family] *::after {
+    scroll-behavior: auto !important;
+  }
+}
