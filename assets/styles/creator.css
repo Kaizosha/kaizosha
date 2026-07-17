@@ -355,14 +355,34 @@ a:focus-visible {
   text-decoration: none;
 }
 
-.work-list a > span {
+.work-index {
   color: var(--site-faint);
   font-size: 0.58rem;
 }
 
-.work-list strong {
+.work-name {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+}
+
+.work-name strong {
   font-size: clamp(1.5rem, 3vw, 2.8rem);
   font-weight: 500;
+  text-transform: uppercase;
+}
+
+.work-name small {
+  padding: 0.28rem 0.42rem;
+  border: 1px solid var(--site-rule);
+  color: var(--site-faint);
+  font-family: var(--mono-ui);
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1;
   text-transform: uppercase;
 }
 
@@ -380,8 +400,14 @@ a:focus-visible {
   transition: transform 160ms ease;
 }
 
-.work-list a:hover strong,
-.work-list a:focus-visible strong {
+.work-list a:hover .work-name strong,
+.work-list a:focus-visible .work-name strong {
+  color: var(--site-accent);
+}
+
+.work-list a:hover .work-name small,
+.work-list a:focus-visible .work-name small {
+  border-color: var(--site-accent);
   color: var(--site-accent);
 }
 
@@ -528,6 +554,12 @@ a:focus-visible {
 
   .work-list p {
     grid-column: 2 / -1;
+    grid-row: 2;
+  }
+
+  .work-list i {
+    grid-column: 3;
+    grid-row: 1;
   }
 }
 
