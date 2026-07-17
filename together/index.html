@@ -59,7 +59,7 @@
     }
     </script>
     <link rel="stylesheet" href="/assets/styles/brand.css?v=20260716-brand">
-    <link rel="stylesheet" href="/assets/styles/together-bounded.css?v=20260716-brand">
+    <link rel="stylesheet" href="/assets/styles/together-bounded.css?v=20260717-ui-2">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -146,12 +146,14 @@
                     <span class="player-visual__orbit player-visual__orbit--two"></span>
                 </div>
                 <figcaption class="player-demo">
-                    <div class="player-demo__modes" role="group" aria-label="Explore how Together works">
-                        <button type="button" data-demo-button="transcribe" data-demo-kicker="02 / Transcribe" data-demo-status="Listening / On device" data-demo-description="Together extracts speech and turns it into timed captions on your device." aria-pressed="true"><span>01</span> Transcribe</button>
-                        <button type="button" data-demo-button="translate" data-demo-kicker="03 / Translate" data-demo-status="High fidelity / Active" data-demo-description="Choose Low Latency translation or more natural, context-aware wording with Apple Intelligence." aria-pressed="false"><span>02</span> Translate</button>
-                        <button type="button" data-demo-button="export" data-demo-kicker="04 / Export" data-demo-status="Three formats / Ready" data-demo-description="Export original, translated, or bilingual captions as VTT, SRT, or plain text." aria-pressed="false"><span>03</span> Export</button>
+                    <div class="player-demo__controls">
+                        <div class="player-demo__modes" role="group" aria-label="Explore how Together works">
+                            <button type="button" data-demo-button="transcribe" data-demo-kicker="02 / Transcribe" data-demo-status="Listening / On device" data-demo-description="Together extracts speech and turns it into timed captions on your device." aria-pressed="true"><span>01</span> Transcribe</button>
+                            <button type="button" data-demo-button="translate" data-demo-kicker="03 / Translate" data-demo-status="High fidelity / Active" data-demo-description="Choose Low Latency translation or more natural, context-aware wording with Apple Intelligence." aria-pressed="false"><span>02</span> Translate</button>
+                            <button type="button" data-demo-button="export" data-demo-kicker="04 / Export" data-demo-status="Three formats / Ready" data-demo-description="Export original, translated, or bilingual captions as VTT, SRT, or plain text." aria-pressed="false"><span>03</span> Export</button>
+                        </div>
+                        <button class="player-demo__pause" type="button" data-demo-toggle aria-pressed="false"><i aria-hidden="true"></i><span>Pause motion</span></button>
                     </div>
-                    <button class="player-demo__pause" type="button" data-demo-toggle aria-pressed="false"><i aria-hidden="true"></i><span>Pause motion</span></button>
                     <p class="player-demo__description" data-demo-description-output>Together extracts speech and turns it into timed captions on your device.</p>
                     <p class="u-screen-reader" aria-live="polite" data-demo-live></p>
                 </figcaption>

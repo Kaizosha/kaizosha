@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="light dark">
-    <meta name="theme-color" content="#f3f3ee" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#f5f5f2" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#08090b" media="(prefers-color-scheme: dark)">
     <title>TL;Pinch — See Less. Know More.</title>
     <meta name="description" content="TL;Pinch summarizes webpages and explains highlighted text in Safari, powered on device by Apple Intelligence.">
@@ -60,7 +60,7 @@
     }
     </script>
     <link rel="stylesheet" href="/assets/styles/brand.css?v=20260716-brand">
-    <link rel="stylesheet" href="/assets/styles/tlpinch-pinch.css?v=20260716-brand">
+    <link rel="stylesheet" href="/assets/styles/tlpinch-pinch.css?v=20260717-ui-4">
 </head>
 <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -93,7 +93,7 @@
                 <p class="hero__description">Summarize long pages or explain highlighted text with Apple Intelligence—right where you read.</p>
                 <div class="hero__actions">
                     <a class="text-link" href="#gesture"><span>Try the gesture</span><span aria-hidden="true">↓</span></a>
-                    <a class="text-link" href="#platforms"><span>Safari / iPhone + iPad + Mac</span><span aria-hidden="true">↘</span></a>
+                    <a class="text-link" href="#platforms"><span>iOS + iPadOS + macOS</span><span aria-hidden="true">↘</span></a>
                 </div>
                 <dl class="hero__facts">
                     <div><dt>Input</dt><dd>Page / selection</dd></div>
@@ -169,11 +169,13 @@
                 </div>
 
                 <figcaption class="reader-demo">
-                    <div class="reader-demo__modes" role="group" aria-label="Explore TL;Pinch modes">
-                        <button type="button" data-demo-button="summary" data-demo-kicker="02 / Illustrative demo" data-demo-status="Whole page / Summary" data-demo-description="Illustrative example: TL;Pinch turns The shape of attention into the overview Attention follows structure and three supporting ideas." aria-pressed="true"><span>01</span> Summarize page</button>
-                        <button type="button" data-demo-button="explain" data-demo-kicker="02 / Illustrative demo" data-demo-status="Selected text / Explanation" data-demo-description="Illustrative example: after highlighting When every detail asks to be noticed, TL;Pinch explains that equal emphasis leaves no clear starting point." aria-pressed="false"><span>02</span> Explain selection</button>
+                    <div class="reader-demo__controls">
+                        <div class="reader-demo__modes" role="group" aria-label="Explore TL;Pinch modes">
+                            <button type="button" data-demo-button="summary" data-demo-kicker="02 / Illustrative demo" data-demo-status="Whole page / Summary" data-demo-description="Illustrative example: TL;Pinch turns The shape of attention into the overview Attention follows structure and three supporting ideas." aria-pressed="true"><span>01</span> Summarize page</button>
+                            <button type="button" data-demo-button="explain" data-demo-kicker="02 / Illustrative demo" data-demo-status="Selected text / Explanation" data-demo-description="Illustrative example: after highlighting When every detail asks to be noticed, TL;Pinch explains that equal emphasis leaves no clear starting point." aria-pressed="false"><span>02</span> Explain selection</button>
+                        </div>
+                        <button class="reader-demo__pause" type="button" data-demo-toggle aria-pressed="false"><i aria-hidden="true"></i><span>Pause motion</span></button>
                     </div>
-                    <button class="reader-demo__pause" type="button" data-demo-toggle aria-pressed="false"><i aria-hidden="true"></i><span>Pause motion</span></button>
                     <p class="reader-demo__description" id="tlpinch-demo-description" data-demo-description-output>Illustrative example: TL;Pinch turns The shape of attention into the overview Attention follows structure and three supporting ideas.</p>
                     <p class="u-screen-reader" aria-live="polite" data-demo-live></p>
                 </figcaption>
