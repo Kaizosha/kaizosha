@@ -719,24 +719,28 @@ button:focus-visible {
 }
 
 .reader-demo {
-  align-items: flex-end !important;
-  gap: 1.2rem;
+  min-height: 9.3rem;
+  display: grid !important;
+  grid-template-columns: 1fr auto;
+  align-items: stretch !important;
+  gap: 0.9rem 1rem;
   border-top: 1px solid var(--site-rule);
-  background: color-mix(in srgb, var(--site-bg) 88%, transparent);
+  background: color-mix(in srgb, var(--site-bg) 94%, transparent);
 }
 
 .reader-demo__modes {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
 }
 
 .reader-demo__modes button,
 .reader-demo__pause {
   min-height: 2.75rem;
   padding: 0.75rem 0.85rem;
-  border: 1px solid var(--site-rule-strong);
+  border: 1px solid var(--site-rule);
   background: transparent;
+  color: var(--site-dim);
   cursor: pointer;
   font-size: 0.52rem;
   font-weight: 600;
@@ -752,12 +756,12 @@ button:focus-visible {
 
 .reader-demo__modes button[aria-pressed="true"] {
   border-color: var(--pinch-signal);
-  background: var(--pinch-signal);
-  color: white;
+  background: color-mix(in srgb, var(--pinch-signal) 8%, transparent);
+  color: var(--site-text);
 }
 
 .reader-demo__modes button[aria-pressed="true"] span {
-  color: inherit;
+  color: var(--pinch-signal);
 }
 
 .reader-demo__pause {
@@ -793,10 +797,10 @@ button:focus-visible {
 }
 
 .reader-demo__description {
-  max-width: 27rem;
-  margin-left: auto;
+  grid-column: 1 / -1;
+  max-width: 44rem;
   color: var(--site-dim);
-  font-size: 0.52rem;
+  font-size: 0.62rem;
   font-weight: 500;
   letter-spacing: 0;
   line-height: 1.6;
@@ -1676,32 +1680,40 @@ button:focus-visible {
 }
 
 .site-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 1.2rem 1.25rem;
-  border-top: 1px solid var(--site-rule);
-  color: var(--site-faint);
+  padding: 1.5rem 1rem;
+  color: var(--site-dim);
   font-family: var(--mono-ui);
-  font-size: 0.55rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.site-footer__quote {
+  margin-bottom: 0.75rem;
+  color: var(--site-faint);
 }
 
 .site-footer__links {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.5rem;
+  justify-content: center;
+  gap: 0.8rem;
 }
 
 .site-footer__links a {
+  color: var(--site-dim);
   text-decoration: none;
+  text-transform: uppercase;
+  transition: color 150ms ease;
 }
 
 .site-footer__links a:hover,
 .site-footer__links a:focus-visible {
   color: var(--pinch-signal);
+}
+
+.site-footer__links span {
+  color: var(--site-faint);
 }
 
 .motion-ready [data-motion] {
@@ -1783,14 +1795,18 @@ button:focus-visible {
   }
 
   .reader-demo {
+    grid-template-columns: 1fr;
     align-items: stretch !important;
-    flex-wrap: wrap;
   }
 
   .reader-demo__description {
+    grid-column: 1;
     width: 100%;
     max-width: none;
-    margin-left: 0;
+  }
+
+  .reader-demo__pause {
+    width: 100%;
   }
 
   .gesture-list li {
@@ -2062,8 +2078,6 @@ button:focus-visible {
   }
 
   .reader-demo__modes {
-    width: 100%;
-    display: grid;
     grid-template-columns: 1fr;
   }
 
@@ -2208,10 +2222,6 @@ button:focus-visible {
   .closing::before { left: 10%; }
   .closing::after { right: 10%; }
 
-  .site-footer {
-    align-items: flex-start;
-    flex-direction: column;
-  }
 }
 
 @keyframes route-travel-vertical {
