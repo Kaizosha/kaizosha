@@ -172,7 +172,8 @@ body.is-app-menu-dragging .app-menu {
 }
 
 .app-list {
-  width: 100%;
+  width: fit-content;
+  max-width: 100%;
   margin: 0;
   list-style: none;
   font-family: var(--mono);
@@ -184,13 +185,8 @@ body.is-app-menu-dragging .app-menu {
 }
 
 .app-list__row {
-  border-bottom: 1px solid var(--site-rule);
   font-size: 2.65rem;
   line-height: 1.15;
-}
-
-.app-list__row:first-child {
-  border-top: 1px solid var(--site-rule);
 }
 
 .app-list__item {
