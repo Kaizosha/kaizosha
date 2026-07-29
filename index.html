@@ -1,184 +1,123 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5f3ee">
-  <title>Kaizōsha — Independent Software Studio</title>
-  <meta name="description" content="Kaizōsha is an independent software studio by Kaizō Konpaku, making thoughtful tools for Apple platforms and the web.">
-  <meta name="author" content="Kaizō Konpaku">
-  <meta name="creator" content="Kaizō Konpaku">
-  <meta name="publisher" content="Kaizōsha">
-  <meta name="robots" content="index, follow, max-image-preview:large">
-  <link rel="icon" type="image/png" href="/icon.png">
-  <link rel="apple-touch-icon" href="/icon.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="canonical" href="https://kaizosha.org/">
-  <meta property="og:title" content="Kaizōsha — Independent Software Studio">
-  <meta property="og:description" content="Thoughtful tools for Apple platforms and the web.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://kaizosha.org/">
-  <meta property="og:site_name" content="Kaizōsha">
-  <meta property="og:image" content="https://kaizosha.org/assets/media/social/kaizosha-social-card-2026.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Kaizōsha — Independent Software Studio">
-  <meta name="twitter:description" content="Thoughtful tools for Apple platforms and the web.">
-  <meta name="twitter:image" content="https://kaizosha.org/assets/media/social/kaizosha-social-card-2026.png">
-  <meta name="twitter:site" content="@KaizoshaX">
-  <link rel="sitemap" type="application/xml" href="/sitemap.xml">
-  <link rel="author" href="/creator.html">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
+    <title>Kaizōsha — Independent Software Studio</title>
+    <meta name="description" content="Kaizōsha is an independent software studio by Kaizō Konpaku, building Apple-platform apps, on-device AI, translation tools, and open-source software.">
+    <meta name="author" content="Kaizō Konpaku">
+    <meta name="creator" content="Kaizō Konpaku">
+    <meta name="publisher" content="Kaizōsha">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="application-name" content="Kaizōsha">
+    <link rel="icon" type="image/png" sizes="1024x1024" href="https://kaizosha.org/icon.png">
+    <link rel="shortcut icon" type="image/png" href="https://kaizosha.org/icon.png">
+    <link rel="apple-touch-icon" href="https://kaizosha.org/icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="canonical" href="https://kaizosha.org/">
+    <meta property="og:title" content="Kaizōsha — Independent Software Studio">
+    <meta property="og:description" content="Independent software studio by Kaizō Konpaku, building Apple-platform apps and open-source software.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://kaizosha.org/">
+    <meta property="og:site_name" content="Kaizōsha">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:image" content="https://kaizosha.org/assets/media/social/kaizosha-social-card-2026.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Kaizōsha independent software studio">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kaizōsha — Independent Software Studio">
+    <meta name="twitter:description" content="Independent software studio by Kaizō Konpaku, building Apple-platform apps and open-source software.">
+    <meta name="twitter:image" content="https://kaizosha.org/assets/media/social/kaizosha-social-card-2026.png">
+    <meta name="twitter:site" content="@KaizoshaX">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml">
+    <link rel="author" href="https://kaizosha.org/creator.html">
+    <link rel="license" href="/terms.html">
+    <script type="application/ld+json">
       {
-        "@type": "Organization",
-        "@id": "https://kaizosha.org/#organization",
-        "name": "Kaizōsha",
-        "legalName": "Kaizosha Private Limited",
-        "alternateName": ["改造社", "Kaizosha"],
-        "url": "https://kaizosha.org/",
-        "logo": "https://kaizosha.org/icon.png",
-        "email": "contact@kaizosha.org",
-        "sameAs": ["https://github.com/Kaizosha", "https://x.com/KaizoshaX"],
-        "founder": {"@id": "https://kaizosha.org/creator.html#person"}
-      },
-      {
-        "@type": "Person",
-        "@id": "https://kaizosha.org/creator.html#person",
-        "name": "Kaizō Konpaku",
-        "alternateName": ["Kon", "KaizoKonpaku"],
-        "url": "https://kaizosha.org/creator.html",
-        "sameAs": ["https://github.com/KaizoKonpaku"],
-        "jobTitle": "Software Engineer"
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://kaizosha.org/#website",
-        "url": "https://kaizosha.org/",
-        "name": "Kaizōsha",
-        "publisher": {"@id": "https://kaizosha.org/#organization"},
-        "inLanguage": "en"
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://kaizosha.org/#organization",
+            "name": "Kaizōsha",
+            "legalName": "Kaizosha Private Limited",
+            "alternateName": ["改造社", "Kaizosha"],
+            "url": "https://kaizosha.org/",
+            "logo": "https://kaizosha.org/icon.png",
+            "email": "contact@kaizosha.org",
+            "sameAs": ["https://github.com/Kaizosha", "https://x.com/KaizoshaX"],
+            "founder": { "@id": "https://kaizosha.org/creator.html#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://kaizosha.org/creator.html#person",
+            "name": "Kaizō Konpaku",
+            "alternateName": ["Kon", "Kaizo Konpaku", "KaizoKonpaku"],
+            "url": "https://kaizosha.org/creator.html",
+            "sameAs": ["https://github.com/KaizoKonpaku"],
+            "jobTitle": "Software Engineer",
+            "worksFor": { "@id": "https://kaizosha.org/#organization" }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://kaizosha.org/#website",
+            "url": "https://kaizosha.org/",
+            "name": "Kaizōsha",
+            "publisher": { "@id": "https://kaizosha.org/#organization" },
+            "inLanguage": "en"
+          },
+          {
+            "@type": "WebPage",
+            "@id": "https://kaizosha.org/#webpage",
+            "url": "https://kaizosha.org/",
+            "name": "Kaizōsha — Independent Software Studio",
+            "isPartOf": { "@id": "https://kaizosha.org/#website" },
+            "author": { "@id": "https://kaizosha.org/creator.html#person" },
+            "inLanguage": "en"
+          }
+        ]
       }
-    ]
-  }
-  </script>
-  <link rel="stylesheet" href="/assets/styles/rewrite.css?v=20260726">
-</head>
-<body data-page-family="directory" data-page="home">
-  <a class="skip-link" href="#work">Skip to work</a>
+    </script>
+    <link rel="stylesheet" href="/assets/styles/brand.css?v=20260716-brand">
+    <link rel="stylesheet" href="/assets/styles/home.css?v=20260729-links">
+    <link rel="stylesheet" href="/assets/styles/site-system.css?v=20260729-cleanup">
+  </head>
+  <body data-page-family="directory" data-page="home">
+    <h1 class="u-screen-reader">Kaizōsha — Independent Software Studio by Kaizō Konpaku</h1>
+    <button type="button" class="home-logo-button" id="home-logo-button" aria-label="Open projects" aria-controls="app-menu" aria-expanded="false">
+      <span class="brand-lockup brand-lockup--icon brand-lockup--display" aria-hidden="true">
+        <span class="brand-lockup__mark">
+          <span class="brand-lockup__unit"><span class="brand-lockup__bar"></span><span class="brand-lockup__glyph">改</span></span>
+          <span class="brand-lockup__unit"><span class="brand-lockup__bar"></span><span class="brand-lockup__glyph">造</span></span>
+          <span class="brand-lockup__unit"><span class="brand-lockup__bar"></span><span class="brand-lockup__glyph">社</span></span>
+        </span>
+      </span>
+    </button>
 
-  <header class="studio-header">
-    <a class="studio-wordmark" href="/" aria-label="Kaizōsha home">Kaizōsha</a>
-    <nav class="studio-nav" aria-label="Primary navigation">
-      <a href="#work">Work</a>
-      <a href="/creator.html">About</a>
-      <a href="/contact.html">Contact</a>
-    </nav>
-  </header>
-
-  <main>
-    <section class="home-hero" aria-labelledby="home-title">
-      <p class="home-hero__eyebrow">Independent software studio</p>
-      <h1 id="home-title">Kaizōsha.</h1>
-      <div class="home-hero__bottom">
-        <p>Thoughtful tools for Apple platforms and the web, made by Kaizō Konpaku.</p>
-        <p class="home-hero__note">Native when possible.<br>Private by design.</p>
+    <div id="app-menu" class="app-menu" role="dialog" aria-modal="true" aria-label="Projects" aria-hidden="true" tabindex="-1" inert>
+      <div class="app-menu__content">
+        <ul class="app-list">
+          <li class="app-list__row"><a class="app-list__item" href="https://github.com/Kaizosha/Sekai" target="_blank" rel="noopener"><span class="app-list__name">sekai</span><span class="app-list__status">GitHub ↗</span></a></li>
+          <li class="app-list__row"><a class="app-list__item" href="https://kaizokonpaku.github.io/morph/" target="_blank" rel="noopener"><span class="app-list__name">morph</span><span class="app-list__status">Open app ↗</span></a></li>
+          <li class="app-list__row"><a class="app-list__item" href="https://github.com/Kaizosha/Hush" target="_blank" rel="noopener"><span class="app-list__name">hush</span><span class="app-list__status">GitHub ↗</span></a></li>
+          <li class="app-list__row"><a class="app-list__item" href="https://www.npmjs.com/package/modscan" target="_blank" rel="noopener"><span class="app-list__name">modscan</span><span class="app-list__status">npm ↗</span></a></li>
+        </ul>
       </div>
-    </section>
-
-    <section class="work-index" id="work" aria-labelledby="work-title">
-      <header class="section-intro">
-        <p class="section-kicker">Selected work</p>
-        <h2 id="work-title">Products with a point of view.</h2>
-      </header>
-
-      <div class="project-list">
-        <a class="project project--wide" href="/hush/">
-          <figure class="project__media project__media--hush">
-            <img src="/assets/media/hush/hush-og.png" width="1734" height="907" alt="Hush macOS interface showing live transcription and contextual assistance">
-          </figure>
-          <div class="project__meta">
-            <p><span>01</span> Hush</p>
-            <p>macOS companion for listening, seeing, and remembering.</p>
-            <span class="project__status">Open source</span>
-          </div>
-        </a>
-
-        <a class="project" href="/together/">
-          <figure class="project__media project__media--together">
-            <img src="/assets/media/together/og-v2.png" width="1536" height="1024" alt="Together video captions and translation interface">
-          </figure>
-          <div class="project__meta">
-            <p><span>02</span> Together</p>
-            <p>On-device captions and translation for video.</p>
-            <span class="project__status">In development</span>
-          </div>
-        </a>
-
-        <a class="project" href="/tlpinch/">
-          <figure class="project__media project__media--tlpinch">
-            <img src="/assets/media/tlpinch/og.png" width="1536" height="1024" alt="TL;Pinch Safari summary interface">
-          </figure>
-          <div class="project__meta">
-            <p><span>03</span> TL;Pinch</p>
-            <p>On-device summaries and explanations inside Safari.</p>
-            <span class="project__status">In development</span>
-          </div>
-        </a>
-
-        <a class="project project--wide" href="/sekai/">
-          <figure class="project__media project__media--sekai">
-            <img src="/assets/media/sekai/sekai-demo-ios.webp" width="320" height="695" alt="Sekai optical-glass globe running on iPhone">
-          </figure>
-          <div class="project__meta">
-            <p><span>04</span> Sekai</p>
-            <p>A native SwiftUI and Metal globe for every Apple platform.</p>
-            <span class="project__status">Open source</span>
-          </div>
-        </a>
-
-        <a class="project project--story" href="/i/">
-          <figure class="project__media project__media--story">
-            <img src="/assets/media/i/i-hero.png" width="1686" height="933" alt="Dark monochrome figure from the interactive story i">
-          </figure>
-          <div class="project__meta">
-            <p><span>05</span> i</p>
-            <p>An interactive psychological horror story for the web.</p>
-            <span class="project__status">A story</span>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section class="studio-about" aria-labelledby="studio-about-title">
-      <p class="section-kicker">The studio</p>
-      <div>
-        <h2 id="studio-about-title">Small by choice.<br>Serious about the details.</h2>
-        <p>Kaizōsha builds focused software across native Apple apps, on-device intelligence, translation, developer tools, and the web.</p>
-        <a class="text-arrow" href="/creator.html">Meet the creator <span aria-hidden="true">↗</span></a>
-      </div>
-    </section>
-
-    <section class="contact-band" aria-labelledby="contact-title">
-      <p class="section-kicker">Start a conversation</p>
-      <h2 id="contact-title">Have something worth making?</h2>
-      <a href="mailto:contact@kaizosha.org">contact@kaizosha.org</a>
-    </section>
-  </main>
-
-  <footer class="studio-footer">
-    <p>Kaizōsha <span>© 2026</span></p>
-    <nav aria-label="Site information">
-      <a href="/creator.html">Creator</a>
-      <a href="/terms.html">Terms</a>
-      <a href="/privacy.html">Privacy</a>
-      <a href="/contact.html">Contact</a>
-      <a href="https://github.com/Kaizosha" target="_blank" rel="noopener">GitHub ↗</a>
-    </nav>
-    <p>From me comes the future.</p>
-  </footer>
-</body>
+      <footer class="site-footer">
+        <p class="site-footer__quote">FROM ME COMES THE FUTURE</p>
+        <nav class="site-footer__links" aria-label="Site information">
+          <a href="/terms.html">terms</a>
+          <span aria-hidden="true">·</span>
+          <a href="/privacy.html">privacy</a>
+          <span aria-hidden="true">·</span>
+          <a href="/contact.html">contact</a>
+        </nav>
+      </footer>
+    </div>
+    <script src="/assets/scripts/home-menu.js?v=20260716-polish" defer></script>
+  </body>
 </html>

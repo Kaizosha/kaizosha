@@ -14,12 +14,7 @@ for file in 404.html contact.html creator.html index.html privacy.html terms.htm
   cp "$ROOT/$file" "$CLIENT/$file"
 done
 
-for route in hush i sekai tlpinch together; do
-  mkdir -p "$CLIENT/$route"
-  cp "$ROOT/$route/index.html" "$CLIENT/$route/index.html"
-done
-
-rsync -a --exclude='* 2.*' "$ROOT/assets/" "$CLIENT/assets/"
+rsync -a "$ROOT/assets/" "$CLIENT/assets/"
 cp "$ROOT/tools/sites-static-worker.js" "$DIST/server/index.js"
 cp "$ROOT/.openai/hosting.json" "$DIST/.openai/hosting.json"
 
