@@ -81,8 +81,8 @@ footer. Do not make ordinary sections appear as floating cards.
 
 ### Brand
 
-Use only the lockups defined in `BRAND.md`. Full lockups use the compact format
-below 640px.
+Use only the lockups defined in `BRAND.md`. Compact lockups are the standard
+navigation and document-header format.
 
 ### Section Heading
 
