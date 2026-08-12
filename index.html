@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="#f7f7f7" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)">
@@ -83,12 +83,12 @@
       }
     </script>
     <link rel="stylesheet" href="/assets/styles/brand.css?v=20260716-brand">
-    <link rel="stylesheet" href="/assets/styles/home.css?v=20260812-home">
+    <link rel="stylesheet" href="/assets/styles/home.css?v=20260812-home-static">
     <link rel="stylesheet" href="/assets/styles/site-system.css?v=20260812-site-system">
   </head>
   <body data-page-family="directory" data-page="home">
     <h1 class="u-screen-reader">Kaizōsha — Independent Software Studio</h1>
-    <button type="button" class="home-logo-button" id="home-logo-button" aria-label="Open projects" aria-controls="app-menu" aria-expanded="false">
+    <div class="home-logo" aria-hidden="true">
       <span class="brand-lockup brand-lockup--icon brand-lockup--display" aria-hidden="true">
         <span class="brand-lockup__mark">
           <span class="brand-lockup__unit"><span class="brand-lockup__bar"></span><span class="brand-lockup__glyph">改</span></span>
@@ -96,17 +96,6 @@
           <span class="brand-lockup__unit"><span class="brand-lockup__bar"></span><span class="brand-lockup__glyph">社</span></span>
         </span>
       </span>
-    </button>
-
-    <div id="app-menu" class="app-menu" role="dialog" aria-modal="true" aria-label="Projects" aria-hidden="true" tabindex="-1" inert>
-      <div class="app-menu__content">
-        <ul class="app-list">
-          <li class="app-list__row"><a class="app-list__item" href="https://github.com/Kaizosha/Sekai" target="_blank" rel="noopener"><span class="app-list__name">sekai</span></a></li>
-          <li class="app-list__row"><a class="app-list__item" href="https://kaizokonpaku.github.io/morph/" target="_blank" rel="noopener"><span class="app-list__name">morph</span></a></li>
-          <li class="app-list__row"><a class="app-list__item" href="https://github.com/Kaizosha/Hush" target="_blank" rel="noopener"><span class="app-list__name">hush</span></a></li>
-          <li class="app-list__row"><a class="app-list__item" href="https://www.npmjs.com/package/modscan" target="_blank" rel="noopener"><span class="app-list__name">modscan</span></a></li>
-        </ul>
-      </div>
     </div>
     <footer class="site-footer">
       <p class="site-footer__quote">FROM ME COMES THE FUTURE</p>
@@ -118,6 +107,5 @@
         <a href="/contact.html">contact</a>
       </nav>
     </footer>
-    <script src="/assets/scripts/home-menu.js?v=20260812-menu" defer></script>
   </body>
 </html>

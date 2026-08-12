@@ -22,9 +22,8 @@ Page-specific color, diagrams, and interaction belong in that page's stylesheet.
 4. **Every edge aligns.** Brand, navigation, section labels, content, and
    footer links use a small set of gutters. Elements must never extend beyond
    the viewport at 320px or wider.
-5. **Motion is optional and purposeful.** The homepage project list opens
-   immediately; small hover and focus transitions may clarify interaction but
-   must never delay navigation. Respect `prefers-reduced-motion`.
+5. **Motion is optional and purposeful.** The homepage is static and has no
+   project-list disclosure or click animation. Respect `prefers-reduced-motion`.
 6. **Plain language wins.** Project promises, legal text, status, and actions
    should state exactly what they do. Avoid marketing filler.
 
@@ -34,7 +33,7 @@ Every `<body>` must declare one `data-page-family` value.
 
 | Family | Pages | Required structure |
 | --- | --- | --- |
-| `directory` | Homepage | Brand trigger, indexed project list, legal footer |
+| `directory` | Homepage | Brand mark, legal footer |
 | `document` | Terms, Privacy, Contact | Document rail, compact brand lockup, readable main column, numbered sections, start/end markers |
 | `error` | 404 | Brand icon, direct status, one recovery action |
 
@@ -100,10 +99,10 @@ navigation and document-header format.
 
 ### Homepage directory
 
-- The brand mark is the project-list trigger and remains the only homepage
-  control.
-- Opening and closing the project list is instantaneous. Do not add a drag,
-  progress, fade, or content-slide state to this interaction.
+- The brand mark is static and decorative; the homepage has no app-list trigger
+  or project disclosure.
+- Keep the homepage free of click-driven overlays, drag states, progress bars,
+  fades, and content slides.
 - The footer stays in the bottom band: `FROM ME COMES THE FUTURE` is left
   aligned and the Terms, Privacy, and Contact links are right aligned. On
   narrow screens they may stack while preserving those edges.
@@ -132,9 +131,8 @@ navigation and document-header format.
 - Keyboard focus uses the page signal or studio accent and is never removed.
 - Interactive elements expose names, state, and at least a 44px target where
   the interface permits.
-- Content remains available without animation or JavaScript. The homepage
-  list still works as a normal keyboard-triggered disclosure when JavaScript is
-  present, and all remaining motion honors `prefers-reduced-motion`.
+- Content remains available without animation or JavaScript. The homepage is
+  intentionally static, and all remaining motion honors `prefers-reduced-motion`.
 - Color is never the only indication of state.
 
 ## New Page Checklist

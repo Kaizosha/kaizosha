@@ -9,7 +9,7 @@ JavaScript.
 
 | Route | Role | Page family |
 | --- | --- | --- |
-| `/` | Project directory and company landing surface | `directory` |
+| `/` | Company landing surface | `directory` |
 | `/terms.html` | Terms of Service | `document` |
 | `/privacy.html` | Privacy Policy | `document` |
 | `/contact.html` | Company contact and support channels | `document` |
@@ -25,8 +25,6 @@ is not a public route, homepage project, or legal-navigation item.
   responsive constraints, and document sizing.
 - `assets/styles/home.css`, `legal-docs.css`, and `error.css`
   contain page-family composition only.
-- `assets/scripts/home-menu.js` manages the homepage project disclosure and
-  keyboard focus trap. The disclosure opens and closes without animation.
 - `assets/scripts/legal-docs.js` maintains document table-of-contents state and
   the small expandable entries used by document pages.
 
@@ -50,7 +48,7 @@ kept in this repository.
    `DESIGN_SYSTEM.md`. The creator identity is metadata only, not a public page.
 3. Keep shared geometry in `site-system.css`; page styles should not redefine
    the brand lockup.
-4. Keep the homepage project list limited to active company projects and leave
-   legal links in the footer.
+4. Keep the homepage free of project-list disclosures and leave legal links in
+   the footer.
 5. Run `tools/build-site.sh` after route or asset changes and inspect the
    generated `dist/client/` tree before publishing.
