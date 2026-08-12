@@ -14,10 +14,9 @@ redefine the mark, wordmark, spacing, or typography.
 | Wordmark only | `brand-lockup--wordmark` | Text-only credits, bylines, or narrow surfaces where the icon is already visible nearby |
 | Icon only | `brand-lockup--icon` | Homepage project trigger, 404 identity, favicon, and app-icon contexts |
 | Icon + wordmark | `brand-lockup--compact` | Sidebars, menus, document headers, and compact navigation |
-| Icon + wordmark + descriptor | `brand-lockup--full` | Primary desktop site and product headers |
 
 `brand-lockup--display` changes scale only. Use it with the icon-only format for
-large identity moments; it is not a fifth lockup.
+large identity moments; it is not an additional lockup format.
 
 ## Canonical Text
 
@@ -32,4 +31,5 @@ large identity moments; it is not a fifth lockup.
 - Do not place the lockup inside a badge, pill, or decorative card.
 - Do not add page-specific bar sizes, glyph sizes, letter spacing, or icon-to-text gaps.
 - Let product themes supply the accent color through their existing CSS variables.
-- Full product-header lockups reduce to the compact format below 640px.
+- Keep compact lockups for navigation and document headers; the homepage and
+  404 page use the icon-only format.

@@ -17,14 +17,14 @@ Page-specific color, diagrams, and interaction belong in that page's stylesheet.
 2. **One shell, distinct pages.** Headers, legal navigation, footers,
    spacing rhythm, and focus behavior are shared. Dedicated pages may own one
    signal color and their primary visual system.
-3. **Content sets the scale.** Large type belongs to dedicated or identity
+3. **Content sets the scale.** Large type belongs to dedicated page
    moments. Navigation, controls, metadata, and descriptions stay compact.
 4. **Every edge aligns.** Brand, navigation, section labels, content, and
    footer links use a small set of gutters. Elements must never extend beyond
    the viewport at 320px or wider.
-5. **Motion explains state.** Animation may communicate opening, progress,
-   selection, or a project concept. It must not delay navigation and must
-   respect `prefers-reduced-motion`.
+5. **Motion is optional and purposeful.** The homepage project list opens
+   immediately; small hover and focus transitions may clarify interaction but
+   must never delay navigation. Respect `prefers-reduced-motion`.
 6. **Plain language wins.** Project promises, legal text, status, and actions
    should state exactly what they do. Avoid marketing filler.
 
@@ -36,7 +36,6 @@ Every `<body>` must declare one `data-page-family` value.
 | --- | --- | --- |
 | `directory` | Homepage | Brand trigger, indexed project list, legal footer |
 | `document` | Terms, Privacy, Contact | Document rail, compact brand lockup, readable main column, numbered sections, start/end markers |
-| `identity` | Creator | Standard brand header, identity hero, indexed work list, legal footer |
 | `error` | 404 | Brand icon, direct status, one recovery action |
 
 ## Foundations
@@ -44,7 +43,7 @@ Every `<body>` must declare one `data-page-family` value.
 ### Typography
 
 - Use the established monospace stack from the page tokens.
-- Dedicated and identity-page H1s may be large; never use that scale inside controls,
+- Dedicated page H1s may be large; never use that scale inside controls,
   cards, rails, or navigation.
 - Labels, navigation, metadata, and statuses are uppercase with normal letter
   spacing and compact sizing.
@@ -99,13 +98,24 @@ below 640px.
 - Use icons for pause/play and other familiar actions; include an accessible
   name and state.
 
+### Homepage directory
+
+- The brand mark is the project-list trigger and remains the only homepage
+  control.
+- Opening and closing the project list is instantaneous. Do not add a drag,
+  progress, fade, or content-slide state to this interaction.
+- The footer stays in the bottom band: `FROM ME COMES THE FUTURE` is left
+  aligned and the Terms, Privacy, and Contact links are right aligned. On
+  narrow screens they may stack while preserving those edges.
+
 ### Footer
 
-- End directory and identity pages with `FROM ME COMES THE FUTURE`
-  and legal links. Document pages use their related-links section and explicit
-  end marker; error pages keep one direct recovery action.
+- End the directory with a bottom footer row containing
+  `FROM ME COMES THE FUTURE` on the left and Terms, Privacy, and Contact links
+  on the right. Document pages use their related-links section and explicit end
+  marker; error pages keep one direct recovery action.
 - Order: Terms, Privacy, Contact.
-- Use a top rule, centered alignment, shared spacing, and no badges.
+- Use a top rule, edge alignment, shared spacing, and no badges.
 
 ## Responsive Contract
 
@@ -122,8 +132,9 @@ below 640px.
 - Keyboard focus uses the page signal or studio accent and is never removed.
 - Interactive elements expose names, state, and at least a 44px target where
   the interface permits.
-- Motion honors `prefers-reduced-motion`; content remains available without
-  animation or JavaScript.
+- Content remains available without animation or JavaScript. The homepage
+  list still works as a normal keyboard-triggered disclosure when JavaScript is
+  present, and all remaining motion honors `prefers-reduced-motion`.
 - Color is never the only indication of state.
 
 ## New Page Checklist

@@ -131,12 +131,6 @@ a.brand-lockup:focus-visible .brand-lockup__bar {
   }
 }
 
-@media (max-width: 640px) {
-  .site-brand.brand-lockup--full .brand-lockup__descriptor {
-    display: none;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .brand-lockup__mark,
   .brand-lockup__bar {

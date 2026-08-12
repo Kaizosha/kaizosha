@@ -1,7 +1,7 @@
 {
   "name": "Kaizōsha",
   "short_name": "Kaizōsha",
-  "description": "Independent software studio by Kaizō Konpaku.",
+  "description": "Independent software studio building Apple-platform apps, on-device AI, translation tools, and open-source software.",
   "start_url": "/",
   "scope": "/",
   "display": "minimal-ui",
