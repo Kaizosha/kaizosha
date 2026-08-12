@@ -107,7 +107,8 @@ navigation and document-header format.
   aligned and the Terms, Privacy, and Contact links are right aligned. On
   pointer-capable screens, the legal links reveal when the footer is hovered or
   focused. On touch screens they remain visible, and on narrow screens they
-  may stack while preserving those edges.
+  are centered. The quote may be hidden on smaller mobile screens to preserve
+  space.
 
 ### Footer
 

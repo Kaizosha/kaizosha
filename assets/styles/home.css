@@ -186,8 +186,13 @@ body::after {
     line-height: 1.35;
   }
 
+  .site-footer__quote {
+    display: none;
+  }
+
   .site-footer__links {
-    justify-self: end;
+    justify-self: center;
+    justify-content: center;
     gap: 0.55rem;
   }
 }
