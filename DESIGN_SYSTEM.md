@@ -22,8 +22,9 @@ Page-specific color, diagrams, and interaction belong in that page's stylesheet.
 4. **Every edge aligns.** Brand, navigation, section labels, content, and
    footer links use a small set of gutters. Elements must never extend beyond
    the viewport at 320px or wider.
-5. **Motion is optional and purposeful.** The homepage is static and has no
-   project-list disclosure or click animation. Respect `prefers-reduced-motion`.
+5. **Motion is optional and purposeful.** The homepage has no project-list
+   disclosure or click animation; only the footer reveal and small hover/focus
+   feedback use motion. Respect `prefers-reduced-motion`.
 6. **Plain language wins.** Project promises, legal text, status, and actions
    should state exactly what they do. Avoid marketing filler.
 
@@ -103,6 +104,8 @@ navigation and document-header format.
   or project disclosure.
 - Keep the homepage free of click-driven overlays, drag states, progress bars,
   fades, and content slides.
+- Use a short opacity transition for the footer reveal and restrained color
+  transitions for links. Do not add looping or attention-seeking motion.
 - The footer stays in the bottom band: `FROM ME COMES THE FUTURE` is left
   aligned and the Terms, Privacy, and Contact links are right aligned. On
   pointer-capable screens, the entire footer is hidden until it is hovered or
