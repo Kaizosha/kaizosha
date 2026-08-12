@@ -31,14 +31,18 @@ is not a public route, homepage project, or legal-navigation item.
 ## Build and Cloudflare handoff
 
 `tools/build-site.sh` creates the ignored `dist/` directory. It copies the
-allowlisted public routes, the favicon/manifest/robots/sitemap files, and the
-`assets/` directory to `dist/client/`, then places the static Cloudflare
-worker at `dist/server/index.js`.
+allowlisted public routes and explicitly allowlisted styles, scripts, and
+social preview image to `dist/client/`, then places the static Cloudflare
+worker at `dist/server/index.js`. The asset allowlist prevents an accidental
+private or development file from becoming public.
 
 The site has no application server, database, authentication layer, runtime
 API, or client-side framework. Cloudflare serves the generated static client
-through the existing worker setup. No unrelated app/project configuration is
-kept in this repository.
+through the existing worker setup. The worker applies long-lived immutable
+caching to versioned assets, short stale-while-revalidate caching to HTML, and
+security headers including CSP, HSTS, clickjacking protection, MIME sniffing
+protection, and a restrictive Permissions Policy. No unrelated app/project
+configuration is kept in this repository.
 
 ## Maintenance rules
 
@@ -50,5 +54,9 @@ kept in this repository.
    the brand lockup.
 4. Keep the homepage free of project-list disclosures and leave legal links in
    the footer.
-5. Run `tools/build-site.sh` after route or asset changes and inspect the
+5. When changing a CSS, JavaScript, or other immutable asset, update its cache
+   query version in the HTML that references it.
+6. Add public assets to the explicit allowlist in `tools/build-site.sh`; never
+   copy the whole source tree to the client bundle.
+7. Run `tools/build-site.sh` after route or asset changes and inspect the
    generated `dist/client/` tree before publishing.
