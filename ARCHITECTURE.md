@@ -53,8 +53,8 @@ configuration is kept in this repository.
 3. Keep shared geometry in `site-system.css`; page styles should not redefine
    the brand lockup.
 4. Keep the homepage free of project-list disclosures and leave legal links in
-   the footer. Pointer devices reveal those links on footer hover/focus;
-   touch devices keep them visible.
+   the footer. Pointer devices reveal the entire footer on hover/focus; touch
+   devices keep it visible.
 5. When changing a CSS, JavaScript, or other immutable asset, update its cache
    query version in the HTML that references it.
 6. Add public assets to the explicit allowlist in `tools/build-site.sh`; never

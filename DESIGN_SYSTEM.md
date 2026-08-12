@@ -105,10 +105,10 @@ navigation and document-header format.
   fades, and content slides.
 - The footer stays in the bottom band: `FROM ME COMES THE FUTURE` is left
   aligned and the Terms, Privacy, and Contact links are right aligned. On
-  pointer-capable screens, the legal links reveal when the footer is hovered or
-  focused. On touch screens they remain visible, and on narrow screens they
-  are centered. The quote may be hidden on smaller mobile screens to preserve
-  space.
+  pointer-capable screens, the entire footer is hidden until it is hovered or
+  focused. On touch screens it remains visible, and on narrow screens the
+  links are centered. The quote may be hidden on smaller mobile screens to
+  preserve space.
 
 ### Footer
 
