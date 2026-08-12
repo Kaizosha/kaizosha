@@ -104,7 +104,6 @@ body::after {
   align-items: end;
   gap: 1rem;
   padding: 1.5rem 1rem;
-  border-top: 1px solid var(--site-rule);
   color: var(--site-dim);
   cursor: default;
   font-family: var(--mono-ui);
@@ -150,6 +149,19 @@ body::after {
   color: var(--site-faint);
   pointer-events: none;
   user-select: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-footer__links {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .site-footer:hover .site-footer__links,
+  .site-footer:focus-within .site-footer__links {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

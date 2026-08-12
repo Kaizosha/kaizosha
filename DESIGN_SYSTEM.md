@@ -105,7 +105,9 @@ navigation and document-header format.
   fades, and content slides.
 - The footer stays in the bottom band: `FROM ME COMES THE FUTURE` is left
   aligned and the Terms, Privacy, and Contact links are right aligned. On
-  narrow screens they may stack while preserving those edges.
+  pointer-capable screens, the legal links reveal when the footer is hovered or
+  focused. On touch screens they remain visible, and on narrow screens they
+  may stack while preserving those edges.
 
 ### Footer
 
@@ -114,7 +116,7 @@ navigation and document-header format.
   on the right. Document pages use their related-links section and explicit end
   marker; error pages keep one direct recovery action.
 - Order: Terms, Privacy, Contact.
-- Use a top rule, edge alignment, shared spacing, and no badges.
+- Use edge alignment, shared spacing, and no badges or divider rule.
 
 ## Responsive Contract
 
