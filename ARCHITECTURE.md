@@ -36,6 +36,12 @@ social preview image to `dist/client/`, then places the static Cloudflare
 worker at `dist/server/index.js`. The asset allowlist prevents an accidental
 private or development file from becoming public.
 
+`wrangler.jsonc` is the Cloudflare deployment contract: it binds
+`dist/client/` as `ASSETS`, uses `dist/server/index.js` as the Worker, routes
+unknown paths to the custom `404.html`, and invokes the Worker before serving
+assets so its security and cache headers apply consistently. Build with
+`./tools/build-site.sh`, then deploy with Wrangler from the repository root.
+
 The site has no application server, database, authentication layer, runtime
 API, or client-side framework. Cloudflare serves the generated static client
 through the existing worker setup. The worker applies long-lived immutable

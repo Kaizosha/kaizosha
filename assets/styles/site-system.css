@@ -81,5 +81,8 @@ body[data-page-family="document"] .toc-num {
   body[data-page-family] *::before,
   body[data-page-family] *::after {
     scroll-behavior: auto !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
   }
 }

@@ -89,6 +89,7 @@ button {
   font-size: 0.7rem;
   text-decoration: none;
   transform: translateY(-200%);
+  transition: transform 180ms ease;
 }
 
 .skip-link:focus {
