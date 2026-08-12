@@ -35,12 +35,12 @@ is not a public route, homepage project, or legal-navigation item.
 `tools/build-site.sh` creates the ignored `dist/` directory. It copies the
 allowlisted public routes, the favicon/manifest/robots/sitemap files, and the
 `assets/` directory to `dist/client/`, then places the static Cloudflare
-worker at `dist/server/index.js` and the project configuration at
-`dist/.openai/hosting.json`.
+worker at `dist/server/index.js`.
 
 The site has no application server, database, authentication layer, runtime
 API, or client-side framework. Cloudflare serves the generated static client
-through the existing worker setup.
+through the existing worker setup. No unrelated app/project configuration is
+kept in this repository.
 
 ## Maintenance rules
 

@@ -7,7 +7,7 @@ DIST="$ROOT/dist"
 CLIENT="$DIST/client"
 
 rm -rf "$DIST"
-mkdir -p "$CLIENT" "$DIST/server" "$DIST/.openai"
+mkdir -p "$CLIENT" "$DIST/server"
 
 for file in 404.html contact.html index.html privacy.html terms.html \
   icon.png robots.txt site.webmanifest sitemap.xml; do
@@ -16,6 +16,5 @@ done
 
 rsync -a "$ROOT/assets/" "$CLIENT/assets/"
 cp "$ROOT/tools/sites-static-worker.js" "$DIST/server/index.js"
-cp "$ROOT/.openai/hosting.json" "$DIST/.openai/hosting.json"
 
 printf 'Built static site in %s\n' "$DIST"
