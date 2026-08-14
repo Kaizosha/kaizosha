@@ -1,158 +1,64 @@
-# Kaizōsha Site Design System
+# Kaizōsha Design System
 
-This document is the visual and structural contract for every page on
-`kaizosha.org`. The homepage directory establishes the quiet, indexed tone;
-the Terms, Privacy, and Contact pages establish the rules for hierarchy,
-numbering, reading width, and navigation.
-
-The system should make pages feel related without making every project look
-identical. Shared structure belongs in `assets/styles/site-system.css`.
-Page-specific color, diagrams, and interaction belong in that page's stylesheet.
+Kaizōsha uses a two-tone, markdown-first visual system. The interface should
+feel like a clean text document: compact, direct, fast, and free of decoration.
 
 ## Principles
 
-1. **Indexed, not decorated.** Use numbers, rules, labels, and deliberate
-   whitespace to establish hierarchy. Do not add pills, floating cards, glow,
-   or ornamental containers without a functional reason.
-2. **One shell, distinct pages.** Headers, legal navigation, footers,
-   spacing rhythm, and focus behavior are shared. Dedicated pages may own one
-   signal color and their primary visual system.
-3. **Content sets the scale.** Large type belongs to dedicated page
-   moments. Navigation, controls, metadata, and descriptions stay compact.
-4. **Every edge aligns.** Brand, navigation, section labels, content, and
-   footer links use a small set of gutters. Elements must never extend beyond
-   the viewport at 320px or wider.
-5. **Motion is optional and purposeful.** The homepage has no project-list
-   disclosure or click animation; only the footer reveal and small hover/focus
-   feedback use motion. Respect `prefers-reduced-motion`.
-6. **Plain language wins.** Project promises, legal text, status, and actions
-   should state exactly what they do. Avoid marketing filler.
+1. Use only the near-black surface and off-white ink defined in
+   `assets/styles/markdown.css`. Muted information uses opacity, not another
+   brand color.
+2. Use the system monospace stack at one compact reading scale.
+3. Let markdown grammar show the hierarchy: `#` for the page title, `##` for
+   sections, `-` for entries, `>` for supporting notes, and `[text](url)` for
+   links.
+4. Keep content in one centered reading column. Do not add rails, cards,
+   badges, gradients, scanlines, shadows, illustrations, or decorative rules.
+5. Use no visual animation or runtime JavaScript. Hover and keyboard focus may
+   add an underline or outline without moving content.
+6. Preserve plain language, semantic HTML, metadata, and legal content.
 
-## Page Families
+## Page families
 
-Every `<body>` must declare one `data-page-family` value.
-
-| Family | Pages | Required structure |
+| Family | Pages | Visible structure |
 | --- | --- | --- |
-| `directory` | Homepage | Brand mark, legal footer |
-| `document` | Terms, Privacy, Contact | Document rail, compact brand lockup, readable main column, numbered sections, start/end markers |
-| `error` | 404 | Brand icon, direct status, one recovery action |
+| `directory` | Homepage | Centered Kaizōsha icon only |
+| `document` | Terms, Privacy, Contact | Markdown breadcrumb, title, sections, related links |
+| `error` | 404 | Markdown status and one home link |
 
 ## Foundations
 
-### Typography
+- Surface: `#101010`
+- Ink: `#f4f4ef`
+- Type: system monospace stack
+- Base size: `13px`
+- Reading width: `72ch`
+- Small-screen edge: `1rem`
+- Motion: none
 
-- Use the established monospace stack from the page tokens.
-- Dedicated page H1s may be large; never use that scale inside controls,
-  cards, rails, or navigation.
-- Labels, navigation, metadata, and statuses are uppercase with normal letter
-  spacing and compact sizing.
-- Body copy uses sentence case, `1.6-1.75` line-height, and a maximum readable
-  width of approximately `72ch-84ch`.
-- Use tabular numerals for section numbers, counters, versions, and times.
+The homepage remains a single centered logo at every screen size. It has no
+footer, project list, app links, slogans, controls, or click behavior.
 
-### Color
+Document pages keep the company and creator metadata in their `<head>`, while
+the visible page uses only the markdown reading column. Links deliberately show
+their destination using `[label](href)` so the page reads like source text.
 
-- Base surfaces remain near-white or near-black, never a saturated wash.
-- Kaizōsha orange is the studio accent.
-- A dedicated page may define one `--page-signal` color for page state, focus, and
-  diagram emphasis.
-- Muted text must remain readable. Rules should be visible but subordinate.
-- Active controls use a light signal tint and a clear edge, not a solid block,
-  unless the action is genuinely primary.
-
-### Spacing
-
-Use the shared CSS tokens rather than one-off values:
-
-| Token | Purpose |
-| --- | --- |
-| `--ks-shell-edge` | Header and footer inset |
-| `--ks-section-edge` | Main section inset |
-| `--ks-header-height` | Shared header minimum |
-| `--ks-reading-width` | Long-form copy measure |
-| `--ks-control-height` | Minimum interactive-control height |
-| `--ks-footer-height` | Closing legal footer minimum |
-
-Spacing should create clear bands: header, hero, numbered sections, closing,
-footer. Do not make ordinary sections appear as floating cards.
-
-## Shared Components
-
-### Brand
-
-Use only the lockups defined in `BRAND.md`. Compact lockups are the standard
-navigation and document-header format.
-
-### Section Heading
-
-- Begin with a two-digit or Roman index and a concise uppercase label.
-- Pair the label with one direct heading and short supporting copy.
-- Use a rule or grid boundary to connect the section to the document language.
-
-### Controls
-
-- Group related modes in one bounded toolbar.
-- Keep controls at least `--ks-control-height` tall.
-- Use a subtle signal tint for selection and a visible focus ring.
-- Use icons for pause/play and other familiar actions; include an accessible
-  name and state.
-
-### Homepage directory
-
-- The brand mark is static and decorative; the homepage has no app-list trigger
-  or project disclosure.
-- Keep the homepage free of click-driven overlays, drag states, progress bars,
-  fades, and content slides.
-- Use a short opacity transition for the footer reveal and restrained color
-  transitions for links. Do not add looping or attention-seeking motion.
-- The footer stays in the bottom band: `FROM ME COMES THE FUTURE` is left
-  aligned and the Terms, Privacy, and Contact links are right aligned. On
-  pointer-capable screens, the entire footer is hidden until it is hovered or
-  focused. On touch screens it remains visible, and on narrow screens the
-  links are centered. The quote may be hidden on smaller mobile screens to
-  preserve space.
-
-### Footer
-
-- End the directory with a bottom footer row containing
-  `FROM ME COMES THE FUTURE` on the left and Terms, Privacy, and Contact links
-  on the right. Document pages use their related-links section and explicit end
-  marker; error pages keep one direct recovery action.
-- Order: Terms, Privacy, Contact.
-- Use edge alignment, shared spacing, and no badges or divider rule.
-
-## Responsive Contract
+## Responsive and accessibility contract
 
 - Required checks: `320x720`, `390x844`, `1024x768`, and `1440x900`.
-- `documentElement.scrollWidth` must never exceed the viewport width.
-- Wide document pages use equal outer tracks around the centered reading
-  column: the left rail, reading column, and right breathing room stay aligned
-  as the viewport grows.
-- At narrower widths, the rail becomes a compact top identity/navigation
-  surface and the reading column keeps equal inline padding on both sides.
-- Controls stack before their labels wrap incoherently.
-- Text, logos, and status must never overlap.
+- The page must never be wider than the viewport.
+- The document measure remains centered with equal left and right space.
+- Text and link destinations may wrap without clipping.
+- Every content page has one H1 and a skip link.
+- Keyboard focus is always visible.
+- Browser zoom remains available on document and error pages.
+- All content works without JavaScript, animation, hover, or color distinction.
 
-## Accessibility Contract
+## New page checklist
 
-- Exactly one H1 per page.
-- A skip link targets the primary content on every content page.
-- Keyboard focus uses the page signal or studio accent and is never removed.
-- Interactive elements expose names, state, and at least a 44px target where
-  the interface permits.
-- Content remains available without animation or JavaScript. The homepage is
-  intentionally static, and all remaining motion honors `prefers-reduced-motion`.
-- Color is never the only indication of state.
-
-## New Page Checklist
-
-1. Choose and declare a page family on `<body>`.
-2. Load `brand.css`, the page stylesheet, then `site-system.css`.
-3. Use an approved brand lockup.
-4. Define `--page-signal` only when the page needs a dedicated interaction color.
-5. Use the shared header/footer and numbered section grammar.
-6. Keep unique visuals inside the page stylesheet; do not redefine shared
-   shell geometry.
-7. Verify keyboard navigation, reduced motion, console output, and all four
-   responsive sizes before shipping.
+1. Add a supported `data-page-family` value to `<body>`.
+2. Load `markdown.css`; load `brand.css` only when the Kaizōsha icon is shown.
+3. Use semantic headings, paragraphs, lists, navigation, and links.
+4. Keep the page inside the shared reading measure.
+5. Update the asset cache version when a stylesheet changes.
+6. Build and test every supported viewport before publishing.

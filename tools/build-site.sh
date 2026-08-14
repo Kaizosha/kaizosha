@@ -14,16 +14,14 @@ for file in 404.html contact.html index.html privacy.html terms.html \
   cp "$ROOT/$file" "$CLIENT/$file"
 done
 
-mkdir -p "$CLIENT/assets/styles" "$CLIENT/assets/scripts" \
-  "$CLIENT/assets/media/social"
+mkdir -p "$CLIENT/assets/styles" "$CLIENT/assets/media/social"
 
-for file in brand.css home.css legal-docs.css site-system.css error.css; do
+for file in brand.css markdown.css; do
   cp "$ROOT/assets/styles/$file" "$CLIENT/assets/styles/$file"
 done
 
-cp "$ROOT/assets/scripts/legal-docs.js" "$CLIENT/assets/scripts/legal-docs.js"
-cp "$ROOT/assets/media/social/kaizosha-social-card-2026.png" \
-  "$CLIENT/assets/media/social/kaizosha-social-card-2026.png"
+cp "$ROOT/assets/media/social/kaizosha-social-card-markdown-2026.png" \
+  "$CLIENT/assets/media/social/kaizosha-social-card-markdown-2026.png"
 cp "$ROOT/tools/sites-static-worker.js" "$DIST/server/index.js"
 
 printf 'Built static site in %s\n' "$DIST"

@@ -1,72 +1,52 @@
 # Kaizōsha Site Architecture
 
-This is a static, multi-route company website. The architecture is intentionally
-small: HTML owns content and metadata, page styles own composition, shared
-styles own the site contract, and only the interactions that need state use
-JavaScript.
+Kaizōsha is a static, multi-route company website. HTML owns the content and
+metadata, two small stylesheets own the entire visual system, and the public
+site runs without client-side JavaScript.
 
 ## Public routes
 
 | Route | Role | Page family |
 | --- | --- | --- |
-| `/` | Company landing surface | `directory` |
+| `/` | Centered company identity | `directory` |
 | `/terms.html` | Terms of Service | `document` |
 | `/privacy.html` | Privacy Policy | `document` |
-| `/contact.html` | Company contact and support channels | `document` |
-| `/404.html` | Direct recovery page for unknown routes | `error` |
+| `/contact.html` | Company contact channels | `document` |
+| `/404.html` | Unknown-route recovery | `error` |
 
-The creator identity remains available in page metadata and structured data. It
-is not a public route, homepage project, or legal-navigation item.
+The creator identity remains in page metadata and structured data. It is not a
+visible page, homepage link, or legal-navigation item.
 
 ## Shared layers
 
-- `assets/styles/brand.css` contains the approved Kaizōsha lockups.
-- `assets/styles/site-system.css` contains shared tokens, focus behavior,
-  responsive constraints, and document sizing.
-- `assets/styles/home.css`, `legal-docs.css`, and `error.css`
-  contain page-family composition only.
-- `assets/scripts/legal-docs.js` maintains document table-of-contents state and
-  the small expandable entries used by document pages.
-- Document pages use a three-track desktop shell with a centered reading
-  column and equal outer spacing; below the document breakpoint, the rail
-  collapses and the content keeps symmetric inline padding.
+- `assets/styles/brand.css` draws the two-tone Kaizōsha icon used on the
+  homepage.
+- `assets/styles/markdown.css` owns layout, typography, markdown grammar,
+  focus behavior, and responsive rules for every public route.
+- There are no public scripts, frontend dependencies, runtime APIs, forms,
+  databases, accounts, or authentication flows.
 
 ## Build and Cloudflare handoff
 
-`tools/build-site.sh` creates the ignored `dist/` directory. It copies the
-allowlisted public routes and explicitly allowlisted styles, scripts, and
-social preview image to `dist/client/`, then places the static Cloudflare
-worker at `dist/server/index.js`. The asset allowlist prevents an accidental
-private or development file from becoming public.
+`tools/build-site.sh` creates the ignored `dist/` directory from an explicit
+allowlist. It copies the five public HTML routes, two stylesheets, required
+metadata files, the icon, and the social preview image. Development files are
+never copied into the public bundle.
 
-`wrangler.jsonc` is the Cloudflare deployment contract: it binds
-`dist/client/` as `ASSETS`, uses `dist/server/index.js` as the Worker, routes
-unknown paths to the custom `404.html`, and invokes the Worker before serving
-assets so its security and cache headers apply consistently. Build with
-`./tools/build-site.sh`, then deploy with Wrangler from the repository root.
-
-The site has no application server, database, authentication layer, runtime
-API, or client-side framework. Cloudflare serves the generated static client
-through the existing worker setup. The worker applies long-lived immutable
-caching to versioned assets, short stale-while-revalidate caching to HTML, and
-security headers including CSP, HSTS, clickjacking protection, MIME sniffing
-protection, and a restrictive Permissions Policy. No unrelated app/project
-configuration is kept in this repository.
+`wrangler.jsonc` serves `dist/client/` through the Worker generated at
+`dist/server/index.js`. The Worker handles HTTPS redirects, GET/HEAD method
+restriction, versioned-asset caching, short HTML caching, and security headers.
+Because the site has no executable browser code, its Content Security Policy
+sets scripts, connections, fonts, media, frames, forms, objects, and workers to
+`none`; only same-origin styles, images, and the manifest are allowed.
 
 ## Maintenance rules
 
-1. Add or remove a public route in `tools/build-site.sh` and `sitemap.xml`
-   together.
-2. Keep the page-family declaration on every `<body>` in sync with
-   `DESIGN_SYSTEM.md`. The creator identity is metadata only, not a public page.
-3. Keep shared geometry in `site-system.css`; page styles should not redefine
-   the brand lockup.
-4. Keep the homepage free of project-list disclosures and leave legal links in
-   the footer. Pointer devices reveal the entire footer on hover/focus; touch
-   devices keep it visible.
-5. When changing a CSS, JavaScript, or other immutable asset, update its cache
-   query version in the HTML that references it.
-6. Add public assets to the explicit allowlist in `tools/build-site.sh`; never
-   copy the whole source tree to the client bundle.
-7. Run `tools/build-site.sh` after route or asset changes and inspect the
-   generated `dist/client/` tree before publishing.
+1. Change public routes in `tools/build-site.sh` and `sitemap.xml` together.
+2. Keep creator metadata in the HTML even though it is not shown visually.
+3. Keep all visible layout rules in `markdown.css` and the homepage icon in
+   `brand.css`.
+4. Do not add client-side JavaScript for presentational behavior.
+5. Update immutable asset query versions whenever their contents change.
+6. Keep the build allowlist explicit; never copy the whole repository.
+7. Run `tools/build-site.sh` and inspect `dist/client/` before publishing.

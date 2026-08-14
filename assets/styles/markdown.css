@@ -1,0 +1,266 @@
+:root {
+  color-scheme: dark;
+  --surface: #101010;
+  --ink: #f4f4ef;
+  --measure: 72ch;
+  --edge: 1rem;
+  font-synthesis: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--surface);
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--surface);
+}
+
+.u-screen-reader {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 10;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.45rem 0.6rem;
+  background: var(--ink);
+  color: var(--surface);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+a:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 0.25rem;
+}
+
+/* Homepage: one mark, one viewport. */
+body[data-page-family="directory"] {
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  place-items: center;
+  overflow: hidden;
+}
+
+.home-main {
+  display: grid;
+  place-items: center;
+}
+
+.home-logo {
+  color: var(--ink);
+}
+
+/* Content pages: semantic HTML rendered with markdown grammar. */
+.main {
+  width: min(calc(100% - (2 * var(--edge))), var(--measure));
+  margin: 0 auto;
+  padding: 4rem 0 6rem;
+}
+
+.document-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.75rem;
+  margin-bottom: 4rem;
+}
+
+.document-nav span {
+  opacity: 0.62;
+}
+
+.section {
+  margin: 0 0 2.75rem;
+  scroll-margin-top: 1rem;
+}
+
+.section-head {
+  margin: 0 0 0.75rem;
+}
+
+.section-title {
+  margin: 0;
+  font: inherit;
+}
+
+h1.section-title::before {
+  content: "# ";
+}
+
+h2.section-title::before {
+  content: "## ";
+}
+
+.body-lines {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.body-lines > * {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.body-lines p {
+  margin: 0;
+}
+
+.entry-sub,
+.document-meta {
+  opacity: 0.62;
+}
+
+.entry-head,
+.entry-sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 0.75rem;
+}
+
+.entry-head::before {
+  content: "- ";
+}
+
+.entry-sub {
+  padding-left: 2ch;
+  font-style: normal;
+}
+
+.entry-sub::before {
+  content: "> ";
+}
+
+.entry-head span:last-child::before,
+.entry-sub span:last-child::before {
+  content: "— ";
+}
+
+.main a,
+.error-main a {
+  overflow-wrap: anywhere;
+  text-decoration: none;
+}
+
+.main a::before,
+.error-main a::before {
+  content: "[";
+}
+
+.main a::after,
+.error-main a::after {
+  content: "](" attr(href) ")";
+  opacity: 0.62;
+}
+
+.main a:hover,
+.main a:focus-visible,
+.error-main a:hover,
+.error-main a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.document-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1rem;
+  margin-top: 4rem;
+}
+
+.document-footer::before {
+  content: "---";
+  flex-basis: 100%;
+}
+
+.document-footer [aria-current="page"] {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+/* Error pages use the same document language. */
+body[data-page-family="error"] {
+  display: grid;
+  min-height: 100vh;
+  min-height: 100svh;
+  place-items: center;
+}
+
+.error-main {
+  width: min(calc(100% - (2 * var(--edge))), 48ch);
+}
+
+.error-main h1,
+.error-main p {
+  margin: 0 0 0.75rem;
+  font: inherit;
+}
+
+.error-main h1::before {
+  content: "# ";
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding-block: 2rem 4rem;
+  }
+
+  .document-nav {
+    margin-bottom: 3rem;
+  }
+
+  .entry-head,
+  .entry-sub {
+    display: block;
+  }
+
+  .entry-head::before,
+  .entry-sub::before {
+    float: left;
+    margin-right: 1ch;
+  }
+
+  .entry-head span,
+  .entry-sub span {
+    display: block;
+  }
+}
