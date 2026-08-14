@@ -7,8 +7,6 @@
   --ink-muted: rgba(var(--ink-rgb), 0.62);
   --line: rgba(var(--ink-rgb), 0.28);
   --line-soft: rgba(var(--ink-rgb), 0.11);
-  --grid-line: rgba(var(--ink-rgb), 0.13);
-  --grid-line-major: rgba(var(--ink-rgb), 0.24);
   --panel: rgba(var(--ink-rgb), 0.025);
   --grid-shift-x: 0px;
   --grid-shift-y: 0px;
@@ -19,7 +17,6 @@
   --speed: 180ms;
   --document-nav-height: 3rem;
   --section-bar-height: 3.25rem;
-  --document-gutter: clamp(1.5rem, 5vmin, 8rem);
   font-synthesis: none;
 }
 
@@ -35,39 +32,22 @@
 }
 
 html {
-  position: relative;
   background: var(--surface);
   scroll-behavior: smooth;
   scrollbar-color: var(--line) var(--surface);
 }
 
-html::before {
-  position: fixed;
-  z-index: 0;
-  inset: -4rem;
-  content: "";
-  pointer-events: none;
-  background-image:
-    linear-gradient(var(--grid-line-major) 2px, transparent 2px),
-    linear-gradient(90deg, var(--grid-line-major) 2px, transparent 2px),
-    linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-  background-position: -2px -2px;
-  background-size:
-    192px 192px,
-    192px 192px,
-    48px 48px,
-    48px 48px;
-  transform: translate3d(var(--grid-shift-x), var(--grid-shift-y), 0);
-}
-
 body {
-  position: relative;
-  z-index: 1;
   min-height: 100vh;
   margin: 0;
   overflow-x: hidden;
-  background: transparent;
+  background-color: var(--surface);
+  background-image:
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-position:
+    calc(-1px + var(--grid-shift-x)) calc(-1px + var(--grid-shift-y));
+  background-size: 48px 48px;
   color: var(--ink);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
@@ -309,33 +289,20 @@ body[data-page-family="directory"] {
 
 /* Content pages: one outer frame with full-width section bands. */
 body[data-page-family="document"] {
-  display: grid;
-  width: 100%;
-  height: 100vh;
-  height: 100svh;
-  min-height: 0;
-  padding: var(--document-gutter);
-  overflow: hidden;
-  place-items: stretch center;
+  padding-block: var(--edge);
+  padding-inline: var(--edge);
+  padding-top: clamp(2rem, 5vh, 4rem);
 }
 
 .main {
   width: min(100%, var(--shell));
-  height: 100%;
-  min-height: 0;
   margin-inline: auto;
-  overflow-x: hidden;
-  overflow-y: auto;
   border: 1px solid var(--line);
   background-color: var(--surface);
   box-shadow:
     0 0 0 1px var(--surface),
     0 0 0 2px var(--line-soft);
   counter-reset: document-section;
-  overscroll-behavior: contain;
-  scroll-behavior: smooth;
-  scrollbar-color: var(--line) var(--surface);
-  scrollbar-gutter: stable;
 }
 
 .main::before {
@@ -350,11 +317,6 @@ body[data-page-family="document"] {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-}
-
-.main:focus-visible {
-  outline: 1px solid var(--ink);
-  outline-offset: 0.35rem;
 }
 
 .document-nav {
@@ -693,10 +655,6 @@ body[data-page-family="error"] {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  html::before {
-    will-change: transform;
-  }
-
   .home-logo:hover {
     background: var(--ink);
     color: var(--surface);
@@ -729,25 +687,15 @@ body[data-page-family="error"] {
 
 @media (max-width: 860px) {
   body[data-page-family="document"] {
-    display: block;
-    height: auto;
-    min-height: 100vh;
-    min-height: 100svh;
-    padding: 0;
-    overflow: visible;
+    padding-block: var(--edge);
+    padding-inline: 0;
   }
 
   .main {
     width: 100%;
-    height: auto;
-    min-height: 0;
-    overflow: visible;
     border-right: 0;
     border-left: 0;
     box-shadow: none;
-    overscroll-behavior: auto;
-    scroll-behavior: auto;
-    scrollbar-gutter: auto;
   }
 }
 

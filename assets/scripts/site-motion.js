@@ -16,7 +16,7 @@
 
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const travel = { x: 12, y: 8 };
+  const travel = { x: 14, y: 10 };
   const current = { x: 0, y: 0 };
   const target = { x: 0, y: 0 };
   let animationFrame = 0;
@@ -28,10 +28,8 @@
   };
 
   const animate = (time) => {
-    const frameDuration = previousTime
-      ? Math.min(time - previousTime, 50)
-      : 16.67;
-    const easing = 1 - Math.pow(0.96, frameDuration / 16.67);
+    const frameDuration = previousTime ? Math.min(time - previousTime, 50) : 16.67;
+    const easing = 1 - Math.pow(0.945, frameDuration / 16.67);
     previousTime = time;
 
     current.x += (target.x - current.x) * easing;

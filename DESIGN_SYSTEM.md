@@ -9,21 +9,19 @@ without becoming visually empty.
 1. Use only the near-black and off-white tones defined in
    `assets/styles/markdown.css`. Their foreground/background roles follow the
    operating-system theme; muted states use opacity, not extra colors.
-2. Build visual hierarchy with one-pixel frames, two-scale drafting grids,
-   guide lines, numbered sections, file bars, and markdown grammar.
-3. Use one outer document frame. On larger screens it is a viewport-contained
-   card with visible canvas on every side and its own scroll area. Section bands
-   span that frame, while copy sits in a centered, unboxed `96ch` maximum reading
-   measure. Long documents keep a sticky back row and one current section band
-   visible while scrolling.
+2. Build visual hierarchy with one-pixel frames, drafting grids, guide lines,
+   numbered sections, file bars, and markdown grammar.
+3. Use one outer document frame. Section bands span that frame, while copy sits
+   in a centered, unboxed `96ch` maximum reading measure. Long documents keep a
+   sticky back row and one current section band visible while scrolling.
 4. Keep the homepage centered on the Kaizōsha mark. Four equal product cells
    fill the canvas behind it; product names remain plain text rather than app
    links or separate pages.
 5. Use the system monospace stack. Do not load web fonts, icon libraries, or
    frontend dependencies.
 6. Motion is restrained and structural: entrance, color inversion, focus, and
-   slow pointer-driven grid drift on one composited layer. Disable pointer
-   motion for touch and reduced motion preferences.
+   slow pointer-driven grid drift. Disable pointer motion for touch and reduced
+   motion preferences.
 7. Preserve semantic HTML, plain language, company metadata, creator metadata,
    legal content, and keyboard access.
 
@@ -31,9 +29,9 @@ without becoming visually empty.
 
 | Element | Treatment |
 | --- | --- |
-| Canvas | 48px minor grid + 192px major grid with subtle pointer drift |
+| Canvas | 48px two-tone drafting grid with subtle pointer drift |
 | File bar | Inverted off-white row with `[ filename.md ]` |
-| Reading shell | One 76rem maximum floating card above 860px |
+| Reading shell | One 76rem maximum outer frame |
 | Document navigation | Sticky `[ ← Back ]` row with the current document name |
 | Section | Full-width ruled band, markdown heading, two-digit counter |
 | Current section | One sticky inverted section band beneath document navigation |
@@ -50,7 +48,7 @@ without becoming visually empty.
 | Family | Pages | Visible structure |
 | --- | --- | --- |
 | `directory` | Homepage | Framed README canvas, equal product grid, centered Kaizōsha mark |
-| `document` | Terms, Privacy, Contact | Floating card, sticky navigation, full-width sections, related links |
+| `document` | Terms, Privacy, Contact | File bar, breadcrumb, full-width sections, related links |
 | `error` | 404 | Framed `404.md` panel and one home link |
 
 ## Foundations
@@ -62,8 +60,7 @@ without becoming visually empty.
 - Base size: `13px`; `12px` below 640px
 - Reading width: `96ch` maximum, without a visible inner container
 - Shell width: `76rem`
-- Grid units: `48px` minor and `192px` major
-- Desktop document gutter: `clamp(1.5rem, 5vmin, 8rem)`
+- Grid unit: `48px`
 - Transition duration: `180ms`
 - Sticky document rows: `3rem` navigation + `3.25rem` current section
 
@@ -77,11 +74,10 @@ Document footer geometry uses four equal columns on desktop and two equal
 columns on small screens. Fine-pointer devices reveal footer link text on
 hover or keyboard focus; touch devices keep it visible.
 
-Above 860px, document pages fill the available card height and scroll inside
-the frame, leaving the same minimum canvas gutter on all four sides. At 860px
-and below, the decorative gutter and internal scrolling are removed in favor of
-normal edge-to-edge page flow. The back row and current section bar stay visible
-in both modes without covering anchored sections.
+Document pages use a larger top gutter on wide screens while keeping the normal
+edge spacing on the other sides. Below 860px, only the inline gutter is removed;
+the balanced block gutter remains. The back row and current section bar stay
+visible without covering anchored sections.
 
 ## Responsive and accessibility contract
 
