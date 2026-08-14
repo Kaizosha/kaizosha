@@ -84,12 +84,36 @@
       }
     </script>
     <link rel="stylesheet" href="/assets/styles/brand.css?v=20260814-two-tone">
-    <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260814-system-theme">
-    <script src="/assets/scripts/site-motion.js?v=20260814-grid-motion" defer></script>
+    <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260814-product-grid">
+    <script src="/assets/scripts/site-motion.js?v=20260814-smooth-grid" defer></script>
+    <script src="/assets/scripts/home-products.js?v=20260814-product-grid" defer></script>
   </head>
   <body data-page-family="directory" data-page="home">
     <main class="home-main" data-file="README.md">
       <h1 class="u-screen-reader">Kaizōsha — Independent Software Studio</h1>
+
+      <header class="home-toolbar">
+        <span>[ README.md ]</span>
+        <nav class="home-pagination" aria-label="Product arrangements" data-product-controls hidden>
+          <button type="button" data-products-previous aria-label="Show previous product arrangement">[ PREV ]</button>
+          <span aria-hidden="true">/</span>
+          <button type="button" data-products-next aria-label="Show next product arrangement">[ NEXT ]</button>
+        </nav>
+      </header>
+
+      <div
+        class="home-products"
+        data-products='["Together","Sekai","Hush","modscan"]'
+        role="list"
+        aria-label="Products"
+        aria-live="polite"
+      >
+        <div class="product-cell" role="listitem"><span class="product-cell__name">Together</span></div>
+        <div class="product-cell" role="listitem"><span class="product-cell__name">Sekai</span></div>
+        <div class="product-cell" role="listitem"><span class="product-cell__name">Hush</span></div>
+        <div class="product-cell" role="listitem"><span class="product-cell__name">modscan</span></div>
+      </div>
+
       <div class="home-logo" aria-hidden="true">
         <span class="brand-lockup" aria-hidden="true">
           <span class="brand-lockup__mark">
@@ -99,6 +123,17 @@
           </span>
         </span>
       </div>
+
+      <footer class="home-statusbar">
+        <nav class="home-legal" aria-label="Company pages">
+          <a href="/terms" aria-label="Terms">[ T ]</a>
+          <span aria-hidden="true">/</span>
+          <a href="/privacy" aria-label="Privacy">[ P ]</a>
+          <span aria-hidden="true">/</span>
+          <a href="/contact" aria-label="Contact">[ C ]</a>
+        </nav>
+        <span>001 / KAIZŌSHA / EOF</span>
+      </footer>
     </main>
   </body>
 </html>

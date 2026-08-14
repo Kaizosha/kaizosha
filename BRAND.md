@@ -7,8 +7,8 @@ the homepage. Its bar and glyph geometry lives in
 
 ## Rules
 
-- Keep the mark centered and decorative to assistive technology; the homepage
-  H1 provides the accessible company name.
+- Keep the mark centered above the equal product grid and decorative to
+  assistive technology; the homepage H1 provides the accessible company name.
 - Render bars and glyphs with `currentColor` so the mark follows the system
   theme and can invert cleanly with its two-tone hover panel.
 - Preserve the shared desktop and mobile proportions. Page styles may position

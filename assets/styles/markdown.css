@@ -101,7 +101,7 @@ a:focus-visible {
   outline-offset: 0.25rem;
 }
 
-/* Homepage: a single logo presented as a framed markdown artifact. */
+/* Homepage: a centered mark over four equal product cells. */
 body[data-page-family="directory"] {
   display: grid;
   min-height: 100vh;
@@ -119,20 +119,6 @@ body[data-page-family="directory"] {
   min-height: 24rem;
   border: 1px solid var(--line);
   background-color: var(--surface);
-  background-image:
-    linear-gradient(
-      90deg,
-      transparent calc(50% - 0.5px),
-      var(--line-soft) calc(50% - 0.5px),
-      var(--line-soft) calc(50% + 0.5px),
-      transparent calc(50% + 0.5px)
-    ),
-    linear-gradient(
-      transparent calc(50% - 0.5px),
-      var(--line-soft) calc(50% - 0.5px),
-      var(--line-soft) calc(50% + 0.5px),
-      transparent calc(50% + 0.5px)
-    );
   box-shadow:
     0 0 0 1px var(--surface),
     0 0 0 2px var(--line-soft);
@@ -141,8 +127,8 @@ body[data-page-family="directory"] {
   animation: frame-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.home-main::before,
-.home-main::after {
+.home-toolbar,
+.home-statusbar {
   position: absolute;
   z-index: 2;
   right: 0;
@@ -158,21 +144,111 @@ body[data-page-family="directory"] {
   text-transform: uppercase;
 }
 
-.home-main::before {
-  content: "[ " attr(data-file) " ]";
+.home-toolbar {
   top: 0;
+  justify-content: space-between;
   border-bottom: 1px solid var(--line);
 }
 
-.home-main::after {
-  content: "001 / kaizōsha / eof";
+.home-statusbar {
   bottom: 0;
-  justify-content: flex-end;
+  justify-content: space-between;
   border-top: 1px solid var(--line);
+}
+
+.home-pagination,
+.home-legal {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.home-pagination[hidden] {
+  display: none;
+}
+
+.home-pagination button,
+.home-statusbar a {
+  margin: 0;
+  padding: 0.2rem 0.25rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-decoration: none;
+  text-transform: inherit;
+  transition:
+    background-color var(--speed) ease,
+    color var(--speed) ease;
+}
+
+.home-pagination button {
+  cursor: pointer;
+}
+
+.home-pagination button:hover,
+.home-pagination button:focus-visible,
+.home-statusbar a:hover,
+.home-statusbar a:focus-visible {
+  background: var(--ink);
+  color: var(--surface);
+  outline-color: var(--ink);
+}
+
+.home-products {
+  position: absolute;
+  z-index: 0;
+  inset: 2.75rem 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+}
+
+.product-cell {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  background: var(--panel);
+  color: var(--ink-muted);
+}
+
+.product-cell:nth-child(odd) {
+  border-right: 1px solid var(--line);
+}
+
+.product-cell:nth-child(-n + 2) {
+  border-bottom: 1px solid var(--line);
+}
+
+.product-cell:nth-child(2),
+.product-cell:nth-child(4) {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.product-cell:nth-child(n + 3) {
+  align-items: flex-end;
+}
+
+.product-cell__name {
+  max-width: calc(50% - 1rem);
+  overflow-wrap: anywhere;
+  color: var(--ink);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.home-products.is-updating .product-cell__name {
+  animation: product-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .home-logo {
   position: relative;
+  z-index: 1;
   display: grid;
   width: clamp(15rem, 30vw, 21rem);
   min-height: clamp(14rem, 36vh, 19rem);
@@ -517,6 +593,17 @@ body[data-page-family="error"] {
   }
 }
 
+@keyframes product-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
   .home-logo:hover {
     background: var(--ink);
@@ -576,11 +663,23 @@ body[data-page-family="error"] {
     min-height: 26rem;
   }
 
-  .home-main::before,
-  .home-main::after {
+  .home-toolbar,
+  .home-statusbar {
     height: 2.5rem;
     padding-inline: 0.75rem;
     font-size: 0.62rem;
+  }
+
+  .home-products {
+    inset: 2.5rem 0;
+  }
+
+  .product-cell {
+    padding: 0.75rem;
+  }
+
+  .product-cell__name {
+    max-width: calc(50% - 0.5rem);
   }
 
   .home-logo {

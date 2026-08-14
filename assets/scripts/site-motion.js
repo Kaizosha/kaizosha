@@ -16,19 +16,24 @@
 
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-  const travel = { x: 16, y: 12 };
+  const travel = { x: 14, y: 10 };
   const current = { x: 0, y: 0 };
   const target = { x: 0, y: 0 };
   let animationFrame = 0;
+  let previousTime = 0;
 
   const writePosition = () => {
     motionRule.style.setProperty("--grid-shift-x", `${current.x.toFixed(2)}px`);
     motionRule.style.setProperty("--grid-shift-y", `${current.y.toFixed(2)}px`);
   };
 
-  const animate = () => {
-    current.x += (target.x - current.x) * 0.09;
-    current.y += (target.y - current.y) * 0.09;
+  const animate = (time) => {
+    const frameDuration = previousTime ? Math.min(time - previousTime, 50) : 16.67;
+    const easing = 1 - Math.pow(0.945, frameDuration / 16.67);
+    previousTime = time;
+
+    current.x += (target.x - current.x) * easing;
+    current.y += (target.y - current.y) * easing;
 
     if (
       Math.abs(target.x - current.x) < 0.02 &&
@@ -38,6 +43,7 @@
       current.y = target.y;
       writePosition();
       animationFrame = 0;
+      previousTime = 0;
       return;
     }
 
@@ -47,6 +53,7 @@
 
   const requestAnimation = () => {
     if (!animationFrame) {
+      previousTime = 0;
       animationFrame = window.requestAnimationFrame(animate);
     }
   };
@@ -75,6 +82,7 @@
       current.y = 0;
       window.cancelAnimationFrame(animationFrame);
       animationFrame = 0;
+      previousTime = 0;
       writePosition();
     }
   };

@@ -20,7 +20,9 @@ for file in brand.css markdown.css; do
   cp "$ROOT/assets/styles/$file" "$CLIENT/assets/styles/$file"
 done
 
-cp "$ROOT/assets/scripts/site-motion.js" "$CLIENT/assets/scripts/site-motion.js"
+for file in home-products.js site-motion.js; do
+  cp "$ROOT/assets/scripts/$file" "$CLIENT/assets/scripts/$file"
+done
 
 cp "$ROOT/assets/media/social/kaizosha-social-card-crafted-2026.png" \
   "$CLIENT/assets/media/social/kaizosha-social-card-crafted-2026.png"
