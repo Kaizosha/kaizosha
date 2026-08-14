@@ -40,6 +40,11 @@ Because the site has no executable browser code, its Content Security Policy
 sets scripts, connections, fonts, media, frames, forms, objects, and workers to
 `none`; only same-origin styles, images, and the manifest are allowed.
 
+The root `_headers` file mirrors the static response protections for
+Cloudflare Pages-style deployments where assets bypass the Worker. The build
+copies it into `dist/client/`, so either supported Cloudflare path receives the
+same restrictive policy and cache rules.
+
 ## Maintenance rules
 
 1. Change public routes in `tools/build-site.sh` and `sitemap.xml` together.
@@ -49,4 +54,5 @@ sets scripts, connections, fonts, media, frames, forms, objects, and workers to
 4. Do not add client-side JavaScript for presentational behavior.
 5. Update immutable asset query versions whenever their contents change.
 6. Keep the build allowlist explicit; never copy the whole repository.
-7. Run `tools/build-site.sh` and inspect `dist/client/` before publishing.
+7. Keep `_headers` and `tools/sites-static-worker.js` aligned.
+8. Run `tools/build-site.sh` and inspect `dist/client/` before publishing.

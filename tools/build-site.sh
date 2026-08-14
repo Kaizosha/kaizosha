@@ -9,7 +9,7 @@ CLIENT="$DIST/client"
 rm -rf "$DIST"
 mkdir -p "$CLIENT" "$DIST/server"
 
-for file in 404.html contact.html index.html privacy.html terms.html \
+for file in _headers 404.html contact.html index.html privacy.html terms.html \
   icon.png robots.txt site.webmanifest sitemap.xml; do
   cp "$ROOT/$file" "$CLIENT/$file"
 done
