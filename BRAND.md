@@ -1,17 +1,21 @@
 # Kaizōsha Brand System
 
-The public site uses one visible brand asset: the three-part Kaizōsha icon on
-the homepage. Its structure and responsive dimensions live in
-`assets/styles/brand.css`.
+The public site uses one visible brand asset: the three-part Kaizōsha mark on
+the homepage. Its bar and glyph geometry lives in
+`assets/styles/brand.css`; its framed presentation lives in
+`assets/styles/markdown.css`.
 
 ## Rules
 
-- Keep the mark centered on the homepage and decorative to assistive
-  technology; the page H1 supplies the accessible company name.
-- Render the bars and glyphs in the current off-white ink on the near-black
-  surface. Do not add an accent color, gradient, texture, shadow, animation, or
-  hover transformation.
-- Keep the icon at its shared desktop and mobile sizes. Page styles must not
-  redefine individual bars or glyphs.
-- Preserve the canonical text `Kaizōsha` in titles, metadata, and structured
-  data.
+- Keep the mark centered and decorative to assistive technology; the homepage
+  H1 provides the accessible company name.
+- Render bars and glyphs with `currentColor` so the mark can invert cleanly
+  with its two-tone hover panel.
+- Preserve the shared desktop and mobile proportions. Page styles may position
+  the complete mark but must not redefine individual bars or glyphs.
+- Use no accent color, gradient, glow, bevel, raster texture, or external logo
+  library.
+- Keep motion restrained to the shared entrance and panel transition, and
+  respect reduced-motion preferences.
+- Preserve the canonical text `Kaizōsha` in titles, metadata, structured data,
+  and social previews.

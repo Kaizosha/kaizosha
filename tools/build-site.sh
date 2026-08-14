@@ -20,8 +20,8 @@ for file in brand.css markdown.css; do
   cp "$ROOT/assets/styles/$file" "$CLIENT/assets/styles/$file"
 done
 
-cp "$ROOT/assets/media/social/kaizosha-social-card-markdown-2026.png" \
-  "$CLIENT/assets/media/social/kaizosha-social-card-markdown-2026.png"
+cp "$ROOT/assets/media/social/kaizosha-social-card-crafted-2026.png" \
+  "$CLIENT/assets/media/social/kaizosha-social-card-crafted-2026.png"
 cp "$ROOT/tools/sites-static-worker.js" "$DIST/server/index.js"
 
 printf 'Built static site in %s\n' "$DIST"

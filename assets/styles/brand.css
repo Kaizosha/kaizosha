@@ -31,10 +31,6 @@
   line-height: 1;
 }
 
-.brand-lockup__copy {
-  display: none;
-}
-
 @media (max-width: 640px) {
   .brand-lockup__mark {
     gap: 10px;
