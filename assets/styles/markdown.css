@@ -15,6 +15,8 @@
   --edge: clamp(0.75rem, 2vw, 1.5rem);
   --pad: clamp(1rem, 2.5vw, 1.5rem);
   --speed: 180ms;
+  --document-file-bar-height: 2.75rem;
+  --document-file-bar-offset: 0px;
   --document-nav-height: 3rem;
   --section-bar-height: 3.25rem;
   --document-sticky-top: 0px;
@@ -308,7 +310,7 @@ body[data-page-family="document"] {
 .main::before {
   content: "[ " attr(data-file) " ]";
   display: flex;
-  min-height: 2.75rem;
+  min-height: var(--document-file-bar-height);
   align-items: center;
   padding: 0 1rem;
   background: var(--ink);
@@ -322,7 +324,7 @@ body[data-page-family="document"] {
 .document-nav {
   position: sticky;
   z-index: 12;
-  top: var(--document-sticky-top);
+  top: calc(var(--document-sticky-top) + var(--document-file-bar-offset));
   display: grid;
   height: var(--document-nav-height);
   align-items: center;
@@ -371,14 +373,18 @@ body.document-is-scrolled .document-nav {
   background: var(--surface);
   counter-increment: document-section;
   scroll-margin-top: calc(
-    var(--document-nav-height) + var(--section-bar-height) + var(--edge)
+    var(--document-sticky-top) + var(--document-file-bar-offset) +
+      var(--document-nav-height) + var(--section-bar-height)
   );
 }
 
 .section-head {
   position: sticky;
   z-index: 10;
-  top: calc(var(--document-sticky-top) + var(--document-nav-height));
+  top: calc(
+    var(--document-sticky-top) + var(--document-file-bar-offset) +
+      var(--document-nav-height)
+  );
   display: grid;
   min-height: var(--section-bar-height);
   align-items: center;
@@ -687,8 +693,15 @@ body[data-page-family="error"] {
 
 @media (min-width: 861px) {
   body[data-page-family="document"] {
+    --document-file-bar-offset: var(--document-file-bar-height);
     --document-sticky-top: var(--edge);
     background-attachment: fixed;
+  }
+
+  .main::before {
+    position: sticky;
+    z-index: 14;
+    top: var(--document-sticky-top);
   }
 
   body[data-page-family="document"]::before {
@@ -707,18 +720,7 @@ body[data-page-family="error"] {
     background-position:
       calc(-1px + var(--grid-shift-x)) calc(-1px + var(--grid-shift-y));
     background-size: 48px 48px;
-    opacity: 0;
-    transition: opacity var(--speed) ease;
-  }
-
-  body[data-page-family="document"].document-is-scrolled::before {
     opacity: 1;
-  }
-
-  body.document-is-scrolled .document-nav {
-    box-shadow:
-      inset 0 1px 0 var(--line),
-      0 0.75rem 1rem rgba(var(--surface-rgb), 0.88);
   }
 }
 

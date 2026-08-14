@@ -62,7 +62,8 @@ without becoming visually empty.
 - Shell width: `76rem`
 - Grid unit: `48px`
 - Transition duration: `180ms`
-- Sticky document rows: `3rem` navigation + `3.25rem` current section
+- Wide-screen sticky document rows: `2.75rem` file bar + `3rem` navigation +
+  `3.25rem` current section
 
 The homepage shows product names as non-interactive text in four equal cells.
 Its top bar owns arrangement controls, and its bottom-left bar owns compact
@@ -75,9 +76,9 @@ columns on small screens. Fine-pointer devices reveal footer link text on
 hover or keyboard focus; touch devices keep it visible.
 
 Document pages keep equal outer spacing above and below the frame. On wide,
-scrolling documents, the sticky rows retain that top spacing and reveal the
-same fixed grid canvas after the opening frame has moved away. Below 860px,
-only the inline gutter is removed; the balanced block gutter remains.
+scrolling documents, the file bar, navigation, and current section remain one
+continuous sticky stack beneath the fixed grid gutter. Below 860px, only the
+inline gutter is removed; the balanced block gutter remains.
 
 ## Responsive and accessibility contract
 
