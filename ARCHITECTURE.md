@@ -17,8 +17,8 @@ document scroll context.
 
 The creator identity remains in page metadata and structured data. It is not a
 visible page, homepage link, app item, or legal-navigation entry.
-The internal brand line is likewise non-visual and appears only in homepage
-description metadata and the Organization `slogan` field.
+The brand line appears in the homepage company introduction, description
+metadata, and the Organization `slogan` field.
 
 ## Shared layers
 
@@ -33,8 +33,9 @@ description metadata and the Organization `slogan` field.
 - `assets/scripts/home-products.js` runs only on the homepage. It closes the
   company introduction with a reduced-motion-aware transition, reopens it from
   the centered mark, fills the four cells from the catalog embedded in
-  `data-products`, balances repeats when the catalog is shorter than the grid,
-  and keeps a stable previous/next history.
+  `data-products`, keeps each name paired with its GitHub repository, balances
+  repeats when the catalog is shorter than the grid, and keeps a stable
+  previous/next history.
   Candidate scoring strongly avoids the same product in the same recent slot
   and favors products that have appeared less recently as the catalog grows.
 - `assets/scripts/document-navigation.js` runs only on document pages. A
@@ -64,7 +65,7 @@ section form one continuous sticky stack beneath a fixed grid gutter. The
 homepage uses a fixed viewport frame containing a real 2×2 product grid,
 centered logo button, dismissible company introduction, top arrangement
 controls, and bottom status bar. Product cells stay equal on every viewport and
-are not links.
+link directly to their GitHub repositories.
 
 ## Build and Cloudflare handoff
 

@@ -63,6 +63,9 @@
   }
 
   const cells = Array.from(productGrid.querySelectorAll(".product-cell__name"));
+  const productLinks = new Map(
+    cells.map((cell) => [cell.textContent.trim(), cell.href]),
+  );
   let products = [];
 
   try {
@@ -76,7 +79,7 @@
       products
         .filter((product) => typeof product === "string")
         .map((product) => product.trim())
-        .filter(Boolean),
+        .filter((product) => product && productLinks.has(product)),
     ),
   );
 
@@ -191,7 +194,11 @@
 
   const render = () => {
     cells.forEach((cell, index) => {
-      cell.textContent = history[historyIndex][index];
+      const product = history[historyIndex][index];
+
+      cell.textContent = product;
+      cell.href = productLinks.get(product);
+      cell.setAttribute("aria-label", `View ${product} on GitHub`);
     });
 
     productGrid.classList.remove("is-updating");

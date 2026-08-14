@@ -16,7 +16,8 @@ without becoming visually empty.
    sticky back row and one current section band visible while scrolling.
 4. Open the homepage with a compact company-introduction panel above the
    centered Kaizōsha mark. Four equal product cells fill the canvas behind it;
-   product names remain plain text rather than app links or separate pages.
+   product names link directly to their GitHub repositories rather than local
+   app pages.
 5. Use the system monospace stack. Do not load web fonts, icon libraries, or
    frontend dependencies.
 6. Motion is restrained and structural: entrance, color inversion, focus, and
@@ -39,7 +40,7 @@ without becoming visually empty.
 | Link | Literal `[label](href)`, inverted on hover/focus |
 | Metadata | Rendered like an HTML comment |
 | Footer | Four equal related-link cells; text reveals on fine-pointer hover |
-| Homepage grid | Four equal product cells with names aligned to the outer corners |
+| Homepage grid | Four equal GitHub-linked product cells with names aligned to the outer corners |
 | Homepage mark | Centered fenced-code button that reopens company information |
 | Homepage introduction | Centered `COMPANY.md` panel with legal identity and `[ EXPLORE ]` |
 | Homepage controls | Stable `[ PREV ] / [ NEXT ]` arrangement history |
@@ -69,12 +70,12 @@ without becoming visually empty.
 The homepage first presents the legal company identity, location, focused
 software profile, domain email, and one Explore action in a dismissible markdown
 panel. Clicking the centered mark reopens that panel. Product names remain
-non-interactive text in four equal cells underneath. Its top bar owns arrangement
-controls; the bottom-left bar spells out Terms, Privacy, and Contact above 640px
-and uses `[ T ] / [ P ] / [ C ]` at smaller sizes. The logo remains centered at
-every screen size, and browser zoom is disabled only there through the homepage
-viewport metadata. If the catalog has fewer products than cells, names repeat
-in balanced batches.
+direct GitHub repository links in four equal cells underneath. Its top bar owns
+arrangement controls; the bottom-left bar spells out Terms, Privacy, and Contact
+above 640px and uses `[ T ] / [ P ] / [ C ]` at smaller sizes. The logo remains
+centered at every screen size, and browser zoom is disabled only there through
+the homepage viewport metadata. If the catalog has fewer products than cells,
+names repeat in balanced batches.
 
 Document footer geometry uses four equal columns on desktop and two equal
 columns on small screens. Fine-pointer devices reveal footer link text on

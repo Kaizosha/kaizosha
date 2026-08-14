@@ -383,6 +383,19 @@ body[data-page-family="directory"] {
   color: var(--ink);
   font-weight: 600;
   letter-spacing: 0.02em;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+  transition:
+    background-color var(--speed) ease,
+    color var(--speed) ease;
+}
+
+.product-cell__name:hover,
+.product-cell__name:focus-visible {
+  background: var(--ink);
+  color: var(--surface);
+  outline-color: var(--ink);
+  text-decoration: none;
 }
 
 .home-products.is-updating .product-cell__name {
