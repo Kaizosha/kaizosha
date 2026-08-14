@@ -56,11 +56,11 @@ file bar → sticky back row → sticky current section → section copy → rel
 Section copy uses a centered `96ch` maximum measure without a second border or
 container. At 860px and below, the shell removes its outer side borders. At
 640px and below, type, sticky row heights, mark dimensions, data rows, and the
-footer adapt to the smaller canvas. Document pages use a larger top gutter on
-wider screens while keeping standard edge spacing elsewhere. The homepage uses
-a fixed viewport frame containing a real 2×2 product grid, centered logo overlay,
-top arrangement controls, and bottom status bar. Product cells stay equal on
-every viewport and are not links.
+footer adapt to the smaller canvas. Document pages keep balanced block gutters
+at rest; on wider screens, sticky document rows preserve the top gutter during
+long-page scrolling. The homepage uses a fixed viewport frame containing a real
+2×2 product grid, centered logo overlay, top arrangement controls, and bottom
+status bar. Product cells stay equal on every viewport and are not links.
 
 ## Build and Cloudflare handoff
 

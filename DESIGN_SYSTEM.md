@@ -74,10 +74,10 @@ Document footer geometry uses four equal columns on desktop and two equal
 columns on small screens. Fine-pointer devices reveal footer link text on
 hover or keyboard focus; touch devices keep it visible.
 
-Document pages use a larger top gutter on wide screens while keeping the normal
-edge spacing on the other sides. Below 860px, only the inline gutter is removed;
-the balanced block gutter remains. The back row and current section bar stay
-visible without covering anchored sections.
+Document pages keep equal outer spacing above and below the frame. On wide,
+scrolling documents, the sticky rows retain that top spacing after the opening
+frame has moved away. Below 860px, only the inline gutter is removed; the
+balanced block gutter remains.
 
 ## Responsive and accessibility contract
 

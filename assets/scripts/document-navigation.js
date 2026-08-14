@@ -15,7 +15,10 @@
     animationFrame = 0;
 
     const navBounds = documentNav.getBoundingClientRect();
-    const isScrolled = window.scrollY > 0 && navBounds.top <= 0.5;
+    const stickyTop = Number.parseFloat(
+      window.getComputedStyle(documentNav).top
+    ) || 0;
+    const isScrolled = window.scrollY > 0 && navBounds.top <= stickyTop + 0.5;
     let nextSection = sections[0];
 
     for (const section of sections) {
