@@ -3,6 +3,17 @@
 
   const intro = document.querySelector("[data-home-intro]");
   const introClose = intro?.querySelector("[data-home-intro-close]");
+  const introOpen = document.querySelector("[data-home-intro-open]");
+
+  const syncIntroState = () => {
+    introOpen?.setAttribute("aria-expanded", String(Boolean(intro?.open)));
+  };
+
+  intro?.addEventListener("close", () => {
+    intro.classList.remove("is-closing");
+    syncIntroState();
+    introOpen?.focus({ preventScroll: true });
+  });
 
   if (intro && introClose && typeof intro.close === "function") {
     introClose.addEventListener("click", (event) => {
@@ -22,6 +33,25 @@
       }, 180);
     });
   }
+
+  introOpen?.addEventListener("click", () => {
+    if (!intro || intro.open) {
+      return;
+    }
+
+    intro.classList.remove("is-closing");
+
+    if (typeof intro.show === "function") {
+      intro.show();
+    } else {
+      intro.setAttribute("open", "");
+    }
+
+    syncIntroState();
+    introClose?.focus({ preventScroll: true });
+  });
+
+  syncIntroState();
 
   const productGrid = document.querySelector(".home-products[data-products]");
   const controls = document.querySelector("[data-product-controls]");

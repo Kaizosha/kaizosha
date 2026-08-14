@@ -6,8 +6,8 @@
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="#101010" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f4f4ef" media="(prefers-color-scheme: light)">
-    <title>Kaizōsha — Independent Software Studio</title>
-    <meta name="description" content="From Me Comes The Future — Kaizōsha builds Apple-platform apps, on-device AI, translation tools, and open-source software.">
+    <title>Kaizōsha — Software Company</title>
+    <meta name="description" content="From Me Comes The Future — Kaizōsha is a product-focused software company creating applications and tools for Apple platforms and the web.">
     <meta name="author" content="Kaizō Konpaku">
     <meta name="creator" content="Kaizō Konpaku">
     <meta name="publisher" content="Kaizōsha">
@@ -18,8 +18,8 @@
     <link rel="apple-touch-icon" href="https://kaizosha.org/icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="canonical" href="https://kaizosha.org/">
-    <meta property="og:title" content="Kaizōsha — Independent Software Studio">
-    <meta property="og:description" content="From Me Comes The Future — an independent software studio building Apple-platform apps and open-source software.">
+    <meta property="og:title" content="Kaizōsha — Software Company">
+    <meta property="og:description" content="From Me Comes The Future — a product-focused software company creating applications and tools for Apple platforms and the web.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kaizosha.org/">
     <meta property="og:site_name" content="Kaizōsha">
@@ -29,8 +29,8 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Kaizōsha presented inside a framed two-tone markdown canvas">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Kaizōsha — Independent Software Studio">
-    <meta name="twitter:description" content="From Me Comes The Future — an independent software studio building Apple-platform apps and open-source software.">
+    <meta name="twitter:title" content="Kaizōsha — Software Company">
+    <meta name="twitter:description" content="From Me Comes The Future — a product-focused software company creating applications and tools for Apple platforms and the web.">
     <meta name="twitter:image" content="https://kaizosha.org/assets/media/social/kaizosha-social-card-crafted-2026.png">
     <meta name="twitter:image:alt" content="Kaizōsha presented inside a framed two-tone markdown canvas">
     <meta name="twitter:site" content="@KaizoshaX">
@@ -47,6 +47,7 @@
             "name": "Kaizōsha",
             "legalName": "Kaizosha Private Limited",
             "alternateName": ["改造社", "Kaizosha"],
+            "description": "Kaizōsha is a product-focused software company creating applications and tools for Apple platforms and the web.",
             "slogan": "From Me Comes The Future",
             "url": "https://kaizosha.org/",
             "logo": "https://kaizosha.org/icon.png",
@@ -76,7 +77,8 @@
             "@type": "WebPage",
             "@id": "https://kaizosha.org/#webpage",
             "url": "https://kaizosha.org/",
-            "name": "Kaizōsha — Independent Software Studio",
+            "name": "Kaizōsha — Software Company",
+            "description": "Kaizōsha is a product-focused software company creating applications and tools for Apple platforms and the web.",
             "isPartOf": { "@id": "https://kaizosha.org/#website" },
             "author": { "@id": "https://kaizosha.org/#creator" },
             "inLanguage": "en"
@@ -85,15 +87,16 @@
       }
     </script>
     <link rel="stylesheet" href="/assets/styles/brand.css?v=20260814-two-tone">
-    <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260814-company-intro">
+    <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260814-software-profile">
     <script src="/assets/scripts/site-motion.js?v=20260814-smooth-grid" defer></script>
-    <script src="/assets/scripts/home-products.js?v=20260814-company-intro" defer></script>
+    <script src="/assets/scripts/home-products.js?v=20260814-software-profile" defer></script>
   </head>
   <body data-page-family="directory" data-page="home">
     <main class="home-main" data-file="README.md">
-      <h1 class="u-screen-reader">Kaizōsha — Independent Software Studio</h1>
+      <h1 class="u-screen-reader">Kaizōsha — Software Company</h1>
 
       <dialog
+        id="home-intro"
         class="home-intro"
         data-home-intro
         aria-labelledby="home-intro-title"
@@ -102,16 +105,23 @@
       >
         <div class="home-intro__file">[ COMPANY.md ]</div>
         <div class="home-intro__body">
-          <p class="home-intro__brand">Kaizōsha / Independent Software Studio</p>
+          <p class="home-intro__brand">Kaizōsha / Software Company</p>
           <h2 id="home-intro-title">Kaizosha Private Limited</h2>
-          <div id="home-intro-description">
-            <p>Independent software company based in Telangana, India.</p>
-            <p>
-              We build Apple-platform applications, on-device AI, translation
-              tools, and open-source software.
+          <div class="home-intro__description" id="home-intro-description">
+            <p class="home-intro__lead">
+              Kaizōsha creates carefully engineered applications and tools for
+              Apple platforms and the web.
+            </p>
+            <p class="home-intro__focus">
+              Our work spans on-device intelligence, language and media
+              technology, privacy-conscious experiences, and open-source
+              software.
             </p>
           </div>
-          <a class="home-intro__email" href="mailto:contact@kaizosha.org">contact@kaizosha.org</a>
+          <div class="home-intro__meta">
+            <span>Telangana, India</span>
+            <a class="home-intro__email" href="mailto:contact@kaizosha.org">contact@kaizosha.org</a>
+          </div>
         </div>
         <form method="dialog" class="home-intro__actions">
           <button type="submit" value="explore" data-home-intro-close>[ EXPLORE ]</button>
@@ -140,7 +150,15 @@
         <div class="product-cell" role="listitem"><span class="product-cell__name">modscan</span></div>
       </div>
 
-      <div class="home-logo" aria-hidden="true">
+      <button
+        class="home-logo"
+        type="button"
+        data-home-intro-open
+        aria-label="Open company information"
+        aria-controls="home-intro"
+        aria-expanded="true"
+        aria-haspopup="dialog"
+      >
         <span class="brand-lockup" aria-hidden="true">
           <span class="brand-lockup__mark">
             <span class="brand-lockup__unit"><span class="brand-lockup__bar"></span><span class="brand-lockup__glyph">改</span></span>
@@ -148,7 +166,7 @@
             <span class="brand-lockup__unit"><span class="brand-lockup__bar"></span><span class="brand-lockup__glyph">社</span></span>
           </span>
         </span>
-      </div>
+      </button>
 
       <footer class="home-statusbar">
         <nav class="home-legal" aria-label="Company pages">

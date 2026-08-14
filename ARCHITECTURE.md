@@ -31,9 +31,10 @@ description metadata and the Organization `slogan` field.
   on fine-pointer devices. Pages do not depend on it for layout or content, and
   it disables itself for reduced-motion and touch contexts.
 - `assets/scripts/home-products.js` runs only on the homepage. It closes the
-  company introduction with a reduced-motion-aware transition, fills the four
-  cells from the catalog embedded in `data-products`, balances repeats when the
-  catalog is shorter than the grid, and keeps a stable previous/next history.
+  company introduction with a reduced-motion-aware transition, reopens it from
+  the centered mark, fills the four cells from the catalog embedded in
+  `data-products`, balances repeats when the catalog is shorter than the grid,
+  and keeps a stable previous/next history.
   Candidate scoring strongly avoids the same product in the same recent slot
   and favors products that have appeared less recently as the catalog grows.
 - `assets/scripts/document-navigation.js` runs only on document pages. A
@@ -61,7 +62,7 @@ footer adapt to the smaller canvas. Document pages keep balanced block gutters
 at rest; on wider screens, the file bar, document navigation, and current
 section form one continuous sticky stack beneath a fixed grid gutter. The
 homepage uses a fixed viewport frame containing a real 2×2 product grid,
-centered logo overlay, dismissible company introduction, top arrangement
+centered logo button, dismissible company introduction, top arrangement
 controls, and bottom status bar. Product cells stay equal on every viewport and
 are not links.
 
