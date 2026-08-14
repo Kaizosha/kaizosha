@@ -14,9 +14,9 @@ without becoming visually empty.
 3. Use one outer document frame. Section bands span that frame, while copy sits
    in a centered, unboxed `96ch` maximum reading measure. Long documents keep a
    sticky back row and one current section band visible while scrolling.
-4. Keep the homepage centered on the Kaizōsha mark. Four equal product cells
-   fill the canvas behind it; product names remain plain text rather than app
-   links or separate pages.
+4. Open the homepage with a compact company-introduction panel above the
+   centered Kaizōsha mark. Four equal product cells fill the canvas behind it;
+   product names remain plain text rather than app links or separate pages.
 5. Use the system monospace stack. Do not load web fonts, icon libraries, or
    frontend dependencies.
 6. Motion is restrained and structural: entrance, color inversion, focus, and
@@ -41,13 +41,14 @@ without becoming visually empty.
 | Footer | Four equal related-link cells; text reveals on fine-pointer hover |
 | Homepage grid | Four equal product cells with names aligned to the outer corners |
 | Homepage mark | Centered fenced-code panel layered over the product grid |
+| Homepage introduction | Centered `COMPANY.md` panel with legal identity and `[ EXPLORE ]` |
 | Homepage controls | Stable `[ PREV ] / [ NEXT ]` arrangement history |
 
 ## Page families
 
 | Family | Pages | Visible structure |
 | --- | --- | --- |
-| `directory` | Homepage | Framed README canvas, equal product grid, centered Kaizōsha mark |
+| `directory` | Homepage | Company introduction, equal product grid, centered Kaizōsha mark |
 | `document` | Terms, Privacy, Contact | File bar, breadcrumb, full-width sections, related links |
 | `error` | 404 | Framed `404.md` panel and one home link |
 
@@ -65,11 +66,14 @@ without becoming visually empty.
 - Wide-screen sticky document rows: `2.75rem` file bar + `3rem` navigation +
   `3.25rem` current section
 
-The homepage shows product names as non-interactive text in four equal cells.
-Its top bar owns arrangement controls, and its bottom-left bar owns compact
-`[ T ] / [ P ] / [ C ]` links. The logo remains centered at every screen size,
-and browser zoom is disabled only there through the homepage viewport metadata.
-If the catalog has fewer products than cells, names repeat in balanced batches.
+The homepage first presents the legal company identity, location, work summary,
+domain email, and one Explore action in a dismissible markdown panel. Product
+names remain non-interactive text in four equal cells underneath. Its top bar
+owns arrangement controls; the bottom-left bar spells out Terms, Privacy, and
+Contact above 640px and uses `[ T ] / [ P ] / [ C ]` at smaller sizes. The logo
+remains centered at every screen size, and browser zoom is disabled only there
+through the homepage viewport metadata. If the catalog has fewer products than
+cells, names repeat in balanced batches.
 
 Document footer geometry uses four equal columns on desktop and two equal
 columns on small screens. Fine-pointer devices reveal footer link text on

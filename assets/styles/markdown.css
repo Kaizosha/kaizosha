@@ -132,6 +132,117 @@ body[data-page-family="directory"] {
   animation: frame-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+.home-intro {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 50%;
+  width: min(calc(100% - 3rem), 38rem);
+  max-width: none;
+  max-height: calc(100% - 7rem);
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  box-shadow:
+    0 0 0 1px var(--surface),
+    0 0 0 2px var(--line-soft),
+    0 1.5rem 3rem rgba(var(--surface-rgb), 0.28);
+  color: var(--ink);
+  transform: translate(-50%, -50%);
+  animation: intro-in 420ms 100ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.home-intro:not([open]) {
+  display: none;
+}
+
+.home-intro.is-closing {
+  pointer-events: none;
+  animation: intro-out var(--speed) ease both;
+}
+
+.home-intro__file {
+  display: flex;
+  min-height: 2.75rem;
+  align-items: center;
+  padding: 0 1rem;
+  background: var(--ink);
+  color: var(--surface);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.home-intro__body {
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.home-intro__brand {
+  margin: 0 0 1rem;
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.home-intro h2 {
+  margin: 0;
+  font: inherit;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.home-intro h2::before {
+  content: "# ";
+}
+
+.home-intro__body p:not(.home-intro__brand) {
+  margin: 1rem 0 0;
+}
+
+.home-intro__body p + p {
+  padding-top: 1rem;
+  border-top: 1px dashed var(--line-soft);
+}
+
+.home-intro__email {
+  display: inline-block;
+  margin-top: 1.25rem;
+  color: var(--ink-muted);
+  overflow-wrap: anywhere;
+  text-underline-offset: 0.2rem;
+}
+
+.home-intro__actions {
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+
+.home-intro__actions button {
+  min-height: 3.25rem;
+  padding: 0.75rem 1rem;
+  border: 0;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition:
+    background-color var(--speed) ease,
+    color var(--speed) ease;
+}
+
+.home-intro__actions button:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: -0.35rem;
+}
+
 .home-toolbar,
 .home-statusbar {
   position: absolute;
@@ -166,6 +277,10 @@ body[data-page-family="directory"] {
   display: flex;
   align-items: center;
   gap: 0.45rem;
+}
+
+.home-legal__compact {
+  display: none;
 }
 
 .home-pagination[hidden] {
@@ -660,7 +775,36 @@ body[data-page-family="error"] {
   }
 }
 
+@keyframes intro-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 0.5rem)) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes intro-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, calc(-50% - 0.25rem)) scale(0.99);
+  }
+}
+
 @media (hover: hover) and (pointer: fine) {
+  .home-intro__actions button:hover,
+  .home-intro__actions button:focus-visible {
+    background: var(--ink);
+    color: var(--surface);
+    outline-color: var(--ink);
+  }
+
   .home-logo:hover {
     background: var(--ink);
     color: var(--surface);
@@ -758,6 +902,42 @@ body[data-page-family="error"] {
     min-height: 26rem;
   }
 
+  .home-intro {
+    width: calc(100% - 1.5rem);
+    max-height: calc(100% - 6.5rem);
+  }
+
+  .home-intro__file {
+    min-height: 2.5rem;
+    padding-inline: 0.75rem;
+    font-size: 0.62rem;
+  }
+
+  .home-intro__body {
+    padding: 1rem;
+  }
+
+  .home-intro__brand {
+    margin-bottom: 0.75rem;
+    font-size: 0.62rem;
+  }
+
+  .home-intro__body p:not(.home-intro__brand) {
+    margin-top: 0.75rem;
+  }
+
+  .home-intro__body p + p {
+    padding-top: 0.75rem;
+  }
+
+  .home-intro__email {
+    margin-top: 1rem;
+  }
+
+  .home-intro__actions button {
+    min-height: 3rem;
+  }
+
   .home-toolbar,
   .home-statusbar {
     height: 2.5rem;
@@ -767,6 +947,14 @@ body[data-page-family="error"] {
 
   .home-products {
     inset: 2.5rem 0;
+  }
+
+  .home-legal__full {
+    display: none;
+  }
+
+  .home-legal__compact {
+    display: inline;
   }
 
   .product-cell {

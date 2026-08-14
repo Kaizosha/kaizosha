@@ -1,6 +1,28 @@
 (() => {
   "use strict";
 
+  const intro = document.querySelector("[data-home-intro]");
+  const introClose = intro?.querySelector("[data-home-intro-close]");
+
+  if (intro && introClose && typeof intro.close === "function") {
+    introClose.addEventListener("click", (event) => {
+      const reducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)",
+      );
+
+      if (reducedMotion.matches) {
+        return;
+      }
+
+      event.preventDefault();
+      intro.classList.add("is-closing");
+
+      window.setTimeout(() => {
+        intro.close("explore");
+      }, 180);
+    });
+  }
+
   const productGrid = document.querySelector(".home-products[data-products]");
   const controls = document.querySelector("[data-product-controls]");
   const previousButton = document.querySelector("[data-products-previous]");

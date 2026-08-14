@@ -85,13 +85,38 @@
       }
     </script>
     <link rel="stylesheet" href="/assets/styles/brand.css?v=20260814-two-tone">
-    <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260814-stacked-docs">
+    <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260814-company-intro">
     <script src="/assets/scripts/site-motion.js?v=20260814-smooth-grid" defer></script>
-    <script src="/assets/scripts/home-products.js?v=20260814-product-grid" defer></script>
+    <script src="/assets/scripts/home-products.js?v=20260814-company-intro" defer></script>
   </head>
   <body data-page-family="directory" data-page="home">
     <main class="home-main" data-file="README.md">
       <h1 class="u-screen-reader">Kaizōsha — Independent Software Studio</h1>
+
+      <dialog
+        class="home-intro"
+        data-home-intro
+        aria-labelledby="home-intro-title"
+        aria-describedby="home-intro-description"
+        open
+      >
+        <div class="home-intro__file">[ COMPANY.md ]</div>
+        <div class="home-intro__body">
+          <p class="home-intro__brand">Kaizōsha / Independent Software Studio</p>
+          <h2 id="home-intro-title">Kaizosha Private Limited</h2>
+          <div id="home-intro-description">
+            <p>Independent software company based in Telangana, India.</p>
+            <p>
+              We build Apple-platform applications, on-device AI, translation
+              tools, and open-source software.
+            </p>
+          </div>
+          <a class="home-intro__email" href="mailto:contact@kaizosha.org">contact@kaizosha.org</a>
+        </div>
+        <form method="dialog" class="home-intro__actions">
+          <button type="submit" value="explore" data-home-intro-close>[ EXPLORE ]</button>
+        </form>
+      </dialog>
 
       <header class="home-toolbar">
         <span>[ README.md ]</span>
@@ -127,11 +152,20 @@
 
       <footer class="home-statusbar">
         <nav class="home-legal" aria-label="Company pages">
-          <a href="/terms" aria-label="Terms">[ T ]</a>
+          <a href="/terms" aria-label="Terms">
+            <span class="home-legal__full">[ TERMS ]</span>
+            <span class="home-legal__compact" aria-hidden="true">[ T ]</span>
+          </a>
           <span aria-hidden="true">/</span>
-          <a href="/privacy" aria-label="Privacy">[ P ]</a>
+          <a href="/privacy" aria-label="Privacy">
+            <span class="home-legal__full">[ PRIVACY ]</span>
+            <span class="home-legal__compact" aria-hidden="true">[ P ]</span>
+          </a>
           <span aria-hidden="true">/</span>
-          <a href="/contact" aria-label="Contact">[ C ]</a>
+          <a href="/contact" aria-label="Contact">
+            <span class="home-legal__full">[ CONTACT ]</span>
+            <span class="home-legal__compact" aria-hidden="true">[ C ]</span>
+          </a>
         </nav>
         <span>001 / KAIZŌSHA / EOF</span>
       </footer>
