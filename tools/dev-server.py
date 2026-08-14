@@ -1,10 +1,24 @@
 #!/usr/bin/env python3
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
 import sys
+from urllib.parse import urlsplit
 
 
 class Custom404Handler(SimpleHTTPRequestHandler):
+    def translate_path(self, path):
+        translated = super().translate_path(path)
+        request_path = urlsplit(path).path
+        request_name = Path(request_path).name
+
+        if request_name and "." not in request_name:
+            html_path = f"{translated}.html"
+            if Path(html_path).is_file():
+                return html_path
+
+        return translated
+
     def send_error(self, code, message=None, explain=None):
         if code != HTTPStatus.NOT_FOUND:
             return super().send_error(code, message, explain)

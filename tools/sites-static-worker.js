@@ -27,12 +27,12 @@ const SECURITY_HEADERS = {
   "X-Frame-Options": "DENY",
 };
 
-function getCacheControl(pathname) {
+function getCacheControl(pathname, contentType) {
   if (pathname.startsWith("/assets/")) {
     return "public, max-age=31536000, immutable";
   }
 
-  if (pathname === "/" || pathname.endsWith(".html")) {
+  if (contentType.startsWith("text/html")) {
     return "public, max-age=300, s-maxage=300, stale-while-revalidate=86400";
   }
 
@@ -50,7 +50,10 @@ function withSiteHeaders(response, pathname) {
     headers.set(name, value);
   }
 
-  headers.set("Cache-Control", getCacheControl(pathname));
+  headers.set(
+    "Cache-Control",
+    getCacheControl(pathname, headers.get("Content-Type") || ""),
+  );
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,

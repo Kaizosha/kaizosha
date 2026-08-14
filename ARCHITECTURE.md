@@ -9,9 +9,9 @@ runs without client-side JavaScript.
 | Route | Role | Page family |
 | --- | --- | --- |
 | `/` | Centered company identity | `directory` |
-| `/terms.html` | Terms of Service | `document` |
-| `/privacy.html` | Privacy Policy | `document` |
-| `/contact.html` | Company contact channels | `document` |
+| `/terms` | Terms of Service | `document` |
+| `/privacy` | Privacy Policy | `document` |
+| `/contact` | Company contact channels | `document` |
 | `/404.html` | Unknown-route recovery | `error` |
 
 The creator identity remains in page metadata and structured data. It is not a
