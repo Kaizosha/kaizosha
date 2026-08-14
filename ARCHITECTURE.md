@@ -27,6 +27,9 @@ is not a public route, homepage project, or legal-navigation item.
   contain page-family composition only.
 - `assets/scripts/legal-docs.js` maintains document table-of-contents state and
   the small expandable entries used by document pages.
+- Document pages use a three-track desktop shell with a centered reading
+  column and equal outer spacing; below the document breakpoint, the rail
+  collapses and the content keeps symmetric inline padding.
 
 ## Build and Cloudflare handoff
 

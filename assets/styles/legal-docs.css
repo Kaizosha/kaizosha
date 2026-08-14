@@ -113,13 +113,18 @@ button {
 }
 
 .page-grid {
+  --document-side-min: 15rem;
   flex: 1;
   display: grid;
-  grid-template-columns: 22rem minmax(0, 1fr);
+  grid-template-columns:
+    minmax(var(--document-side-min), 1fr)
+    minmax(0, var(--ks-reading-width, 76ch))
+    minmax(var(--document-side-min), 1fr);
   min-height: 0;
 }
 
 .rail {
+  grid-column: 1;
   position: sticky;
   top: 0;
   align-self: start;
@@ -203,9 +208,11 @@ button {
 }
 
 .main {
+  grid-column: 2;
   min-width: 0;
-  max-width: 84ch;
-  padding: 2rem 2.5rem 4rem;
+  width: 100%;
+  max-width: none;
+  padding: 2rem clamp(1.25rem, 2.5vw, 2.5rem) 4rem;
 }
 
 .section {
@@ -459,7 +466,7 @@ button.entry-head {
   outline-offset: 0.25rem;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .page-grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -469,8 +476,9 @@ button.entry-head {
   }
 
   .main {
+    grid-column: 1;
     max-width: 100%;
-    padding: 1.5rem 1.25rem 3rem;
+    padding: 1.5rem clamp(1rem, 5vw, 2.5rem) 3rem;
   }
 
   .mobile-doc-brand {

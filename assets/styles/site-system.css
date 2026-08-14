@@ -60,7 +60,7 @@ body[data-page-family]:not([data-page-family="immersive"])
 
 body[data-page-family="document"] .main {
   width: 100%;
-  max-width: var(--ks-reading-width);
+  max-width: none;
 }
 
 body[data-page-family="document"] .section-num,

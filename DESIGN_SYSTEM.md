@@ -126,7 +126,11 @@ navigation and document-header format.
 
 - Required checks: `320x720`, `390x844`, `1024x768`, and `1440x900`.
 - `documentElement.scrollWidth` must never exceed the viewport width.
-- Document rails become a compact top identity/navigation surface.
+- Wide document pages use equal outer tracks around the centered reading
+  column: the left rail, reading column, and right breathing room stay aligned
+  as the viewport grows.
+- At narrower widths, the rail becomes a compact top identity/navigation
+  surface and the reading column keeps equal inline padding on both sides.
 - Controls stack before their labels wrap incoherently.
 - Text, logos, and status must never overlap.
 
