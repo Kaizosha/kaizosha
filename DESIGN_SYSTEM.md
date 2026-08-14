@@ -75,9 +75,9 @@ columns on small screens. Fine-pointer devices reveal footer link text on
 hover or keyboard focus; touch devices keep it visible.
 
 Document pages keep equal outer spacing above and below the frame. On wide,
-scrolling documents, the sticky rows retain that top spacing after the opening
-frame has moved away. Below 860px, only the inline gutter is removed; the
-balanced block gutter remains.
+scrolling documents, the sticky rows retain that top spacing and reveal the
+same fixed grid canvas after the opening frame has moved away. Below 860px,
+only the inline gutter is removed; the balanced block gutter remains.
 
 ## Responsive and accessibility contract
 

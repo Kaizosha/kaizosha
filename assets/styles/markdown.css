@@ -688,6 +688,37 @@ body[data-page-family="error"] {
 @media (min-width: 861px) {
   body[data-page-family="document"] {
     --document-sticky-top: var(--edge);
+    background-attachment: fixed;
+  }
+
+  body[data-page-family="document"]::before {
+    position: fixed;
+    z-index: 11;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: var(--document-sticky-top);
+    content: "";
+    pointer-events: none;
+    background-color: var(--surface);
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-position:
+      calc(-1px + var(--grid-shift-x)) calc(-1px + var(--grid-shift-y));
+    background-size: 48px 48px;
+    opacity: 0;
+    transition: opacity var(--speed) ease;
+  }
+
+  body[data-page-family="document"].document-is-scrolled::before {
+    opacity: 1;
+  }
+
+  body.document-is-scrolled .document-nav {
+    box-shadow:
+      inset 0 1px 0 var(--line),
+      0 0.75rem 1rem rgba(var(--surface-rgb), 0.88);
   }
 }
 
