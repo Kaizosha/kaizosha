@@ -5,8 +5,8 @@ the homepage. Its bar and glyph geometry lives in
 `assets/styles/brand.css`; its framed presentation lives in
 `assets/styles/markdown.css`.
 
-The brand subtitle is `From Me Comes The Future`. It appears once beneath the
-homepage mark on screens wider than 640px and is not repeated elsewhere.
+The internal brand line is `From Me Comes The Future`. It does not appear in
+rendered website content; its only public use is homepage metadata.
 
 ## Rules
 
@@ -22,5 +22,6 @@ homepage mark on screens wider than 640px and is not repeated elsewhere.
   respect reduced-motion preferences.
 - Preserve the canonical text `Kaizōsha` in titles, metadata, structured data,
   and social previews.
-- Preserve the subtitle's title case and use it only as supporting brand copy,
-  never as a page title, navigation item, product label, or metadata replacement.
+- Preserve the internal line's title case. Use it only in homepage descriptions
+  and the Organization `slogan`; never render it as a page title, subtitle,
+  navigation item, or product label.

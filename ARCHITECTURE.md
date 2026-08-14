@@ -16,6 +16,8 @@ scripts provide optional pointer motion and homepage product arrangements.
 
 The creator identity remains in page metadata and structured data. It is not a
 visible page, homepage link, app item, or legal-navigation entry.
+The internal brand line is likewise non-visual and appears only in homepage
+description metadata and the Organization `slogan` field.
 
 ## Shared layers
 
@@ -51,9 +53,8 @@ Section copy uses a centered `96ch` maximum measure without a second border or
 container. At 860px and below, the shell removes its outer side borders. At
 640px and below, type, mark dimensions, data rows, and the footer adapt to the
 smaller canvas. The homepage uses a fixed viewport frame containing a real 2×2
-product grid, centered logo/subtitle overlay, top arrangement controls, and
-bottom status bar. Product cells stay equal on every viewport and are not
-links. The subtitle is a homepage-only brand element hidden below 641px.
+product grid, centered logo overlay, top arrangement controls, and bottom
+status bar. Product cells stay equal on every viewport and are not links.
 
 ## Build and Cloudflare handoff
 
