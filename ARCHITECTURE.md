@@ -24,20 +24,21 @@ description metadata and the Organization `slogan` field.
 
 - `assets/styles/brand.css` defines the three-part Kaizōsha icon used on the
   homepage.
-- `assets/styles/markdown.css` owns the drafting grid, framed shells,
-  system themes, typography, markdown grammar, counters, interactions,
+- `assets/styles/markdown.css` owns the fixed two-scale drafting grid, framed
+  shells, system themes, typography, markdown grammar, counters, interactions,
   accessibility states, and responsive rules for every route.
-- `assets/scripts/site-motion.js` eases the background grid toward the pointer
-  on fine-pointer devices. Pages do not depend on it for layout or content, and
-  it disables itself for reduced-motion and touch contexts.
+- `assets/scripts/site-motion.js` eases the composited background grid toward
+  the pointer on fine-pointer devices. Pages do not depend on it for layout or
+  content, and it disables itself for reduced-motion and touch contexts.
 - `assets/scripts/home-products.js` runs only on the homepage. It fills the four
   cells from the catalog embedded in `data-products`, balances repeats when the
   catalog is shorter than the grid, and keeps a stable previous/next history.
   Candidate scoring strongly avoids the same product in the same recent slot
   and favors products that have appeared less recently as the catalog grows.
 - `assets/scripts/document-navigation.js` runs only on document pages. A
-  requestAnimationFrame-throttled scroll check marks the current section and
-  the sticky state; layout and navigation remain functional without it.
+  requestAnimationFrame-throttled check reads either the desktop card scroll or
+  mobile page scroll, then marks the current section and sticky state. Layout
+  and navigation remain functional without it.
 - `assets/media/social/kaizosha-social-card-crafted-2026.png` mirrors the
   framed README language for social previews without affecting page load.
 - HTML `data-file` attributes provide the decorative file labels rendered by
@@ -54,12 +55,15 @@ file bar → sticky back row → sticky current section → section copy → rel
 ```
 
 Section copy uses a centered `96ch` maximum measure without a second border or
-container. At 860px and below, the shell removes its outer side borders. At
-640px and below, type, sticky row heights, mark dimensions, data rows, and the
-footer adapt to the smaller canvas. Document pages retain equal top and bottom
-gutters at every width. The homepage uses a fixed viewport frame containing a
-real 2×2 product grid, centered logo overlay, top arrangement controls, and
-bottom status bar. Product cells stay equal on every viewport and are not links.
+container. Above 860px, the shell occupies the viewport minus one uniform outer
+gutter and becomes the scroll container, keeping the fixed grid visible around
+all four edges. At 860px and below, internal scrolling and decorative gutters
+are removed, the shell returns to normal page flow, and its outer side borders
+are omitted. At 640px and below, type, sticky row heights, mark dimensions, data
+rows, and the footer adapt to the smaller canvas. The homepage uses a fixed
+viewport frame containing a real 2×2 product grid, centered logo overlay, top
+arrangement controls, and bottom status bar. Product cells stay equal on every
+viewport and are not links.
 
 ## Build and Cloudflare handoff
 
