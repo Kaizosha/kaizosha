@@ -12,7 +12,8 @@ without becoming visually empty.
 2. Build visual hierarchy with one-pixel frames, drafting grids, guide lines,
    numbered sections, file bars, and markdown grammar.
 3. Use one outer document frame. Section bands span that frame, while copy sits
-   in a centered, unboxed `96ch` maximum reading measure.
+   in a centered, unboxed `96ch` maximum reading measure. Long documents keep a
+   sticky back row and one current section band visible while scrolling.
 4. Keep the homepage centered on the Kaizōsha mark. Four equal product cells
    fill the canvas behind it; product names remain plain text rather than app
    links or separate pages.
@@ -31,7 +32,9 @@ without becoming visually empty.
 | Canvas | 48px two-tone drafting grid with subtle pointer drift |
 | File bar | Inverted off-white row with `[ filename.md ]` |
 | Reading shell | One 76rem maximum outer frame |
+| Document navigation | Sticky `[ ← Back ]` row with the current document name |
 | Section | Full-width ruled band, markdown heading, two-digit counter |
+| Current section | One sticky inverted section band beneath document navigation |
 | Data row | Bordered `-` entry with optional `>` support row |
 | Link | Literal `[label](href)`, inverted on hover/focus |
 | Metadata | Rendered like an HTML comment |
@@ -59,6 +62,7 @@ without becoming visually empty.
 - Shell width: `76rem`
 - Grid unit: `48px`
 - Transition duration: `180ms`
+- Sticky document rows: `3rem` navigation + `3.25rem` current section
 
 The homepage shows product names as non-interactive text in four equal cells.
 Its top bar owns arrangement controls, and its bottom-left bar owns compact
@@ -69,6 +73,10 @@ If the catalog has fewer products than cells, names repeat in balanced batches.
 Document footer geometry uses four equal columns on desktop and two equal
 columns on small screens. Fine-pointer devices reveal footer link text on
 hover or keyboard focus; touch devices keep it visible.
+
+Document pages keep equal outer spacing above and below the frame. Below 860px,
+only the inline gutter is removed; the balanced block gutter remains. The back
+row and current section bar stay visible without covering anchored sections.
 
 ## Responsive and accessibility contract
 
@@ -90,7 +98,8 @@ hover or keyboard focus; touch devices keep it visible.
 1. Add a supported `data-page-family` value to `<body>`.
 2. Add a descriptive `data-file` value to the framed `<main>`.
 3. Load `markdown.css` and the deferred `site-motion.js`; load `brand.css` only
-   when the Kaizōsha icon appears, and `home-products.js` only on the homepage.
+   when the Kaizōsha icon appears, `home-products.js` only on the homepage, and
+   `document-navigation.js` only on document pages.
 4. Use semantic headings, paragraphs, navigation, and links.
 5. Keep content inside the balanced shell and shared reading measure.
 6. Update immutable asset query versions when stylesheet contents change.

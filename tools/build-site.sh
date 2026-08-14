@@ -20,7 +20,7 @@ for file in brand.css markdown.css; do
   cp "$ROOT/assets/styles/$file" "$CLIENT/assets/styles/$file"
 done
 
-for file in home-products.js site-motion.js; do
+for file in document-navigation.js home-products.js site-motion.js; do
   cp "$ROOT/assets/scripts/$file" "$CLIENT/assets/scripts/$file"
 done
 

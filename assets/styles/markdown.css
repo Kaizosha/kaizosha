@@ -15,6 +15,8 @@
   --edge: clamp(0.75rem, 2vw, 1.5rem);
   --pad: clamp(1rem, 2.5vw, 1.5rem);
   --speed: 180ms;
+  --document-nav-height: 3rem;
+  --section-bar-height: 3.25rem;
   font-synthesis: none;
 }
 
@@ -287,12 +289,13 @@ body[data-page-family="directory"] {
 
 /* Content pages: one outer frame with full-width section bands. */
 body[data-page-family="document"] {
-  padding: var(--edge);
+  padding-block: var(--edge);
+  padding-inline: var(--edge);
 }
 
 .main {
   width: min(100%, var(--shell));
-  margin: 0 auto;
+  margin-inline: auto;
   border: 1px solid var(--line);
   background-color: var(--surface);
   box-shadow:
@@ -316,18 +319,48 @@ body[data-page-family="document"] {
 }
 
 .document-nav {
+  position: sticky;
+  z-index: 12;
+  top: 0;
   display: grid;
-  min-height: 3rem;
+  height: var(--document-nav-height);
   align-items: center;
   padding: 0.65rem 1rem;
   border-bottom: 1px solid var(--line);
   background: rgba(var(--surface-rgb), 0.94);
+  gap: 1rem;
   grid-template-columns: minmax(0, 1fr) auto;
+  transition:
+    background-color var(--speed) ease,
+    box-shadow var(--speed) ease;
+}
+
+body.document-is-scrolled .document-nav {
+  box-shadow: 0 0.75rem 1rem rgba(var(--surface-rgb), 0.88);
+}
+
+.document-back {
+  width: fit-content;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.main .document-back::before {
+  content: "[ ";
+}
+
+.main .document-back::after {
+  content: " ]";
+  opacity: 1;
 }
 
 .document-nav span {
+  min-width: 0;
+  overflow: hidden;
   color: var(--ink-muted);
   text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .section {
@@ -336,12 +369,17 @@ body[data-page-family="document"] {
   border-bottom: 1px solid var(--line);
   background: var(--surface);
   counter-increment: document-section;
-  scroll-margin-top: 1rem;
+  scroll-margin-top: calc(
+    var(--document-nav-height) + var(--section-bar-height) + var(--edge)
+  );
 }
 
 .section-head {
+  position: sticky;
+  z-index: 10;
+  top: var(--document-nav-height);
   display: grid;
-  min-height: 3.25rem;
+  min-height: var(--section-bar-height);
   align-items: center;
   margin: 0;
   padding: 0.75rem var(--pad);
@@ -350,6 +388,7 @@ body[data-page-family="document"] {
   grid-template-columns: minmax(0, 1fr) auto;
   transition:
     background-color var(--speed) ease,
+    box-shadow var(--speed) ease,
     color var(--speed) ease;
 }
 
@@ -359,6 +398,16 @@ body[data-page-family="document"] {
   padding-left: 1rem;
   color: var(--ink-muted);
   text-align: right;
+}
+
+body.document-is-scrolled .section.is-current > .section-head {
+  background: var(--ink);
+  box-shadow: 0 0.55rem 0.85rem rgba(var(--surface-rgb), 0.72);
+  color: var(--surface);
+}
+
+body.document-is-scrolled .section.is-current > .section-head::after {
+  color: rgba(var(--surface-rgb), 0.62);
 }
 
 .section-title {
@@ -637,7 +686,8 @@ body[data-page-family="error"] {
 
 @media (max-width: 860px) {
   body[data-page-family="document"] {
-    padding: 0;
+    padding-block: var(--edge);
+    padding-inline: 0;
   }
 
   .main {
@@ -649,6 +699,11 @@ body[data-page-family="error"] {
 }
 
 @media (max-width: 640px) {
+  :root {
+    --document-nav-height: 2.75rem;
+    --section-bar-height: 3rem;
+  }
+
   body {
     font-size: 12px;
   }
@@ -688,12 +743,7 @@ body[data-page-family="error"] {
   }
 
   .document-nav {
-    min-height: 2.75rem;
     padding-inline: 0.75rem;
-  }
-
-  .section-head {
-    min-height: 3rem;
   }
 
   .entry-head,
