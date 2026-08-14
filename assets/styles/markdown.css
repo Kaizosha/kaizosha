@@ -285,6 +285,27 @@ body[data-page-family="directory"] {
   bottom: 0.75rem;
 }
 
+.home-logo__content {
+  display: grid;
+  gap: clamp(0.9rem, 2.5vh, 1.2rem);
+  place-items: center;
+}
+
+.home-logo__subtitle {
+  max-width: calc(100% - 3rem);
+  margin: 0;
+  color: currentColor;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  line-height: 1.45;
+  opacity: 0.62;
+  text-align: center;
+}
+
+.home-logo__subtitle::before {
+  content: "> ";
+}
+
 /* Content pages: one outer frame with full-width section bands. */
 body[data-page-family="document"] {
   padding: var(--edge);
@@ -685,6 +706,10 @@ body[data-page-family="error"] {
   .home-logo {
     width: min(68vw, 14rem);
     min-height: 13rem;
+  }
+
+  .home-logo__subtitle {
+    display: none;
   }
 
   .document-nav {

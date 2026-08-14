@@ -38,6 +38,7 @@ without becoming visually empty.
 | Footer | Four equal related-link cells; text reveals on fine-pointer hover |
 | Homepage grid | Four equal product cells with names aligned to the outer corners |
 | Homepage mark | Centered fenced-code panel layered over the product grid |
+| Brand subtitle | One muted markdown quote beneath the desktop homepage mark |
 | Homepage controls | Stable `[ PREV ] / [ NEXT ]` arrangement history |
 
 ## Page families
@@ -65,6 +66,8 @@ Its top bar owns arrangement controls, and its bottom-left bar owns compact
 `[ T ] / [ P ] / [ C ]` links. The logo remains centered at every screen size,
 and browser zoom is disabled only there through the homepage viewport metadata.
 If the catalog has fewer products than cells, names repeat in balanced batches.
+The brand subtitle `From Me Comes The Future` appears once beneath the homepage
+mark and is omitted at 640px and below; do not repeat it on document pages.
 
 Document footer geometry uses four equal columns on desktop and two equal
 columns on small screens. Fine-pointer devices reveal footer link text on
