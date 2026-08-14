@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta name="color-scheme" content="dark">
-    <meta name="theme-color" content="#101010">
+    <meta name="color-scheme" content="light dark">
+    <meta name="theme-color" content="#101010" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f4f4ef" media="(prefers-color-scheme: light)">
     <title>Kaizōsha — Independent Software Studio</title>
     <meta name="description" content="Kaizōsha is an independent software studio building Apple-platform apps, on-device AI, translation tools, and open-source software.">
     <meta name="author" content="Kaizō Konpaku">
@@ -83,7 +84,8 @@
       }
     </script>
     <link rel="stylesheet" href="/assets/styles/brand.css?v=20260814-two-tone">
-    <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260814-crafted-markdown">
+    <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260814-system-theme">
+    <script src="/assets/scripts/site-motion.js?v=20260814-grid-motion" defer></script>
   </head>
   <body data-page-family="directory" data-page="home">
     <main class="home-main" data-file="README.md">

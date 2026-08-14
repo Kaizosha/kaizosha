@@ -14,11 +14,13 @@ for file in _headers 404.html contact.html index.html privacy.html terms.html \
   cp "$ROOT/$file" "$CLIENT/$file"
 done
 
-mkdir -p "$CLIENT/assets/styles" "$CLIENT/assets/media/social"
+mkdir -p "$CLIENT/assets/styles" "$CLIENT/assets/scripts" "$CLIENT/assets/media/social"
 
 for file in brand.css markdown.css; do
   cp "$ROOT/assets/styles/$file" "$CLIENT/assets/styles/$file"
 done
+
+cp "$ROOT/assets/scripts/site-motion.js" "$CLIENT/assets/scripts/site-motion.js"
 
 cp "$ROOT/assets/media/social/kaizosha-social-card-crafted-2026.png" \
   "$CLIENT/assets/media/social/kaizosha-social-card-crafted-2026.png"

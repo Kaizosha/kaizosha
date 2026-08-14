@@ -1,17 +1,28 @@
 :root {
-  color-scheme: dark;
-  --surface: #101010;
-  --ink: #f4f4ef;
-  --ink-muted: rgba(244, 244, 239, 0.62);
-  --line: rgba(244, 244, 239, 0.28);
-  --line-soft: rgba(244, 244, 239, 0.11);
-  --panel: rgba(244, 244, 239, 0.025);
-  --measure: 72ch;
+  color-scheme: light dark;
+  --surface-rgb: 16, 16, 16;
+  --ink-rgb: 244, 244, 239;
+  --surface: rgb(var(--surface-rgb));
+  --ink: rgb(var(--ink-rgb));
+  --ink-muted: rgba(var(--ink-rgb), 0.62);
+  --line: rgba(var(--ink-rgb), 0.28);
+  --line-soft: rgba(var(--ink-rgb), 0.11);
+  --panel: rgba(var(--ink-rgb), 0.025);
+  --grid-shift-x: 0px;
+  --grid-shift-y: 0px;
+  --measure: 96ch;
   --shell: 76rem;
   --edge: clamp(0.75rem, 2vw, 1.5rem);
   --pad: clamp(1rem, 2.5vw, 1.5rem);
   --speed: 180ms;
   font-synthesis: none;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --surface-rgb: 244, 244, 239;
+    --ink-rgb: 16, 16, 16;
+  }
 }
 
 * {
@@ -32,7 +43,8 @@ body {
   background-image:
     linear-gradient(var(--line-soft) 1px, transparent 1px),
     linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-  background-position: -1px -1px;
+  background-position:
+    calc(-1px + var(--grid-shift-x)) calc(-1px + var(--grid-shift-y));
   background-size: 48px 48px;
   color: var(--ink);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
@@ -197,26 +209,20 @@ body[data-page-family="directory"] {
   bottom: 0.75rem;
 }
 
-/* Content pages: a balanced shell with a centered markdown reading column. */
+/* Content pages: one outer frame with full-width section bands. */
 body[data-page-family="document"] {
   padding: var(--edge);
 }
 
 .main {
-  display: grid;
   width: min(100%, var(--shell));
   margin: 0 auto;
   border: 1px solid var(--line);
   background-color: var(--surface);
-  background-image:
-    linear-gradient(var(--line-soft) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-  background-size: 48px 48px;
   box-shadow:
     0 0 0 1px var(--surface),
     0 0 0 2px var(--line-soft);
   counter-reset: document-section;
-  grid-template-columns: minmax(2rem, 1fr) minmax(0, var(--measure)) minmax(2rem, 1fr);
 }
 
 .main::before {
@@ -229,7 +235,6 @@ body[data-page-family="document"] {
   color: var(--surface);
   font-size: 0.72rem;
   font-weight: 700;
-  grid-column: 1 / -1;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -240,8 +245,7 @@ body[data-page-family="document"] {
   align-items: center;
   padding: 0.65rem 1rem;
   border-bottom: 1px solid var(--line);
-  background: rgba(16, 16, 16, 0.94);
-  grid-column: 1 / -1;
+  background: rgba(var(--surface-rgb), 0.94);
   grid-template-columns: minmax(0, 1fr) auto;
 }
 
@@ -253,12 +257,9 @@ body[data-page-family="document"] {
 .section {
   min-width: 0;
   margin: 0;
-  border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  border-left: 1px solid var(--line);
   background: var(--surface);
   counter-increment: document-section;
-  grid-column: 2;
   scroll-margin-top: 1rem;
 }
 
@@ -302,7 +303,9 @@ h2.section-title::before {
 
 .body-lines {
   display: grid;
+  width: min(100%, var(--measure));
   gap: 0.8rem;
+  margin-inline: auto;
   padding: var(--pad);
 }
 
@@ -410,7 +413,6 @@ h2.section-title::before {
   margin: 0;
   border-top: 1px solid var(--line);
   background: var(--surface);
-  grid-column: 1 / -1;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
@@ -524,7 +526,7 @@ body[data-page-family="error"] {
 
   .home-logo:hover::before,
   .home-logo:hover::after {
-    color: rgba(16, 16, 16, 0.62);
+    color: rgba(var(--surface-rgb), 0.62);
   }
 
   .section:hover > .section-head {
@@ -533,7 +535,7 @@ body[data-page-family="error"] {
   }
 
   .section:hover > .section-head::after {
-    color: rgba(16, 16, 16, 0.62);
+    color: rgba(var(--surface-rgb), 0.62);
   }
 
   .document-footer a {
@@ -556,19 +558,6 @@ body[data-page-family="error"] {
     border-right: 0;
     border-left: 0;
     box-shadow: none;
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .main::before,
-  .document-nav,
-  .section,
-  .document-footer {
-    grid-column: 1;
-  }
-
-  .section {
-    border-right: 0;
-    border-left: 0;
   }
 }
 

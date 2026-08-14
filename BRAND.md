@@ -9,8 +9,8 @@ the homepage. Its bar and glyph geometry lives in
 
 - Keep the mark centered and decorative to assistive technology; the homepage
   H1 provides the accessible company name.
-- Render bars and glyphs with `currentColor` so the mark can invert cleanly
-  with its two-tone hover panel.
+- Render bars and glyphs with `currentColor` so the mark follows the system
+  theme and can invert cleanly with its two-tone hover panel.
 - Preserve the shared desktop and mobile proportions. Page styles may position
   the complete mark but must not redefine individual bars or glyphs.
 - Use no accent color, gradient, glow, bevel, raster texture, or external logo

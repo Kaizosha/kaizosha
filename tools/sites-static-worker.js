@@ -11,7 +11,7 @@ const SECURITY_HEADERS = {
     "manifest-src 'self'",
     "media-src 'none'",
     "object-src 'none'",
-    "script-src 'none'",
+    "script-src 'self'",
     "script-src-attr 'none'",
     "style-src 'self'",
     "style-src-attr 'none'",
