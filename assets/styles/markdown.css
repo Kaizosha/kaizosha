@@ -737,6 +737,7 @@ body[data-page-family="directory"] {
   position: absolute;
   color: var(--ink-muted);
   font-size: 0.65rem;
+  line-height: 1;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   transition: color var(--speed) ease;
@@ -1339,6 +1340,26 @@ body[data-page-family="error"] {
   .home-main[data-active-product] .home-logo {
     width: 5.5rem;
     height: 5.75rem;
+  }
+
+  .home-main[data-active-product] .home-logo .brand-lockup {
+    transform: scale(0.5);
+  }
+
+  .home-main[data-active-product] .home-logo::before,
+  .home-main[data-active-product] .home-logo::after {
+    font-size: 0.45rem;
+    letter-spacing: 0;
+  }
+
+  .home-main[data-active-product] .home-logo::before {
+    top: 0.35rem;
+    left: 0.4rem;
+  }
+
+  .home-main[data-active-product] .home-logo::after {
+    right: 0.4rem;
+    bottom: 0.35rem;
   }
 
   .product-cell.is-active .product-cell__content {

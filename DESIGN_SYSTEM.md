@@ -114,6 +114,8 @@ inline gutter is removed; the balanced block gutter remains.
 - Every page remains readable without hover, animation, or JavaScript.
 - Product detail is available through fine-pointer hover, keyboard focus, and
   touch activation; Close and Explore remain explicit controls.
+- The compact active-product mark keeps its fenced-code labels clear of the
+  brand glyph at mobile widths.
 - Light and dark palettes must follow `prefers-color-scheme` without a flash of
   the wrong theme.
 - Increased-contrast and forced-color preferences strengthen or simplify the
