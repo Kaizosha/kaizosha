@@ -3,10 +3,36 @@
 
   const intro = document.querySelector("[data-home-intro]");
   const introClose = intro?.querySelector("[data-home-intro-close]");
+  const introTitle = intro?.querySelector("[data-home-intro-title]");
   const introOpen = document.querySelector("[data-home-intro-open]");
 
   const syncIntroState = () => {
     introOpen?.setAttribute("aria-expanded", String(Boolean(intro?.open)));
+  };
+
+  const focusIntroTitle = () => {
+    window.requestAnimationFrame(() => {
+      if (intro?.open) {
+        introTitle?.focus({ preventScroll: true });
+      }
+    });
+  };
+
+  const showIntro = () => {
+    if (!intro || intro.open) {
+      return;
+    }
+
+    intro.classList.remove("is-closing");
+
+    if (typeof intro.showModal === "function") {
+      intro.showModal();
+    } else {
+      intro.setAttribute("open", "");
+    }
+
+    syncIntroState();
+    focusIntroTitle();
   };
 
   intro?.addEventListener("close", () => {
@@ -35,28 +61,22 @@
   }
 
   introOpen?.addEventListener("click", () => {
-    if (!intro || intro.open) {
-      return;
-    }
-
-    intro.classList.remove("is-closing");
-
-    if (typeof intro.show === "function") {
-      intro.show();
-    } else {
-      intro.setAttribute("open", "");
-    }
-
-    syncIntroState();
-    introClose?.focus({ preventScroll: true });
+    showIntro();
   });
 
+  if (intro?.open && typeof intro.showModal === "function") {
+    intro.removeAttribute("open");
+    intro.showModal();
+  }
+
   syncIntroState();
+  focusIntroTitle();
 
   const productGrid = document.querySelector(".home-products[data-products]");
   const controls = document.querySelector("[data-product-controls]");
   const previousButton = document.querySelector("[data-products-previous]");
   const nextButton = document.querySelector("[data-products-next]");
+  const productStatus = document.querySelector("[data-products-status]");
 
   if (!productGrid || !controls || !previousButton || !nextButton) {
     return;
@@ -192,14 +212,21 @@
   const history = [createArrangement(sourceArrangement, [], 0)];
   let historyIndex = 0;
 
-  const render = () => {
+  const render = (announce = false) => {
     cells.forEach((cell, index) => {
       const product = history[historyIndex][index];
 
       cell.textContent = product;
       cell.href = productLinks.get(product);
-      cell.setAttribute("aria-label", `View ${product} on GitHub`);
+      cell.setAttribute(
+        "aria-label",
+        `View ${product} on GitHub (opens in a new tab)`,
+      );
     });
+
+    if (announce && productStatus) {
+      productStatus.textContent = `Products shown: ${history[historyIndex].join(", ")}.`;
+    }
 
     productGrid.classList.remove("is-updating");
     void productGrid.offsetWidth;
@@ -213,7 +240,7 @@
       history.unshift(createArrangement(history[0], history, 0));
     }
 
-    render();
+    render(true);
   });
 
   nextButton.addEventListener("click", () => {
@@ -226,7 +253,7 @@
       historyIndex += 1;
     }
 
-    render();
+    render(true);
   });
 
   controls.hidden = false;

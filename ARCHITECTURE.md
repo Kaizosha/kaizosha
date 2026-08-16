@@ -31,11 +31,12 @@ metadata, and the Organization `slogan` field.
   on fine-pointer devices. Pages do not depend on it for layout or content, and
   it disables itself for reduced-motion and touch contexts.
 - `assets/scripts/home-products.js` runs only on the homepage. It closes the
-  company introduction with a reduced-motion-aware transition, reopens it from
-  the centered mark, fills the four cells from the catalog embedded in
-  `data-products`, keeps each name paired with its GitHub repository, balances
-  repeats when the catalog is shorter than the grid, and keeps a stable
-  previous/next history.
+  native modal company introduction with a reduced-motion-aware transition,
+  restores focus when it closes, reopens it from the centered mark, fills the
+  four cells from the catalog embedded in `data-products`, keeps each name
+  paired with its GitHub repository, announces user-requested arrangements,
+  balances repeats when the catalog is shorter than the grid, and keeps a
+  stable previous/next history.
   Candidate scoring strongly avoids the same product in the same recent slot
   and favors products that have appeared less recently as the catalog grows.
 - `assets/scripts/document-navigation.js` runs only on document pages. A
@@ -45,6 +46,9 @@ metadata, and the Organization `slogan` field.
   framed README language for social previews without affecting page load.
 - HTML `data-file` attributes provide the decorative file labels rendered by
   CSS.
+- Every indexable route has a canonical URL, unique title and description,
+  page-specific social metadata, and JSON-LD. The homepage identifies the
+  organization, while document pages add matching breadcrumb data.
 - There are no frontend dependencies, runtime APIs, forms, databases, accounts,
   or authentication flows.
 
@@ -76,8 +80,10 @@ security configuration. Development files are never copied into the public
 bundle.
 
 `wrangler.jsonc` serves `dist/client/` through the Worker at
-`dist/server/index.js`. The Worker handles HTTPS redirects, GET/HEAD method
-restriction, versioned-asset caching, short HTML caching, and security headers.
+`dist/server/index.js`. The Worker handles HTTPS and canonical-route redirects,
+GET/HEAD method restriction, versioned-asset caching, short HTML caching,
+English content headers, no-index headers for missing pages, and security
+headers.
 Its Content Security Policy allows only same-origin deferred scripts, styles,
 images, and the manifest. Connections, fonts, media, frames, forms, objects,
 workers, inline scripts, and script attributes remain disabled.
@@ -100,3 +106,5 @@ supported Cloudflare paths receive the restrictive policy and cache rules.
 6. Keep the build allowlist explicit; never copy the whole repository.
 7. Keep `_headers` and `tools/sites-static-worker.js` aligned.
 8. Run `tools/build-site.sh` and inspect `dist/client/` before publishing.
+9. Keep each indexable route's visible heading, metadata, canonical URL,
+   structured data, and sitemap entry consistent.

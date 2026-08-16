@@ -24,7 +24,8 @@ without becoming visually empty.
    slow pointer-driven grid drift. Disable pointer motion for touch and reduced
    motion preferences.
 7. Preserve semantic HTML, plain language, company metadata, creator metadata,
-   legal content, and keyboard access.
+   legal content, browser zoom, keyboard access, and system accessibility
+   preferences.
 
 ## Visual vocabulary
 
@@ -73,9 +74,9 @@ panel. Clicking the centered mark reopens that panel. Product names remain
 direct GitHub repository links in four equal cells underneath. Its top bar owns
 arrangement controls; the bottom-left bar spells out Terms, Privacy, and Contact
 above 640px and uses `[ T ] / [ P ] / [ C ]` at smaller sizes. The logo remains
-centered at every screen size, and browser zoom is disabled only there through
-the homepage viewport metadata. If the catalog has fewer products than cells,
-names repeat in balanced batches.
+centered at every screen size. Browser zoom remains available on every page,
+and the homepage frame yields to short or magnified viewports without clipping.
+If the catalog has fewer products than cells, names repeat in balanced batches.
 
 Document footer geometry uses four equal columns on desktop and two equal
 columns on small screens. Fine-pointer devices reveal footer link text on
@@ -93,12 +94,15 @@ inline gutter is removed; the balanced block gutter remains.
 - Document sections must not introduce a second visible frame inside the shell.
 - Text, email addresses, and literal link destinations may wrap without
   clipping.
-- Every document page has one H1 and a skip link.
-- Keyboard focus is always visible.
-- Browser zoom remains available on document and error pages.
+- Every public page has one H1, one main landmark, and a skip link.
+- Keyboard focus uses a two-pixel indicator, and standalone controls provide at
+  least a 24px target in each axis.
+- Browser zoom remains available on every page through at least 200%.
 - Every page remains readable without hover, animation, or JavaScript.
 - Light and dark palettes must follow `prefers-color-scheme` without a flash of
   the wrong theme.
+- Increased-contrast and forced-color preferences strengthen or simplify the
+  same interface without hiding controls.
 - Motion collapses to near-zero when reduced motion is requested.
 
 ## New page checklist
@@ -108,8 +112,11 @@ inline gutter is removed; the balanced block gutter remains.
 3. Load `markdown.css` and the deferred `site-motion.js`; load `brand.css` only
    when the Kaizōsha icon appears, `home-products.js` only on the homepage, and
    `document-navigation.js` only on document pages.
-4. Use semantic headings, paragraphs, navigation, and links.
+4. Use semantic headings, paragraphs, navigation, links, a main landmark, and a
+   keyboard-accessible skip link.
 5. Keep content inside the balanced shell and shared reading measure.
 6. Update immutable asset query versions when stylesheet contents change.
 7. Add only allowlisted public files to `tools/build-site.sh`.
-8. Build and test all supported viewports before publishing.
+8. Keep canonical URLs, descriptions, structured data, sitemap dates, and
+   visible page content aligned.
+9. Build and test all supported viewports before publishing.

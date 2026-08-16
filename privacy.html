@@ -17,7 +17,6 @@
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="application-name" content="Kaizōsha" />
     <link rel="icon" type="image/png" sizes="1024x1024" href="https://kaizosha.org/icon.png" />
-    <link rel="shortcut icon" type="image/png" href="https://kaizosha.org/icon.png" />
     <link rel="apple-touch-icon" href="https://kaizosha.org/icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href="https://kaizosha.org/privacy" />
@@ -61,6 +60,24 @@
           "url": "https://kaizosha.org/",
           "name": "Kaizōsha"
         },
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "@id": "https://kaizosha.org/privacy#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Kaizōsha",
+              "item": "https://kaizosha.org/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "name": "Privacy Policy",
+              "item": "https://kaizosha.org/privacy"
+            }
+          ]
+        },
         "publisher": {
           "@type": "Organization",
           "@id": "https://kaizosha.org/#organization",
@@ -83,13 +100,13 @@
         "inLanguage": "en"
       }
     </script>
-    <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260814-product-links" />
+    <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260816-accessibility-seo" />
     <script src="/assets/scripts/site-motion.js?v=20260814-smooth-grid" defer></script>
     <script src="/assets/scripts/document-navigation.js?v=20260814-scroll-gutter" defer></script>
   </head>
   <body id="top" data-page-family="document" data-page="privacy">
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <main class="main" id="main-content" data-file="privacy.md">
+    <main class="main" id="main-content" data-file="privacy.md" tabindex="-1">
           <nav class="document-nav" aria-label="Document navigation">
             <a class="document-back" href="/" aria-label="Back to Kaizōsha homepage">← Back</a>
             <span>/ Privacy Policy</span>

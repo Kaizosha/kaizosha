@@ -1,12 +1,16 @@
 {
   "name": "Kaizōsha",
   "short_name": "Kaizōsha",
-  "description": "Independent software studio building Apple-platform apps, on-device AI, translation tools, and open-source software.",
+  "description": "Kaizōsha designs and builds useful software products for web and mobile platforms, including open-source tools.",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
+  "lang": "en",
+  "dir": "ltr",
   "display": "minimal-ui",
   "background_color": "#101010",
   "theme_color": "#101010",
+  "categories": ["business", "productivity", "utilities"],
   "icons": [
     {
       "src": "/icon.png",

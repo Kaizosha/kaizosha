@@ -2,35 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="#101010" media="(prefers-color-scheme: dark)">
     <meta name="theme-color" content="#f4f4ef" media="(prefers-color-scheme: light)">
     <title>Kaizōsha — Software Company</title>
-    <meta name="description" content="From Me Comes The Future — Kaizōsha is a product-focused software company creating applications and tools for Apple platforms and the web.">
+    <meta name="description" content="From Me Comes The Future — Kaizōsha designs and builds useful software products for web and mobile platforms, including open-source tools.">
     <meta name="author" content="Kaizō Konpaku">
     <meta name="creator" content="Kaizō Konpaku">
     <meta name="publisher" content="Kaizōsha">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="application-name" content="Kaizōsha">
     <link rel="icon" type="image/png" sizes="1024x1024" href="https://kaizosha.org/icon.png">
-    <link rel="shortcut icon" type="image/png" href="https://kaizosha.org/icon.png">
     <link rel="apple-touch-icon" href="https://kaizosha.org/icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="canonical" href="https://kaizosha.org/">
     <meta property="og:title" content="Kaizōsha — Software Company">
-    <meta property="og:description" content="From Me Comes The Future — a product-focused software company creating applications and tools for Apple platforms and the web.">
+    <meta property="og:description" content="From Me Comes The Future — Kaizōsha designs and builds useful software products for web and mobile platforms, including open-source tools.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://kaizosha.org/">
     <meta property="og:site_name" content="Kaizōsha">
     <meta property="og:locale" content="en_US">
     <meta property="og:image" content="https://kaizosha.org/assets/media/social/kaizosha-social-card-crafted-2026.png">
+    <meta property="og:image:secure_url" content="https://kaizosha.org/assets/media/social/kaizosha-social-card-crafted-2026.png">
+    <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Kaizōsha presented inside a framed two-tone markdown canvas">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Kaizōsha — Software Company">
-    <meta name="twitter:description" content="From Me Comes The Future — a product-focused software company creating applications and tools for Apple platforms and the web.">
+    <meta name="twitter:description" content="From Me Comes The Future — Kaizōsha designs and builds useful software products for web and mobile platforms, including open-source tools.">
     <meta name="twitter:image" content="https://kaizosha.org/assets/media/social/kaizosha-social-card-crafted-2026.png">
     <meta name="twitter:image:alt" content="Kaizōsha presented inside a framed two-tone markdown canvas">
     <meta name="twitter:site" content="@KaizoshaX">
@@ -47,11 +48,43 @@
             "name": "Kaizōsha",
             "legalName": "Kaizosha Private Limited",
             "alternateName": ["改造社", "Kaizosha"],
-            "description": "Kaizōsha is a product-focused software company creating applications and tools for Apple platforms and the web.",
+            "description": "Kaizōsha designs and builds useful software products for web and mobile platforms, including open-source tools.",
             "slogan": "From Me Comes The Future",
+            "foundingDate": "2026",
             "url": "https://kaizosha.org/",
-            "logo": "https://kaizosha.org/icon.png",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://kaizosha.org/icon.png",
+              "contentUrl": "https://kaizosha.org/icon.png",
+              "width": 1024,
+              "height": 1024
+            },
             "email": "contact@kaizosha.org",
+            "address": {
+              "@type": "PostalAddress",
+              "addressRegion": "Telangana",
+              "addressCountry": "IN"
+            },
+            "contactPoint": [
+              {
+                "@type": "ContactPoint",
+                "contactType": "business",
+                "email": "contact@kaizosha.org",
+                "availableLanguage": "English"
+              },
+              {
+                "@type": "ContactPoint",
+                "contactType": "customer support",
+                "email": "support@kaizosha.org",
+                "availableLanguage": "English"
+              },
+              {
+                "@type": "ContactPoint",
+                "contactType": "privacy",
+                "email": "privacy@kaizosha.org",
+                "availableLanguage": "English"
+              }
+            ],
             "sameAs": ["https://github.com/Kaizosha", "https://x.com/KaizoshaX"],
             "founder": { "@id": "https://kaizosha.org/#creator" }
           },
@@ -70,6 +103,7 @@
             "@id": "https://kaizosha.org/#website",
             "url": "https://kaizosha.org/",
             "name": "Kaizōsha",
+            "alternateName": "Kaizosha",
             "publisher": { "@id": "https://kaizosha.org/#organization" },
             "inLanguage": "en"
           },
@@ -78,8 +112,10 @@
             "@id": "https://kaizosha.org/#webpage",
             "url": "https://kaizosha.org/",
             "name": "Kaizōsha — Software Company",
-            "description": "Kaizōsha is a product-focused software company creating applications and tools for Apple platforms and the web.",
+            "description": "Kaizōsha designs and builds useful software products for web and mobile platforms, including open-source tools.",
+            "dateModified": "2026-08-16",
             "isPartOf": { "@id": "https://kaizosha.org/#website" },
+            "about": { "@id": "https://kaizosha.org/#organization" },
             "author": { "@id": "https://kaizosha.org/#creator" },
             "inLanguage": "en"
           }
@@ -87,13 +123,14 @@
       }
     </script>
     <link rel="stylesheet" href="/assets/styles/brand.css?v=20260814-two-tone">
-    <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260814-product-links">
+    <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260816-accessibility-seo">
     <script src="/assets/scripts/site-motion.js?v=20260814-smooth-grid" defer></script>
-    <script src="/assets/scripts/home-products.js?v=20260814-product-links" defer></script>
+    <script src="/assets/scripts/home-products.js?v=20260816-accessibility" defer></script>
   </head>
   <body data-page-family="directory" data-page="home">
-    <main class="home-main" data-file="README.md">
-      <h1 class="u-screen-reader">Kaizōsha — Software Company</h1>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <main class="home-main" id="main-content" data-file="README.md" tabindex="-1" aria-labelledby="site-title">
+      <h1 class="u-screen-reader" id="site-title">Kaizōsha — Software Company</h1>
 
       <dialog
         id="home-intro"
@@ -103,10 +140,10 @@
         aria-describedby="home-intro-description"
         open
       >
-        <div class="home-intro__file">[ COMPANY.md ]</div>
+        <div class="home-intro__file" aria-hidden="true">[ COMPANY.md ]</div>
         <div class="home-intro__body">
           <p class="home-intro__brand">Kaizōsha / Software Company</p>
-          <h2 id="home-intro-title">Kaizosha Private Limited</h2>
+          <h2 id="home-intro-title" data-home-intro-title tabindex="-1">Kaizosha Private Limited</h2>
           <div class="home-intro__description" id="home-intro-description">
             <p class="home-intro__lead">
               From Me Comes The Future.
@@ -127,7 +164,7 @@
       </dialog>
 
       <header class="home-toolbar">
-        <span>[ README.md ]</span>
+        <span aria-hidden="true">[ README.md ]</span>
         <nav class="home-pagination" aria-label="Product arrangements" data-product-controls hidden>
           <button type="button" data-products-previous aria-label="Show previous product arrangement">[ PREV ]</button>
           <span aria-hidden="true">/</span>
@@ -140,13 +177,13 @@
         data-products='["Together","Sekai","Hush","modscan"]'
         role="list"
         aria-label="Products"
-        aria-live="polite"
       >
-        <div class="product-cell" role="listitem"><a class="product-cell__name" href="https://github.com/Kaizosha/Together" target="_blank" rel="noopener noreferrer" aria-label="View Together on GitHub">Together</a></div>
-        <div class="product-cell" role="listitem"><a class="product-cell__name" href="https://github.com/Kaizosha/Sekai" target="_blank" rel="noopener noreferrer" aria-label="View Sekai on GitHub">Sekai</a></div>
-        <div class="product-cell" role="listitem"><a class="product-cell__name" href="https://github.com/Kaizosha/Hush" target="_blank" rel="noopener noreferrer" aria-label="View Hush on GitHub">Hush</a></div>
-        <div class="product-cell" role="listitem"><a class="product-cell__name" href="https://github.com/Kaizosha/modscan" target="_blank" rel="noopener noreferrer" aria-label="View modscan on GitHub">modscan</a></div>
+        <div class="product-cell" role="listitem"><a class="product-cell__name" href="https://github.com/Kaizosha/Together" target="_blank" rel="noopener noreferrer" aria-label="View Together on GitHub (opens in a new tab)">Together</a></div>
+        <div class="product-cell" role="listitem"><a class="product-cell__name" href="https://github.com/Kaizosha/Sekai" target="_blank" rel="noopener noreferrer" aria-label="View Sekai on GitHub (opens in a new tab)">Sekai</a></div>
+        <div class="product-cell" role="listitem"><a class="product-cell__name" href="https://github.com/Kaizosha/Hush" target="_blank" rel="noopener noreferrer" aria-label="View Hush on GitHub (opens in a new tab)">Hush</a></div>
+        <div class="product-cell" role="listitem"><a class="product-cell__name" href="https://github.com/Kaizosha/modscan" target="_blank" rel="noopener noreferrer" aria-label="View modscan on GitHub (opens in a new tab)">modscan</a></div>
       </div>
+      <p class="u-screen-reader" role="status" aria-live="polite" aria-atomic="true" data-products-status></p>
 
       <button
         class="home-logo"
@@ -183,7 +220,7 @@
             <span class="home-legal__compact" aria-hidden="true">[ C ]</span>
           </a>
         </nav>
-        <span>001 / KAIZŌSHA / EOF</span>
+        <span aria-hidden="true">001 / KAIZŌSHA / EOF</span>
       </footer>
     </main>
   </body>
