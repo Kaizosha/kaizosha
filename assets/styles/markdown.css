@@ -582,8 +582,8 @@ body[data-page-family="directory"] {
   width: 100%;
   height: 100%;
   border: 0;
-  background: var(--ink);
-  color: var(--surface);
+  background: var(--panel);
+  color: var(--ink-muted);
 }
 
 .product-cell.is-active .product-cell__content {
@@ -603,7 +603,7 @@ body[data-page-family="directory"] {
 
 .product-cell.is-active .product-cell__name {
   max-width: 100%;
-  color: var(--surface);
+  color: var(--ink);
   font-size: clamp(1.5rem, 4.5vw, 3.6rem);
   line-height: 1.05;
   letter-spacing: -0.045em;
@@ -621,52 +621,6 @@ body[data-page-family="directory"] {
 .product-cell.is-active .product-cell__detail {
   opacity: 1;
   transform: translateY(0);
-}
-
-.product-cell.is-active .product-cell__name:hover,
-.product-cell.is-active .product-cell__name:focus-visible {
-  background: var(--surface);
-  color: var(--ink);
-  outline-color: var(--surface);
-}
-
-.product-cell.is-active .product-cell__eyebrow,
-.product-cell.is-active .product-cell__meta {
-  color: rgba(var(--surface-rgb), 0.62);
-}
-
-.product-cell.is-active .product-cell__description {
-  border-color: rgba(var(--surface-rgb), 0.28);
-  color: var(--surface);
-}
-
-.product-cell.is-active .product-cell__actions button,
-.product-cell.is-active .product-cell__actions a {
-  border-color: rgba(var(--surface-rgb), 0.34);
-}
-
-.product-cell.is-active .product-cell__actions button {
-  background: transparent;
-  color: var(--surface);
-}
-
-.product-cell.is-active .product-cell__actions .product-cell__explore {
-  background: var(--surface);
-  color: var(--ink);
-}
-
-.product-cell.is-active .product-cell__actions button:hover,
-.product-cell.is-active .product-cell__actions button:focus-visible {
-  background: var(--surface);
-  color: var(--ink);
-  outline-color: var(--surface);
-}
-
-.product-cell.is-active .product-cell__actions .product-cell__explore:hover,
-.product-cell.is-active .product-cell__actions .product-cell__explore:focus-visible {
-  background: transparent;
-  color: var(--surface);
-  outline-color: var(--surface);
 }
 
 .home-products.is-updating .product-cell__name {
@@ -721,27 +675,27 @@ body[data-page-family="directory"] {
 }
 
 .home-main[data-active-slot="top-left"] .home-logo {
-  top: calc(var(--home-bar-height) + clamp(0.75rem, 2vw, 1.25rem));
-  left: clamp(0.75rem, 2vw, 1.25rem);
-  transform: translate(0, 0);
+  top: calc(100% - var(--home-bar-height) - clamp(0.75rem, 2vw, 1.25rem));
+  left: calc(100% - clamp(0.75rem, 2vw, 1.25rem));
+  transform: translate(-100%, -100%);
 }
 
 .home-main[data-active-slot="top-right"] .home-logo {
-  top: calc(var(--home-bar-height) + clamp(0.75rem, 2vw, 1.25rem));
-  left: calc(100% - clamp(0.75rem, 2vw, 1.25rem));
-  transform: translate(-100%, 0);
-}
-
-.home-main[data-active-slot="bottom-left"] .home-logo {
   top: calc(100% - var(--home-bar-height) - clamp(0.75rem, 2vw, 1.25rem));
   left: clamp(0.75rem, 2vw, 1.25rem);
   transform: translate(0, -100%);
 }
 
-.home-main[data-active-slot="bottom-right"] .home-logo {
-  top: calc(100% - var(--home-bar-height) - clamp(0.75rem, 2vw, 1.25rem));
+.home-main[data-active-slot="bottom-left"] .home-logo {
+  top: calc(var(--home-bar-height) + clamp(0.75rem, 2vw, 1.25rem));
   left: calc(100% - clamp(0.75rem, 2vw, 1.25rem));
-  transform: translate(-100%, -100%);
+  transform: translate(-100%, 0);
+}
+
+.home-main[data-active-slot="bottom-right"] .home-logo {
+  top: calc(var(--home-bar-height) + clamp(0.75rem, 2vw, 1.25rem));
+  left: clamp(0.75rem, 2vw, 1.25rem);
+  transform: translate(0, 0);
 }
 
 .home-logo:focus-visible {
@@ -1192,16 +1146,6 @@ body[data-page-family="error"] {
     color: rgba(var(--surface-rgb), 0.62);
   }
 
-  .home-main[data-active-product] .home-logo:hover {
-    background: var(--surface);
-    color: var(--ink);
-  }
-
-  .home-main[data-active-product] .home-logo:hover::before,
-  .home-main[data-active-product] .home-logo:hover::after {
-    color: var(--ink-muted);
-  }
-
   .section:hover > .section-head {
     background: var(--ink);
     color: var(--surface);
@@ -1445,12 +1389,12 @@ body[data-page-family="error"] {
 @media (max-height: 560px) {
   .product-cell.is-active[data-product-slot="bottom-left"] .product-cell__content,
   .product-cell.is-active[data-product-slot="bottom-right"] .product-cell__content {
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
 
   .product-cell.is-active[data-product-slot="top-left"] .product-cell__content,
   .product-cell.is-active[data-product-slot="top-right"] .product-cell__content {
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 }
 

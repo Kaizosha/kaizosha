@@ -41,8 +41,8 @@ without becoming visually empty.
 | Link | Literal `[label](href)`, inverted on hover/focus |
 | Metadata | Rendered like an HTML comment |
 | Footer | Four equal related-link cells; text reveals on fine-pointer hover |
-| Homepage grid | Four equal product cells; the selected cell grows from its quadrant into one inverted canvas |
-| Homepage mark | Centered fenced-code button that moves into the selected product's original corner |
+| Homepage grid | Four equal product cells; the selected cell grows into one continuous same-tone canvas |
+| Homepage mark | Centered fenced-code button that moves toward the selected cell's expansion corner |
 | Homepage introduction | Centered `COMPANY.md` panel with legal identity and `[ EXPLORE ]` |
 | Homepage controls | Stable `[ PREV ] / [ NEXT ]` arrangement history |
 
@@ -76,10 +76,11 @@ panel. Clicking the centered mark reopens that panel. Product names begin as
 direct GitHub repository links in four equal cells underneath. Hovering a cell,
 focusing its link, or tapping its name expands that product across the grid;
 the selected block grows continuously from its original quadrant into one
-inverted canvas while the mark shrinks and travels from center into that
-product's original corner. Centered product information then reveals a
-description, metadata comment, Close control, and GitHub Explore action. Escape
-closes an expanded product.
+same-tone canvas while the mark shrinks and travels from center in the same
+diagonal direction as the expanding block. For example, a top-right product
+expands toward bottom-left and sends the mark to bottom-left. Centered product
+information then reveals a description, metadata comment, Close control, and
+GitHub Explore action. Escape closes an expanded product.
 Its top bar owns arrangement controls; the bottom-left bar spells out Terms,
 Privacy, and Contact above 640px and uses `[ T ] / [ P ] / [ C ]` at smaller
 sizes. The logo returns to center when product detail closes. Browser zoom
