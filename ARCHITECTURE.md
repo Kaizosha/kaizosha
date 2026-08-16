@@ -71,13 +71,15 @@ section form one continuous sticky stack beneath a fixed grid gutter. The
 homepage uses a fixed viewport frame containing a real 2×2 product grid,
 centered logo button, dismissible company introduction, top arrangement
 controls, and bottom status bar. Product cells stay equal at rest. An active
-cell grows from its physical quadrant to the full grid while the central logo
-scales toward the diagonally opposite corner—the direction in which that cell
-expands—on the same timing curve. The active surface keeps the resting theme
-color, covers the crosshair, and becomes one continuous product canvas. Its
-centered content uses a broad reading measure, while narrow screens allow it to
-use the full available width. Source-order product names remain direct
-repository links when scripting is unavailable.
+cell grows from its physical quadrant by animating the shared column and row
+tracks from `50% / 50%` to `100% / 0%`; it does not become a positioned overlay.
+The other three cells are pushed and compressed toward the canvas edges while
+the central logo scales toward the diagonally opposite corner—the direction in
+which the selected cell expands—on the same timing curve. The active surface
+keeps the resting theme color, and its reversed product-name label remains
+legible in both system themes. Centered content uses a broad reading measure,
+while narrow screens allow it to use the full available width. Source-order
+product names remain direct repository links when scripting is unavailable.
 
 ## Build and Cloudflare handoff
 
