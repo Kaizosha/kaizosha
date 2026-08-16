@@ -41,7 +41,7 @@ without becoming visually empty.
 | Link | Literal `[label](href)`, inverted on hover/focus |
 | Metadata | Rendered like an HTML comment |
 | Footer | Four equal related-link cells; text reveals on fine-pointer hover |
-| Homepage grid | Four equal product cells; the selected cell expands into a ruled detail canvas |
+| Homepage grid | Four equal product cells; the selected cell grows from its quadrant into one inverted canvas |
 | Homepage mark | Centered fenced-code button that moves into the selected product's original corner |
 | Homepage introduction | Centered `COMPANY.md` panel with legal identity and `[ EXPLORE ]` |
 | Homepage controls | Stable `[ PREV ] / [ NEXT ]` arrangement history |
@@ -65,6 +65,8 @@ without becoming visually empty.
 - Shell width: `76rem`
 - Grid unit: `48px`
 - Transition duration: `180ms`
+- Product takeover duration: `560ms` with a shared spring-like ease for the
+  expanding cell and moving mark
 - Wide-screen sticky document rows: `2.75rem` file bar + `3rem` navigation +
   `3.25rem` current section
 
@@ -73,9 +75,11 @@ software profile, domain email, and one Explore action in a dismissible markdown
 panel. Clicking the centered mark reopens that panel. Product names begin as
 direct GitHub repository links in four equal cells underneath. Hovering a cell,
 focusing its link, or tapping its name expands that product across the grid;
-the crosshair remains visible, the mark scales into the product's original
-corner, and the opposite quadrant presents a description, metadata comment,
-Close control, and GitHub Explore action. Escape closes an expanded product.
+the selected block grows continuously from its original quadrant into one
+inverted canvas while the mark shrinks and travels from center into that
+product's original corner. Centered product information then reveals a
+description, metadata comment, Close control, and GitHub Explore action. Escape
+closes an expanded product.
 Its top bar owns arrangement controls; the bottom-left bar spells out Terms,
 Privacy, and Contact above 640px and uses `[ T ] / [ P ] / [ C ]` at smaller
 sizes. The logo returns to center when product detail closes. Browser zoom

@@ -72,9 +72,10 @@ homepage uses a fixed viewport frame containing a real 2×2 product grid,
 centered logo button, dismissible company introduction, top arrangement
 controls, and bottom status bar. Product cells stay equal at rest. An active
 cell grows from its physical quadrant to the full grid while the central logo
-scales into that cell's original corner. The crosshair stays in place and the
-product content occupies the diagonal quadrant; narrow screens allow that
-content to use the available width. Source-order product names remain direct
+scales into that cell's original corner on the same timing curve. The active
+surface covers the resting crosshair and becomes one inverted product canvas;
+its centered content uses a broad reading measure, while narrow screens allow
+it to use the full available width. Source-order product names remain direct
 repository links when scripting is unavailable.
 
 ## Build and Cloudflare handoff

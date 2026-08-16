@@ -276,7 +276,7 @@
       }
 
       detailHideTimers.delete(record);
-    }, 420);
+    }, 620);
 
     detailHideTimers.set(record, timer);
   };
