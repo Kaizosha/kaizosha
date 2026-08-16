@@ -664,6 +664,42 @@ body[data-page-family="directory"] {
   transform: translateY(0);
 }
 
+.home-main[data-active-slot="top-left"]
+  .product-cell.is-active
+  .product-cell__content,
+.home-main[data-active-slot="bottom-left"]
+  .product-cell.is-active
+  .product-cell__content {
+  align-items: flex-start;
+}
+
+.home-main[data-active-slot="top-right"]
+  .product-cell.is-active
+  .product-cell__content,
+.home-main[data-active-slot="bottom-right"]
+  .product-cell.is-active
+  .product-cell__content {
+  align-items: flex-end;
+}
+
+.home-main[data-active-slot="top-right"]
+  .product-cell.is-active
+  :is(.product-cell__heading, .product-cell__eyebrow, .product-cell__meta),
+.home-main[data-active-slot="bottom-right"]
+  .product-cell.is-active
+  :is(.product-cell__heading, .product-cell__eyebrow, .product-cell__meta) {
+  text-align: right;
+}
+
+.home-main[data-active-slot="top-right"]
+  .product-cell.is-active
+  .product-cell__actions,
+.home-main[data-active-slot="bottom-right"]
+  .product-cell.is-active
+  .product-cell__actions {
+  justify-content: flex-end;
+}
+
 .home-products.is-updating .product-cell__name {
   animation: product-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }

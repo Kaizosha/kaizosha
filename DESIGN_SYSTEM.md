@@ -82,9 +82,10 @@ keyboard focus, or press. Sibling cells are physically compressed toward the
 outer edges while the mark shrinks and travels from center in the same
 diagonal direction as the expanding block. For example, a top-right product
 expands toward bottom-left and sends the mark to bottom-left. Its product name
-uses a reversed two-tone label for persistent contrast. Centered information
-then reveals a description, metadata comment, Close control, and GitHub Explore
-action. Escape closes an expanded product.
+uses a reversed two-tone label for persistent contrast. Expanded information
+anchors to the horizontal side opposite the mark; long description copy remains
+left-aligned for readability. It reveals a description, metadata comment, Close
+control, and GitHub Explore action. Escape closes an expanded product.
 Its top bar owns arrangement controls; the bottom-left bar spells out Terms,
 Privacy, and Contact above 640px and uses `[ T ] / [ P ] / [ C ]` at smaller
 sizes. The logo returns to center when product detail closes. Browser zoom

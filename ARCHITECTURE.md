@@ -77,10 +77,11 @@ The other three cells are pushed and compressed toward the canvas edges while
 the central logo scales toward the diagonally opposite corner—the direction in
 which the selected cell expands—on the same timing curve. The active surface
 keeps the resting theme color. Only interactive product-name labels and actions
-invert on hover, keyboard focus, or press. Centered content uses a broad reading
-measure, while narrow screens allow it to use the full available width.
-Source-order product names remain direct repository links when scripting is
-unavailable.
+invert on hover, keyboard focus, or press. Expanded content anchors to the
+horizontal edge opposite the logo while retaining a broad reading measure;
+description copy remains left-aligned, and narrow screens allow the block to use
+the full available width. Source-order product names remain direct repository
+links when scripting is unavailable.
 
 ## Build and Cloudflare handoff
 
