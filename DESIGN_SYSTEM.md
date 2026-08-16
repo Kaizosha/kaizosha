@@ -16,8 +16,8 @@ without becoming visually empty.
    sticky back row and one current section band visible while scrolling.
 4. Open the homepage with a compact company-introduction panel above the
    centered Kaizōsha mark. Four equal product cells fill the canvas behind it;
-   a hovered, focused, or tapped product inverts, expands across that canvas,
-   and exposes its description and repository action.
+   a hovered, focused, or tapped product expands across that canvas and exposes
+   its description and repository action.
 5. Use the system monospace stack. Do not load web fonts, icon libraries, or
    frontend dependencies.
 6. Motion is restrained and structural: entrance, color inversion, focus, and
@@ -41,7 +41,7 @@ without becoming visually empty.
 | Link | Literal `[label](href)`, inverted on hover/focus |
 | Metadata | Rendered like an HTML comment |
 | Footer | Four equal related-link cells; text reveals on fine-pointer hover |
-| Homepage grid | Four equal product cells on shared animated tracks; an interactive cell inverts and pushes its siblings to the edges |
+| Homepage grid | Four equal product cells on shared animated tracks; the selected cell pushes its siblings to the edges |
 | Homepage mark | Centered fenced-code button that moves toward the selected cell's expansion corner |
 | Homepage introduction | Centered `COMPANY.md` panel with legal identity and `[ EXPLORE ]` |
 | Homepage controls | Stable `[ PREV ] / [ NEXT ]` arrangement history |
@@ -76,10 +76,10 @@ panel. Clicking the centered mark reopens that panel. Product names begin as
 direct GitHub repository links in four equal cells underneath. Hovering a cell,
 focusing its link, or tapping its name expands that product across the grid;
 the selected block grows continuously from its original quadrant into one
-inverted canvas by resizing the grid tracks themselves; it never stacks above
-the other product cells. Its copy, rules, title label, and actions reverse for
-contrast. Sibling cells are physically compressed toward the outer edges while
-the mark shrinks and travels from center in the same
+same-tone canvas by resizing the grid tracks themselves; it never stacks above
+the other product cells. Only interactive labels and controls invert on hover,
+keyboard focus, or press. Sibling cells are physically compressed toward the
+outer edges while the mark shrinks and travels from center in the same
 diagonal direction as the expanding block. For example, a top-right product
 expands toward bottom-left and sends the mark to bottom-left. Its product name
 uses a reversed two-tone label for persistent contrast. Centered information

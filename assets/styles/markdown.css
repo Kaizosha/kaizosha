@@ -281,6 +281,12 @@ body[data-page-family="directory"] {
   outline-offset: -0.35rem;
 }
 
+.home-intro__actions button:active {
+  background: var(--ink);
+  color: var(--surface);
+  outline-color: var(--ink);
+}
+
 .home-toolbar,
 .home-statusbar {
   position: absolute;
@@ -351,8 +357,10 @@ body[data-page-family="directory"] {
 
 .home-pagination button:hover,
 .home-pagination button:focus-visible,
+.home-pagination button:active,
 .home-statusbar a:hover,
-.home-statusbar a:focus-visible {
+.home-statusbar a:focus-visible,
+.home-statusbar a:active {
   background: var(--ink);
   color: var(--surface);
   outline-color: var(--ink);
@@ -393,28 +401,16 @@ body[data-page-family="directory"] {
 }
 
 .product-cell {
-  --product-surface: var(--panel);
-  --product-copy: var(--ink);
-  --product-muted: var(--ink-muted);
-  --product-rule: var(--line);
   position: relative;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
-  background: var(--product-surface);
-  color: var(--product-muted);
+  background: var(--panel);
+  color: var(--ink-muted);
   transition:
     border-color 240ms ease,
     background-color var(--product-motion),
     color var(--product-motion);
-}
-
-.product-cell:focus-within,
-.product-cell.is-active {
-  --product-surface: var(--ink);
-  --product-copy: var(--surface);
-  --product-muted: rgba(var(--surface-rgb), 0.66);
-  --product-rule: rgba(var(--surface-rgb), 0.28);
 }
 
 .product-cell[data-product-slot="top-left"] {
@@ -476,7 +472,7 @@ body[data-page-family="directory"] {
   min-height: 2rem;
   align-items: center;
   overflow-wrap: anywhere;
-  color: var(--product-copy);
+  color: var(--ink);
   font-weight: 600;
   letter-spacing: 0.02em;
   text-decoration-thickness: 1px;
@@ -495,7 +491,8 @@ body[data-page-family="directory"] {
 }
 
 .product-cell__name:hover,
-.product-cell__name:focus-visible {
+.product-cell__name:focus-visible,
+.product-cell__name:active {
   background: var(--ink);
   color: var(--surface);
   outline-color: var(--ink);
@@ -526,7 +523,7 @@ body[data-page-family="directory"] {
 
 .product-cell__eyebrow {
   padding-bottom: 0.75rem;
-  color: var(--product-muted);
+  color: var(--ink-muted);
   font-size: 0.68rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -534,15 +531,15 @@ body[data-page-family="directory"] {
 
 .product-cell__description {
   padding-block: 1rem;
-  border-block: 1px solid var(--product-rule);
-  color: var(--product-copy);
+  border-block: 1px solid var(--line);
+  color: var(--ink);
   font-size: clamp(0.9rem, 1.25vw, 1.05rem);
   line-height: 1.7;
 }
 
 .product-cell__meta {
   padding-top: 0.75rem;
-  color: var(--product-muted);
+  color: var(--ink-muted);
   font-size: 0.68rem;
   letter-spacing: 0.04em;
 }
@@ -553,14 +550,6 @@ body[data-page-family="directory"] {
 
 .product-cell__meta::after {
   content: " -->";
-}
-
-.product-cell__eyebrow,
-.product-cell__description,
-.product-cell__meta {
-  transition:
-    border-color var(--speed) ease,
-    color var(--speed) ease;
 }
 
 .product-cell__actions {
@@ -598,14 +587,16 @@ body[data-page-family="directory"] {
 }
 
 .product-cell__actions button:hover,
-.product-cell__actions button:focus-visible {
+.product-cell__actions button:focus-visible,
+.product-cell__actions button:active {
   background: var(--ink);
   color: var(--surface);
   outline-color: var(--ink);
 }
 
 .product-cell__actions .product-cell__explore:hover,
-.product-cell__actions .product-cell__explore:focus-visible {
+.product-cell__actions .product-cell__explore:focus-visible,
+.product-cell__actions .product-cell__explore:active {
   background: var(--surface);
   color: var(--ink);
   outline-color: var(--ink);
@@ -621,6 +612,8 @@ body[data-page-family="directory"] {
 
 .product-cell.is-active {
   border-color: transparent;
+  background: var(--panel);
+  color: var(--ink-muted);
 }
 
 .product-cell.is-active .product-cell__content {
@@ -641,8 +634,8 @@ body[data-page-family="directory"] {
 .product-cell.is-active .product-cell__name {
   max-width: 100%;
   padding: 0.12em 0.28em;
-  background: var(--surface);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--surface);
   font-size: clamp(1.5rem, 4.5vw, 3.6rem);
   line-height: 1.05;
   letter-spacing: -0.045em;
@@ -650,41 +643,12 @@ body[data-page-family="directory"] {
 }
 
 .product-cell.is-active .product-cell__name:hover,
-.product-cell.is-active .product-cell__name:focus-visible {
-  background: var(--ink);
-  box-shadow: inset 0 0 0 1px var(--surface);
-  color: var(--surface);
-  outline-color: var(--surface);
-}
-
-.product-cell.is-active .product-cell__actions button {
-  border-color: var(--product-rule);
-  background: var(--ink);
-  color: var(--surface);
-}
-
-.product-cell.is-active .product-cell__actions .product-cell__explore {
-  border-color: var(--surface);
+.product-cell.is-active .product-cell__name:focus-visible,
+.product-cell.is-active .product-cell__name:active {
   background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--ink);
   color: var(--ink);
-}
-
-.product-cell.is-active .product-cell__actions button:hover,
-.product-cell.is-active .product-cell__actions button:focus-visible {
-  background: var(--surface);
-  color: var(--ink);
-  outline-color: var(--surface);
-}
-
-.product-cell.is-active
-  .product-cell__actions
-  .product-cell__explore:hover,
-.product-cell.is-active
-  .product-cell__actions
-  .product-cell__explore:focus-visible {
-  background: var(--ink);
-  color: var(--surface);
-  outline-color: var(--surface);
+  outline-color: var(--ink);
 }
 
 .product-cell.is-active .product-cell__name::before {
@@ -780,6 +744,11 @@ body[data-page-family="directory"] {
   outline-offset: 0.35rem;
 }
 
+.home-logo:active {
+  background: var(--ink);
+  color: var(--surface);
+}
+
 .home-logo::before,
 .home-logo::after {
   position: absolute;
@@ -801,6 +770,11 @@ body[data-page-family="directory"] {
   content: "```";
   right: 0.85rem;
   bottom: 0.75rem;
+}
+
+.home-logo:active::before,
+.home-logo:active::after {
+  color: rgba(var(--surface-rgb), 0.62);
 }
 
 /* Content pages: one outer frame with full-width section bands. */
@@ -1045,8 +1019,10 @@ h2.section-title::before {
 
 .main a:hover,
 .main a:focus-visible,
+.main a:active,
 .error-main a:hover,
-.error-main a:focus-visible {
+.error-main a:focus-visible,
+.error-main a:active {
   background: var(--ink);
   color: var(--surface);
   outline-color: var(--ink);
@@ -1207,13 +1183,6 @@ body[data-page-family="error"] {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .product-cell:hover {
-    --product-surface: var(--ink);
-    --product-copy: var(--surface);
-    --product-muted: rgba(var(--surface-rgb), 0.66);
-    --product-rule: rgba(var(--surface-rgb), 0.28);
-  }
-
   .home-intro__actions button:hover,
   .home-intro__actions button:focus-visible {
     background: var(--ink);

@@ -76,11 +76,11 @@ tracks from `50% / 50%` to `100% / 0%`; it does not become a positioned overlay.
 The other three cells are pushed and compressed toward the canvas edges while
 the central logo scales toward the diagonally opposite corner—the direction in
 which the selected cell expands—on the same timing curve. The active surface
-inverts to the theme's foreground tone; its copy, rules, product-name label,
-and actions reverse roles to remain legible in both system themes. Centered
-content uses a broad reading measure, while narrow screens allow it to use the
-full available width. Source-order product names remain direct repository links
-when scripting is unavailable.
+keeps the resting theme color. Only interactive product-name labels and actions
+invert on hover, keyboard focus, or press. Centered content uses a broad reading
+measure, while narrow screens allow it to use the full available width.
+Source-order product names remain direct repository links when scripting is
+unavailable.
 
 ## Build and Cloudflare handoff
 
