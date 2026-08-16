@@ -33,10 +33,12 @@ metadata, and the Organization `slogan` field.
 - `assets/scripts/home-products.js` runs only on the homepage. It closes the
   native modal company introduction with a reduced-motion-aware transition,
   restores focus when it closes, reopens it from the centered mark, fills the
-  four cells from the catalog embedded in `data-products`, keeps each name
-  paired with its GitHub repository, announces user-requested arrangements,
-  balances repeats when the catalog is shorter than the grid, and keeps a
-  stable previous/next history.
+  four cells from the source-order product catalog, keeps each name,
+  description, metadata line, and GitHub repository paired while shuffling,
+  announces user-requested arrangements, balances repeats when the catalog is
+  shorter than the grid, and keeps a stable previous/next history. It also owns
+  the expanded-product state for hover, keyboard focus, touch, Close, and
+  Escape; CSS owns the geometry and transition.
   Candidate scoring strongly avoids the same product in the same recent slot
   and favors products that have appeared less recently as the catalog grows.
 - `assets/scripts/document-navigation.js` runs only on document pages. A
@@ -68,8 +70,12 @@ at rest; on wider screens, the file bar, document navigation, and current
 section form one continuous sticky stack beneath a fixed grid gutter. The
 homepage uses a fixed viewport frame containing a real 2×2 product grid,
 centered logo button, dismissible company introduction, top arrangement
-controls, and bottom status bar. Product cells stay equal on every viewport and
-link directly to their GitHub repositories.
+controls, and bottom status bar. Product cells stay equal at rest. An active
+cell grows from its physical quadrant to the full grid while the central logo
+scales into that cell's original corner. The crosshair stays in place and the
+product content occupies the diagonal quadrant; narrow screens allow that
+content to use the available width. Source-order product names remain direct
+repository links when scripting is unavailable.
 
 ## Build and Cloudflare handoff
 

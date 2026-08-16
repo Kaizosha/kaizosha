@@ -5,6 +5,7 @@
   const introClose = intro?.querySelector("[data-home-intro-close]");
   const introTitle = intro?.querySelector("[data-home-intro-title]");
   const introOpen = document.querySelector("[data-home-intro-open]");
+  let closeProductDetails = () => {};
 
   const syncIntroState = () => {
     introOpen?.setAttribute("aria-expanded", String(Boolean(intro?.open)));
@@ -61,6 +62,7 @@
   }
 
   introOpen?.addEventListener("click", () => {
+    closeProductDetails({ immediate: true });
     showIntro();
   });
 
@@ -77,33 +79,70 @@
   const previousButton = document.querySelector("[data-products-previous]");
   const nextButton = document.querySelector("[data-products-next]");
   const productStatus = document.querySelector("[data-products-status]");
+  const homeMain = productGrid?.closest(".home-main");
+  const homeLogo = document.querySelector(".home-logo");
 
-  if (!productGrid || !controls || !previousButton || !nextButton) {
+  if (
+    !productGrid ||
+    !controls ||
+    !previousButton ||
+    !nextButton ||
+    !homeMain ||
+    !homeLogo
+  ) {
     return;
   }
 
-  const cells = Array.from(productGrid.querySelectorAll(".product-cell__name"));
-  const productLinks = new Map(
-    cells.map((cell) => [cell.textContent.trim(), cell.href]),
+  const cellRecords = Array.from(
+    productGrid.querySelectorAll(".product-cell[data-product-slot]"),
+  )
+    .map((cell) => {
+      const nameLink = cell.querySelector(".product-cell__name");
+      const detail = cell.querySelector(".product-cell__detail");
+      const eyebrow = cell.querySelector(".product-cell__eyebrow");
+      const description = cell.querySelector(".product-cell__description");
+      const meta = cell.querySelector(".product-cell__meta");
+      const closeButton = cell.querySelector("[data-product-close]");
+      const exploreLink = cell.querySelector(".product-cell__explore");
+
+      if (
+        !nameLink ||
+        !detail ||
+        !eyebrow ||
+        !description ||
+        !meta ||
+        !closeButton ||
+        !exploreLink
+      ) {
+        return null;
+      }
+
+      return {
+        cell,
+        nameLink,
+        detail,
+        eyebrow,
+        description,
+        meta,
+        closeButton,
+        exploreLink,
+      };
+    })
+    .filter(Boolean);
+
+  const catalog = cellRecords.map((record, index) => ({
+    name: record.nameLink.textContent.trim(),
+    url: record.nameLink.href,
+    description: record.description.textContent.trim(),
+    meta: record.meta.textContent.trim(),
+    sequence: String(index + 1).padStart(2, "0"),
+  }));
+  const productsByName = new Map(
+    catalog.map((product) => [product.name, product]),
   );
-  let products = [];
+  const products = Array.from(productsByName.keys());
 
-  try {
-    products = JSON.parse(productGrid.dataset.products);
-  } catch {
-    products = [];
-  }
-
-  products = Array.from(
-    new Set(
-      products
-        .filter((product) => typeof product === "string")
-        .map((product) => product.trim())
-        .filter((product) => product && productLinks.has(product)),
-    ),
-  );
-
-  if (!cells.length || !products.length) {
+  if (!cellRecords.length || !products.length) {
     return;
   }
 
@@ -119,13 +158,13 @@
   };
 
   const buildCandidate = () => {
-    if (products.length >= cells.length) {
-      return shuffle(products).slice(0, cells.length);
+    if (products.length >= cellRecords.length) {
+      return shuffle(products).slice(0, cellRecords.length);
     }
 
     const candidate = [];
 
-    while (candidate.length < cells.length) {
+    while (candidate.length < cellRecords.length) {
       const batch = shuffle(products);
 
       if (
@@ -139,7 +178,7 @@
       candidate.push(...batch);
     }
 
-    return candidate.slice(0, cells.length);
+    return candidate.slice(0, cellRecords.length);
   };
 
   const arrangementsMatch = (first, second) =>
@@ -208,20 +247,211 @@
     return bestCandidate;
   };
 
-  const sourceArrangement = cells.map((cell) => cell.textContent.trim());
+  const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const detailHideTimers = new Map();
+  let activeRecord = null;
+  let suppressFocusActivation = false;
+
+  const clearDetailHide = (record) => {
+    const timer = detailHideTimers.get(record);
+
+    if (timer) {
+      window.clearTimeout(timer);
+      detailHideTimers.delete(record);
+    }
+  };
+
+  const hideDetail = (record, immediate) => {
+    clearDetailHide(record);
+
+    if (immediate || reducedMotion.matches) {
+      record.detail.hidden = true;
+      return;
+    }
+
+    const timer = window.setTimeout(() => {
+      if (activeRecord !== record) {
+        record.detail.hidden = true;
+      }
+
+      detailHideTimers.delete(record);
+    }, 420);
+
+    detailHideTimers.set(record, timer);
+  };
+
+  const deactivateProduct = ({
+    focus = false,
+    immediate = false,
+    announce = false,
+  } = {}) => {
+    const record = activeRecord;
+
+    if (!record) {
+      return;
+    }
+
+    if (focus) {
+      suppressFocusActivation = true;
+      record.nameLink.focus({ preventScroll: true });
+    }
+
+    activeRecord = null;
+    record.nameLink.setAttribute("aria-expanded", "false");
+    record.detail.setAttribute("aria-hidden", "true");
+    record.cell.classList.remove("is-active");
+    productGrid.classList.remove("has-active");
+    delete homeMain.dataset.activeProduct;
+    delete homeMain.dataset.activeSlot;
+    hideDetail(record, immediate);
+
+    if (announce && productStatus) {
+      productStatus.textContent = `${record.cell.dataset.productName} details closed.`;
+    }
+
+    if (focus) {
+      window.requestAnimationFrame(() => {
+        suppressFocusActivation = false;
+      });
+    }
+  };
+
+  closeProductDetails = deactivateProduct;
+
+  const activateProduct = (record, { announce = false } = {}) => {
+    if (intro?.open || activeRecord === record) {
+      return;
+    }
+
+    if (activeRecord) {
+      deactivateProduct({ immediate: true });
+    }
+
+    clearDetailHide(record);
+    record.detail.hidden = false;
+    record.detail.removeAttribute("aria-hidden");
+    void record.detail.offsetWidth;
+
+    activeRecord = record;
+    homeLogo.classList.add("is-ready");
+    homeMain.dataset.activeProduct = record.cell.dataset.productName;
+    homeMain.dataset.activeSlot = record.cell.dataset.productSlot;
+    productGrid.classList.add("has-active");
+    record.cell.classList.add("is-active");
+    record.nameLink.setAttribute("aria-expanded", "true");
+
+    if (announce && productStatus) {
+      productStatus.textContent = `${record.cell.dataset.productName} product details shown.`;
+    }
+  };
+
+  const renderCell = (record, product) => {
+    record.cell.dataset.productName = product.name;
+    record.nameLink.textContent = product.name;
+    record.nameLink.href = product.url;
+    record.nameLink.setAttribute(
+      "aria-label",
+      `View ${product.name} on GitHub (opens in a new tab)`,
+    );
+    record.nameLink.setAttribute("aria-expanded", "false");
+    record.eyebrow.textContent = `product / ${product.sequence}`;
+    record.description.textContent = product.description;
+    record.meta.textContent = product.meta;
+    record.closeButton.setAttribute(
+      "aria-label",
+      `Close ${product.name} details`,
+    );
+    record.exploreLink.href = product.url;
+    record.exploreLink.setAttribute(
+      "aria-label",
+      `Explore ${product.name} on GitHub (opens in a new tab)`,
+    );
+    record.detail.setAttribute("aria-hidden", "true");
+    record.detail.hidden = true;
+  };
+
+  homeLogo.addEventListener(
+    "animationend",
+    (event) => {
+      if (event.target === homeLogo && event.animationName === "mark-in") {
+        homeLogo.classList.add("is-ready");
+      }
+    },
+    { once: true },
+  );
+
+  cellRecords.forEach((record) => {
+    record.cell.addEventListener("pointerenter", (event) => {
+      if (finePointer.matches && event.pointerType !== "touch") {
+        activateProduct(record);
+      }
+    });
+
+    record.cell.addEventListener("focusin", () => {
+      if (!suppressFocusActivation) {
+        activateProduct(record, { announce: true });
+      }
+    });
+
+    record.nameLink.addEventListener("click", (event) => {
+      if (event.detail > 0 && !finePointer.matches) {
+        event.preventDefault();
+        activateProduct(record, { announce: true });
+      }
+    });
+
+    record.closeButton.addEventListener("click", () => {
+      deactivateProduct({ focus: true, announce: true });
+    });
+  });
+
+  homeMain.addEventListener("pointerleave", () => {
+    if (
+      finePointer.matches &&
+      activeRecord &&
+      !activeRecord.cell.contains(document.activeElement)
+    ) {
+      deactivateProduct();
+    }
+  });
+
+  productGrid.addEventListener("focusout", () => {
+    const record = activeRecord;
+
+    window.requestAnimationFrame(() => {
+      if (
+        record &&
+        activeRecord === record &&
+        !record.cell.contains(document.activeElement)
+      ) {
+        deactivateProduct();
+      }
+    });
+  });
+
+  homeMain.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && activeRecord) {
+      event.preventDefault();
+      deactivateProduct({ focus: true, announce: true });
+    }
+  });
+
+  const sourceArrangement = cellRecords.map((record) =>
+    record.nameLink.textContent.trim(),
+  );
   const history = [createArrangement(sourceArrangement, [], 0)];
   let historyIndex = 0;
 
   const render = (announce = false) => {
-    cells.forEach((cell, index) => {
-      const product = history[historyIndex][index];
+    deactivateProduct({ immediate: true });
 
-      cell.textContent = product;
-      cell.href = productLinks.get(product);
-      cell.setAttribute(
-        "aria-label",
-        `View ${product} on GitHub (opens in a new tab)`,
-      );
+    cellRecords.forEach((record, index) => {
+      const product = productsByName.get(history[historyIndex][index]);
+
+      if (product) {
+        renderCell(record, product);
+      }
     });
 
     if (announce && productStatus) {

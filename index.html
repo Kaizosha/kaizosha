@@ -123,9 +123,9 @@
       }
     </script>
     <link rel="stylesheet" href="/assets/styles/brand.css?v=20260814-two-tone">
-    <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260816-accessibility-seo">
+    <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260816-product-expansion">
     <script src="/assets/scripts/site-motion.js?v=20260814-smooth-grid" defer></script>
-    <script src="/assets/scripts/home-products.js?v=20260816-accessibility" defer></script>
+    <script src="/assets/scripts/home-products.js?v=20260816-product-expansion" defer></script>
   </head>
   <body data-page-family="directory" data-page="home">
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -174,14 +174,74 @@
 
       <div
         class="home-products"
-        data-products='["Together","Sekai","Hush","modscan"]'
+        data-products
         role="list"
         aria-label="Products"
       >
-        <div class="product-cell" role="listitem"><a class="product-cell__name" href="https://github.com/Kaizosha/Together" target="_blank" rel="noopener noreferrer" aria-label="View Together on GitHub (opens in a new tab)">Together</a></div>
-        <div class="product-cell" role="listitem"><a class="product-cell__name" href="https://github.com/Kaizosha/Sekai" target="_blank" rel="noopener noreferrer" aria-label="View Sekai on GitHub (opens in a new tab)">Sekai</a></div>
-        <div class="product-cell" role="listitem"><a class="product-cell__name" href="https://github.com/Kaizosha/Hush" target="_blank" rel="noopener noreferrer" aria-label="View Hush on GitHub (opens in a new tab)">Hush</a></div>
-        <div class="product-cell" role="listitem"><a class="product-cell__name" href="https://github.com/Kaizosha/modscan" target="_blank" rel="noopener noreferrer" aria-label="View modscan on GitHub (opens in a new tab)">modscan</a></div>
+        <div class="product-cell" data-product-slot="top-left" role="listitem">
+          <div class="product-cell__content">
+            <h2 class="product-cell__heading">
+              <a class="product-cell__name" href="https://github.com/Kaizosha/Together" target="_blank" rel="noopener noreferrer" aria-label="View Together on GitHub (opens in a new tab)" aria-controls="product-detail-1" aria-expanded="false">Together</a>
+            </h2>
+            <div class="product-cell__detail" id="product-detail-1" hidden>
+              <p class="product-cell__eyebrow" aria-hidden="true">product / 01</p>
+              <p class="product-cell__description">A Kaizōsha software product currently being prepared for public release.</p>
+              <p class="product-cell__meta">Software product / In development</p>
+              <div class="product-cell__actions">
+                <button type="button" data-product-close aria-label="Close Together details">[ CLOSE ]</button>
+                <a class="product-cell__explore" href="https://github.com/Kaizosha/Together" target="_blank" rel="noopener noreferrer" aria-label="Explore Together on GitHub (opens in a new tab)">[ EXPLORE ↗ ]</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="product-cell" data-product-slot="top-right" role="listitem">
+          <div class="product-cell__content">
+            <h2 class="product-cell__heading">
+              <a class="product-cell__name" href="https://github.com/Kaizosha/Sekai" target="_blank" rel="noopener noreferrer" aria-label="View Sekai on GitHub (opens in a new tab)" aria-controls="product-detail-2" aria-expanded="false">Sekai</a>
+            </h2>
+            <div class="product-cell__detail" id="product-detail-2" hidden>
+              <p class="product-cell__eyebrow" aria-hidden="true">product / 02</p>
+              <p class="product-cell__description">An offline-first native globe package for SwiftUI, rendered with Metal and built for every Apple platform.</p>
+              <p class="product-cell__meta">SwiftUI package / Swift + Metal</p>
+              <div class="product-cell__actions">
+                <button type="button" data-product-close aria-label="Close Sekai details">[ CLOSE ]</button>
+                <a class="product-cell__explore" href="https://github.com/Kaizosha/Sekai" target="_blank" rel="noopener noreferrer" aria-label="Explore Sekai on GitHub (opens in a new tab)">[ EXPLORE ↗ ]</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="product-cell" data-product-slot="bottom-left" role="listitem">
+          <div class="product-cell__content">
+            <h2 class="product-cell__heading">
+              <a class="product-cell__name" href="https://github.com/Kaizosha/Hush" target="_blank" rel="noopener noreferrer" aria-label="View Hush on GitHub (opens in a new tab)" aria-controls="product-detail-3" aria-expanded="false">Hush</a>
+            </h2>
+            <div class="product-cell__detail" id="product-detail-3" hidden>
+              <p class="product-cell__eyebrow" aria-hidden="true">product / 03</p>
+              <p class="product-cell__description">A macOS tool designed to listen, see, and remember while you stay in the moment.</p>
+              <p class="product-cell__meta">macOS application / Swift</p>
+              <div class="product-cell__actions">
+                <button type="button" data-product-close aria-label="Close Hush details">[ CLOSE ]</button>
+                <a class="product-cell__explore" href="https://github.com/Kaizosha/Hush" target="_blank" rel="noopener noreferrer" aria-label="Explore Hush on GitHub (opens in a new tab)">[ EXPLORE ↗ ]</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="product-cell" data-product-slot="bottom-right" role="listitem">
+          <div class="product-cell__content">
+            <h2 class="product-cell__heading">
+              <a class="product-cell__name" href="https://github.com/Kaizosha/modscan" target="_blank" rel="noopener noreferrer" aria-label="View modscan on GitHub (opens in a new tab)" aria-controls="product-detail-4" aria-expanded="false">modscan</a>
+            </h2>
+            <div class="product-cell__detail" id="product-detail-4" hidden>
+              <p class="product-cell__eyebrow" aria-hidden="true">product / 04</p>
+              <p class="product-cell__description">A keyboard-first command-line tool for scanning, analyzing, and managing node_modules directories.</p>
+              <p class="product-cell__meta">CLI tool / JavaScript</p>
+              <div class="product-cell__actions">
+                <button type="button" data-product-close aria-label="Close modscan details">[ CLOSE ]</button>
+                <a class="product-cell__explore" href="https://github.com/Kaizosha/modscan" target="_blank" rel="noopener noreferrer" aria-label="Explore modscan on GitHub (opens in a new tab)">[ EXPLORE ↗ ]</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <p class="u-screen-reader" role="status" aria-live="polite" aria-atomic="true" data-products-status></p>
 

@@ -16,8 +16,8 @@ without becoming visually empty.
    sticky back row and one current section band visible while scrolling.
 4. Open the homepage with a compact company-introduction panel above the
    centered Kaizōsha mark. Four equal product cells fill the canvas behind it;
-   product names link directly to their GitHub repositories rather than local
-   app pages.
+   a hovered, focused, or tapped product expands across that canvas and exposes
+   its description and repository action.
 5. Use the system monospace stack. Do not load web fonts, icon libraries, or
    frontend dependencies.
 6. Motion is restrained and structural: entrance, color inversion, focus, and
@@ -41,8 +41,8 @@ without becoming visually empty.
 | Link | Literal `[label](href)`, inverted on hover/focus |
 | Metadata | Rendered like an HTML comment |
 | Footer | Four equal related-link cells; text reveals on fine-pointer hover |
-| Homepage grid | Four equal GitHub-linked product cells with names aligned to the outer corners |
-| Homepage mark | Centered fenced-code button that reopens company information |
+| Homepage grid | Four equal product cells; the selected cell expands into a ruled detail canvas |
+| Homepage mark | Centered fenced-code button that moves into the selected product's original corner |
 | Homepage introduction | Centered `COMPANY.md` panel with legal identity and `[ EXPLORE ]` |
 | Homepage controls | Stable `[ PREV ] / [ NEXT ]` arrangement history |
 
@@ -70,13 +70,18 @@ without becoming visually empty.
 
 The homepage first presents the legal company identity, location, focused
 software profile, domain email, and one Explore action in a dismissible markdown
-panel. Clicking the centered mark reopens that panel. Product names remain
-direct GitHub repository links in four equal cells underneath. Its top bar owns
-arrangement controls; the bottom-left bar spells out Terms, Privacy, and Contact
-above 640px and uses `[ T ] / [ P ] / [ C ]` at smaller sizes. The logo remains
-centered at every screen size. Browser zoom remains available on every page,
-and the homepage frame yields to short or magnified viewports without clipping.
-If the catalog has fewer products than cells, names repeat in balanced batches.
+panel. Clicking the centered mark reopens that panel. Product names begin as
+direct GitHub repository links in four equal cells underneath. Hovering a cell,
+focusing its link, or tapping its name expands that product across the grid;
+the crosshair remains visible, the mark scales into the product's original
+corner, and the opposite quadrant presents a description, metadata comment,
+Close control, and GitHub Explore action. Escape closes an expanded product.
+Its top bar owns arrangement controls; the bottom-left bar spells out Terms,
+Privacy, and Contact above 640px and uses `[ T ] / [ P ] / [ C ]` at smaller
+sizes. The logo returns to center when product detail closes. Browser zoom
+remains available on every page, and the homepage frame yields to short or
+magnified viewports without clipping. If the catalog has fewer products than
+cells, names repeat in balanced batches.
 
 Document footer geometry uses four equal columns on desktop and two equal
 columns on small screens. Fine-pointer devices reveal footer link text on
@@ -99,6 +104,8 @@ inline gutter is removed; the balanced block gutter remains.
   least a 24px target in each axis.
 - Browser zoom remains available on every page through at least 200%.
 - Every page remains readable without hover, animation, or JavaScript.
+- Product detail is available through fine-pointer hover, keyboard focus, and
+  touch activation; Close and Explore remain explicit controls.
 - Light and dark palettes must follow `prefers-color-scheme` without a flash of
   the wrong theme.
 - Increased-contrast and forced-color preferences strengthen or simplify the
