@@ -44,8 +44,12 @@ function getCacheControl(pathname, contentType) {
     return "public, max-age=31536000, immutable";
   }
 
+  if (pathname === "/site.webmanifest") {
+    return "no-cache, no-store, must-revalidate";
+  }
+
   if (contentType.startsWith("text/html")) {
-    return "public, max-age=300, s-maxage=300, stale-while-revalidate=86400";
+    return "no-cache, no-store, must-revalidate";
   }
 
   if (pathname === "/icon.png") {
@@ -62,10 +66,17 @@ function withSiteHeaders(response, pathname) {
     headers.set(name, value);
   }
 
-  headers.set(
-    "Cache-Control",
-    getCacheControl(pathname, headers.get("Content-Type") || ""),
+  const cacheControl = getCacheControl(
+    pathname,
+    headers.get("Content-Type") || "",
   );
+
+  headers.set("Cache-Control", cacheControl);
+
+  if (cacheControl.includes("no-store")) {
+    headers.set("Expires", "0");
+    headers.set("Pragma", "no-cache");
+  }
 
   if ((headers.get("Content-Type") || "").startsWith("text/html")) {
     headers.set("Content-Language", "en");

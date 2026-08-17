@@ -93,9 +93,11 @@ bundle.
 
 `wrangler.jsonc` serves `dist/client/` through the Worker at
 `dist/server/index.js`. The Worker handles HTTPS and canonical-route redirects,
-GET/HEAD method restriction, versioned-asset caching, short HTML caching,
-English content headers, no-index headers for missing pages, and security
-headers.
+GET/HEAD method restriction, immutable versioned-asset caching, always-fresh
+HTML and web-app manifests, English content headers, no-index headers for
+missing pages, and security headers. Navigation documents and the manifest use
+`no-store` so installed launches cannot retain an obsolete app shell; CSS,
+scripts, and media remain long-lived because their URLs are versioned.
 Its Content Security Policy allows only same-origin deferred scripts, styles,
 images, and the manifest. Connections, fonts, media, frames, forms, objects,
 workers, inline scripts, and script attributes remain disabled.
@@ -120,3 +122,5 @@ supported Cloudflare paths receive the restrictive policy and cache rules.
 8. Run `tools/build-site.sh` and inspect `dist/client/` before publishing.
 9. Keep each indexable route's visible heading, metadata, canonical URL,
    structured data, and sitemap entry consistent.
+10. Bump the manifest link query whenever install or launch behavior changes;
+    keep navigation HTML and `site.webmanifest` non-cacheable.

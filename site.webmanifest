@@ -3,7 +3,7 @@
   "short_name": "Kaizōsha",
   "description": "Kaizōsha designs and builds useful software products for web and mobile platforms, including open-source tools.",
   "id": "/",
-  "start_url": "/",
+  "start_url": "/?source=pwa",
   "scope": "/",
   "lang": "en",
   "dir": "ltr",
