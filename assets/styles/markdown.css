@@ -147,13 +147,6 @@ body[data-page-family="directory"] {
   min-height: min(24rem, calc(100svh - 3rem));
   border: 1px solid var(--line);
   background-color: var(--surface);
-  background-image:
-    linear-gradient(var(--line-soft) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
-  background-position:
-    calc(-1px + var(--grid-auto-x) + var(--grid-shift-x))
-    calc(-1px + var(--grid-auto-y) + var(--grid-shift-y));
-  background-size: 48px 48px;
   box-shadow:
     0 0 0 1px var(--surface),
     0 0 0 2px var(--line-soft);
