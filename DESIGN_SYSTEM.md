@@ -21,8 +21,8 @@ without becoming visually empty.
 5. Use the system monospace stack. Do not load web fonts, icon libraries, or
    frontend dependencies.
 6. Motion is restrained and structural: entrance, color inversion, focus, and
-   slow pointer-driven grid drift. Disable pointer motion for touch and reduced
-   motion preferences.
+   a continuously drifting grid that responds to a fine pointer. Disable
+   pointer motion for touch and reduced-motion preferences.
 7. Preserve semantic HTML, plain language, company metadata, creator metadata,
    legal content, browser zoom, keyboard access, and system accessibility
    preferences.
@@ -31,7 +31,7 @@ without becoming visually empty.
 
 | Element | Treatment |
 | --- | --- |
-| Canvas | 48px two-tone drafting grid with subtle pointer drift |
+| Canvas | 48px two-tone drafting grid with continuous motion and subtle pointer drift |
 | File bar | Inverted off-white row with `[ filename.md ]` |
 | Reading shell | One 76rem maximum outer frame |
 | Document navigation | Sticky `[ ← Back ]` row with the current document name |

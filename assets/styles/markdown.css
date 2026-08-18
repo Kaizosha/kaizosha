@@ -1,3 +1,15 @@
+@property --grid-auto-x {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --grid-auto-y {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
 :root {
   color-scheme: light dark;
   --surface-rgb: 16, 16, 16;
@@ -8,6 +20,8 @@
   --line: rgba(var(--ink-rgb), 0.28);
   --line-soft: rgba(var(--ink-rgb), 0.11);
   --panel: rgba(var(--ink-rgb), 0.025);
+  --grid-auto-x: 0px;
+  --grid-auto-y: 0px;
   --grid-shift-x: 0px;
   --grid-shift-y: 0px;
   --measure: 96ch;
@@ -53,8 +67,10 @@ body {
     linear-gradient(var(--line-soft) 1px, transparent 1px),
     linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
   background-position:
-    calc(-1px + var(--grid-shift-x)) calc(-1px + var(--grid-shift-y));
+    calc(-1px + var(--grid-auto-x) + var(--grid-shift-x))
+    calc(-1px + var(--grid-auto-y) + var(--grid-shift-y));
   background-size: 48px 48px;
+  animation: grid-drift 18s cubic-bezier(0.45, 0, 0.55, 1) infinite;
   color: var(--ink);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
@@ -131,6 +147,13 @@ body[data-page-family="directory"] {
   min-height: min(24rem, calc(100svh - 3rem));
   border: 1px solid var(--line);
   background-color: var(--surface);
+  background-image:
+    linear-gradient(var(--line-soft) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+  background-position:
+    calc(-1px + var(--grid-auto-x) + var(--grid-shift-x))
+    calc(-1px + var(--grid-auto-y) + var(--grid-shift-y));
+  background-size: 48px 48px;
   box-shadow:
     0 0 0 1px var(--surface),
     0 0 0 2px var(--line-soft);
@@ -1163,6 +1186,26 @@ body[data-page-family="error"] {
   }
 }
 
+@keyframes grid-drift {
+  0%,
+  100% {
+    --grid-auto-x: -28px;
+    --grid-auto-y: -18px;
+  }
+  25% {
+    --grid-auto-x: 30px;
+    --grid-auto-y: -12px;
+  }
+  50% {
+    --grid-auto-x: 18px;
+    --grid-auto-y: 26px;
+  }
+  75% {
+    --grid-auto-x: -32px;
+    --grid-auto-y: 20px;
+  }
+}
+
 @keyframes mark-in {
   from {
     opacity: 0;
@@ -1282,7 +1325,8 @@ body[data-page-family="error"] {
       linear-gradient(var(--line-soft) 1px, transparent 1px),
       linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
     background-position:
-      calc(-1px + var(--grid-shift-x)) calc(-1px + var(--grid-shift-y));
+      calc(-1px + var(--grid-auto-x) + var(--grid-shift-x))
+      calc(-1px + var(--grid-auto-y) + var(--grid-shift-y));
     background-size: 48px 48px;
     opacity: 1;
   }

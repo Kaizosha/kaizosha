@@ -27,9 +27,10 @@ metadata, and the Organization `slogan` field.
 - `assets/styles/markdown.css` owns the drafting grid, framed shells,
   system themes, typography, markdown grammar, counters, interactions,
   accessibility states, and responsive rules for every route.
-- `assets/scripts/site-motion.js` continuously drifts the background grid and
-  smoothly blends in fine-pointer movement. Pages do not depend on it for
-  layout or content; it pauses in hidden tabs and disables itself for
+- `assets/styles/markdown.css` continuously drifts the visible drafting grid;
+  `assets/scripts/site-motion.js` smoothly adds fine-pointer movement through
+  the trusted stylesheet rather than inline styles. Pages do not depend on
+  either for layout or content, and pointer movement disables itself for
   reduced-motion contexts.
 - `assets/scripts/home-products.js` runs only on the homepage. It closes the
   native modal company introduction with a reduced-motion-aware transition,
