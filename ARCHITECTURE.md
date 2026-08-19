@@ -36,7 +36,7 @@ metadata, and the Organization `slogan` field.
   native modal company introduction with a reduced-motion-aware transition,
   restores focus when it closes, reopens it from the centered mark, fills the
   four cells from the source-order product catalog, keeps each name,
-  description, metadata line, and GitHub repository paired while shuffling,
+  description, metadata line, and product destination paired while shuffling,
   announces user-requested arrangements, balances repeats when the catalog is
   shorter than the grid, and keeps a stable previous/next history. It also owns
   the expanded-product state for hover, keyboard focus, touch, Close, and
@@ -82,7 +82,7 @@ keeps the resting theme color. Only interactive product-name labels and actions
 invert on hover, keyboard focus, or press. Expanded content anchors to the
 horizontal edge opposite the logo while retaining a broad reading measure;
 description copy remains left-aligned, and narrow screens allow the block to use
-the full available width. Source-order product names remain direct repository
+the full available width. Source-order product names remain direct destination
 links when scripting is unavailable.
 
 ## Build and Cloudflare handoff

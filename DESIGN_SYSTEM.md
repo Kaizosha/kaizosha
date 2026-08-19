@@ -17,7 +17,7 @@ without becoming visually empty.
 4. Open the homepage with a compact company-introduction panel above the
    centered Kaizōsha mark. Four equal product cells fill the canvas behind it;
    a hovered, focused, or tapped product expands across that canvas and exposes
-   its description and repository action.
+   its description and destination action.
 5. Use the system monospace stack. Do not load web fonts, icon libraries, or
    frontend dependencies.
 6. Motion is restrained and structural: entrance, color inversion, focus, and
@@ -73,7 +73,7 @@ without becoming visually empty.
 The homepage first presents the legal company identity, location, focused
 software profile, domain email, and one Explore action in a dismissible markdown
 panel. Clicking the centered mark reopens that panel. Product names begin as
-direct GitHub repository links in four equal cells underneath. Hovering a cell,
+direct product-destination links in four equal cells underneath. Hovering a cell,
 focusing its link, or tapping its name expands that product across the grid;
 the selected block grows continuously from its original quadrant into one
 same-tone canvas by resizing the grid tracks themselves; it never stacks above
@@ -85,7 +85,7 @@ expands toward bottom-left and sends the mark to bottom-left. Its product name
 uses a reversed two-tone label for persistent contrast. Expanded information
 anchors to the horizontal side opposite the mark; long description copy remains
 left-aligned for readability. It reveals a description, metadata comment, Close
-control, and GitHub Explore action. Escape closes an expanded product.
+control, and destination Explore action. Escape closes an expanded product.
 Its top bar owns arrangement controls; the bottom-left bar spells out Terms,
 Privacy, and Contact above 640px and uses `[ T ] / [ P ] / [ C ]` at smaller
 sizes. The logo returns to center when product detail closes. Browser zoom

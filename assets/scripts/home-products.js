@@ -142,6 +142,16 @@
   );
   const products = Array.from(productsByName.keys());
 
+  const getDestinationLabel = (url) => {
+    try {
+      return new URL(url).hostname.toLowerCase() === "github.com"
+        ? "on GitHub"
+        : "website";
+    } catch {
+      return "website";
+    }
+  };
+
   if (!cellRecords.length || !products.length) {
     return;
   }
@@ -347,12 +357,14 @@
   };
 
   const renderCell = (record, product) => {
+    const destinationLabel = getDestinationLabel(product.url);
+
     record.cell.dataset.productName = product.name;
     record.nameLink.textContent = product.name;
     record.nameLink.href = product.url;
     record.nameLink.setAttribute(
       "aria-label",
-      `View ${product.name} on GitHub (opens in a new tab)`,
+      `View ${product.name} ${destinationLabel} (opens in a new tab)`,
     );
     record.nameLink.setAttribute("aria-expanded", "false");
     record.eyebrow.textContent = `product / ${product.sequence}`;
@@ -365,7 +377,7 @@
     record.exploreLink.href = product.url;
     record.exploreLink.setAttribute(
       "aria-label",
-      `Explore ${product.name} on GitHub (opens in a new tab)`,
+      `Explore ${product.name} ${destinationLabel} (opens in a new tab)`,
     );
     record.detail.setAttribute("aria-hidden", "true");
     record.detail.hidden = true;
