@@ -35,18 +35,21 @@ metadata, and the Organization `slogan` field.
 - `assets/scripts/home-products.js` runs only on the homepage. It closes the
   native modal company introduction with a reduced-motion-aware transition,
   restores focus when it closes, reopens it from the centered mark, fills the
-  four cells from the source-order product catalog, keeps each name,
+  four cells from the source-order product catalog plus inert template entries,
+  and keeps each name,
   description, metadata line, and product destination paired while shuffling,
   announces user-requested arrangements, balances repeats when the catalog is
   shorter than the grid, and keeps a stable previous/next history. It also owns
   the expanded-product state for hover, keyboard focus, touch, Close, and
   Escape. For non-GitHub website destinations, it accumulates downward wheel
   intent or a deliberate upward touch swipe only after any overflowing details
-  reach their end, then immediately performs a same-tab handoff. Together
-  receives the active quadrant through a `slot` query parameter so its first
-  frame preserves the product position. Explicit controls remain available for
-  every input path; CSS owns the geometry, cue, and transition.
-  Candidate scoring strongly avoids the same product in the same recent slot
+  reach their end, then immediately performs a same-tab handoff. Kaizōsha
+  product sites receive the active quadrant through a `slot` query parameter so
+  their first frame preserves the product position. Explicit controls remain
+  available for every input path; CSS owns the geometry, cue, and transition.
+  Inert template entries let the catalog grow beyond the four no-script cells
+  without adding hidden interactive controls. Candidate scoring strongly avoids
+  the same product in the same recent slot
   and favors products that have appeared less recently as the catalog grows.
 - `assets/scripts/document-navigation.js` runs only on document pages. A
   requestAnimationFrame-throttled scroll check marks the current section and

@@ -88,10 +88,10 @@ left-aligned for readability. It reveals a description, metadata comment, Close
 control, and destination Explore action. Fine-pointer users can scroll downward,
 and touch users can deliberately swipe upward, over an expanded website-backed
 product to fill an inline handoff rule and immediately open that site in the
-same tab. The handoff waits until overflowing details reach their end. Together
-carries the active quadrant into its destination so the spatial composition
-remains continuous; repository destinations keep their explicit Explore action
-only. Escape closes an expanded product.
+same tab. The handoff waits until overflowing details reach their end. Each
+Kaizōsha product site carries the active quadrant into its destination so the
+spatial composition remains continuous; repository destinations keep their
+explicit Explore action only. Escape closes an expanded product.
 Its top bar owns arrangement controls; the bottom-left bar spells out Terms,
 Privacy, and Contact above 640px and uses `[ T ] / [ P ] / [ C ]` at smaller
 sizes. The logo returns to center when product detail closes. Browser zoom
@@ -138,8 +138,8 @@ inline gutter is removed; the balanced block gutter remains.
 1. Add a supported `data-page-family` value to `<body>`.
 2. Add a descriptive `data-file` value to the framed `<main>`.
 3. Load `markdown.css` and the deferred `site-motion.js`; load `brand.css` only
-   when the Kaizōsha icon appears, `home-products.js` only on the homepage, and
-   `document-navigation.js` only on document pages.
+   when the constructed Kaizōsha mark appears, `home-products.js` only on the
+   homepage, and `document-navigation.js` only on document pages.
 4. Use semantic headings, paragraphs, navigation, links, a main landmark, and a
    keyboard-accessible skip link.
 5. Keep content inside the balanced shell and shared reading measure.

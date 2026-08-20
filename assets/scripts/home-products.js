@@ -136,13 +136,31 @@
     })
     .filter(Boolean);
 
-  const catalog = cellRecords.map((record, index) => ({
+  const sourceCatalog = cellRecords.map((record, index) => ({
     name: record.nameLink.textContent.trim(),
     url: record.nameLink.href,
     description: record.description.textContent.trim(),
     meta: record.meta.textContent.trim(),
     sequence: String(index + 1).padStart(2, "0"),
   }));
+  const catalogTemplate = document.querySelector(
+    "template[data-product-catalog]",
+  );
+  const additionalCatalog = Array.from(
+    catalogTemplate?.content.querySelectorAll(
+      "[data-product-catalog-item]",
+    ) ?? [],
+  ).map((item, index) => ({
+    name: item.dataset.productName?.trim() ?? "",
+    url: item.dataset.productUrl?.trim() ?? "",
+    description: item.dataset.productDescription?.trim() ?? "",
+    meta: item.dataset.productMeta?.trim() ?? "",
+    sequence: String(sourceCatalog.length + index + 1).padStart(2, "0"),
+  }));
+  const catalog = [...sourceCatalog, ...additionalCatalog].filter(
+    (product) =>
+      product.name && product.url && product.description && product.meta,
+  );
   const productsByName = new Map(
     catalog.map((product) => [product.name, product]),
   );
@@ -355,7 +373,10 @@
 
     const destination = new URL(record.nameLink.href);
 
-    if (destination.hostname === "together.kaizosha.org") {
+    if (
+      destination.hostname.endsWith(".kaizosha.org") &&
+      destination.hostname !== "kaizosha.org"
+    ) {
       destination.searchParams.set("slot", record.cell.dataset.productSlot);
     }
 

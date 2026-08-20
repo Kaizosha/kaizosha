@@ -32,11 +32,11 @@ product sites:
 - `assets/scripts/document-navigation.js`
 - `assets/scripts/site-motion.js`
 
-Synchronize those files to a sibling product repository with:
+Synchronize those files to every known sibling product repository with:
 
 ```sh
-./tools/sync-shared-design.sh ../together-web
+./tools/sync-shared-design.sh
 ```
 
-Use `--check` in place of synchronization to verify that a product site has not
-drifted from the shared core.
+Pass one or more repository paths to target a subset, and use `--check` before
+the paths to verify that product sites have not drifted from the shared core.

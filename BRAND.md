@@ -1,12 +1,17 @@
 # Kaizōsha Brand System
 
-The public site uses one visible brand asset: the three-part Kaizōsha mark on
-the homepage. Its bar and glyph geometry lives in
+The public site uses one visible brand construction: the three-part Kaizōsha
+mark on the homepage. Its bar and glyph geometry lives in
 `assets/styles/brand.css`; its framed presentation lives in
 `assets/styles/markdown.css`.
 
-The internal brand line is `From Me Comes The Future`. It does not appear in
-rendered website content; its only public use is homepage metadata.
+`icon.png` is the transparent raster distribution asset. Use it only where a
+browser, operating system, PWA manifest, or metadata consumer requires an image.
+Visible site branding must use the semantic HTML and shared CSS construction.
+
+The brand line is `From Me Comes The Future`. Its public use is limited to the
+homepage company introduction, homepage description metadata, and the
+Organization `slogan` field.
 
 ## Rules
 
@@ -16,12 +21,16 @@ rendered website content; its only public use is homepage metadata.
   theme and can invert cleanly with its two-tone hover panel.
 - Preserve the shared desktop and mobile proportions. Page styles may position
   the complete mark but must not redefine individual bars or glyphs.
+- Keep `icon.png` fully transparent outside the bars and glyphs: no badge,
+  canvas fill, outer border, shadow, or texture.
+- Do not place `icon.png` in visible page content. Reserve it for favicons,
+  touch icons, PWA installation, and machine-readable logo metadata.
 - Use no accent color, gradient, glow, bevel, raster texture, or external logo
   library.
 - Keep motion restrained to the shared entrance and panel transition, and
   respect reduced-motion preferences.
 - Preserve the canonical text `Kaizōsha` in titles, metadata, structured data,
   and social previews.
-- Preserve the internal line's title case. Use it only in homepage descriptions
-  and the Organization `slogan`; never render it as a page title, subtitle,
-  navigation item, or product label.
+- Preserve the line's title case. Use it only in the homepage company
+  introduction, homepage descriptions, and the Organization `slogan`; never use
+  it as a page title, navigation item, or product label.
