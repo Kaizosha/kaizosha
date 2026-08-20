@@ -95,32 +95,26 @@ for wheel and touch input; its progress rule fills before the browser
 immediately navigates in the same tab. Source-order product names remain direct
 destination links when scripting is unavailable.
 
-## Build and Cloudflare handoff
+## Cloudflare Pages handoff
 
-`tools/build-site.sh` recreates the ignored `dist/` directory from an explicit
-allowlist. It copies the five public HTML routes, two stylesheets, all three
-script controllers, required metadata files, icon, crafted social card, and
-security configuration. Development files are never copied into the public
-bundle.
+The repository root is the complete public site. Cloudflare Pages connects to
+the Git repository with framework preset `None`, production branch `main`, no
+build command, and build output directory `.`. A push to `main` publishes the
+committed HTML, CSS, JavaScript, metadata, icon, and social card directly.
 
-`wrangler.jsonc` serves `dist/client/` through the Worker at
-`dist/server/index.js`. The Worker handles HTTPS and canonical-route redirects,
-GET/HEAD method restriction, immutable versioned-asset caching, always-fresh
-HTML and web-app manifests, English content headers, no-index headers for
-missing pages, and security headers. Navigation documents and the manifest use
-`no-store` so installed launches cannot retain an obsolete app shell; CSS,
-scripts, and media remain long-lived because their URLs are versioned.
-Its Content Security Policy allows only same-origin deferred scripts, styles,
-images, and the manifest. Connections, fonts, media, frames, forms, objects,
-workers, inline scripts, and script attributes remain disabled.
-
-The root `_headers` file mirrors static-response protections for Cloudflare
-Pages-style asset delivery. The build copies it into `dist/client/`, so both
-supported Cloudflare paths receive the restrictive policy and cache rules.
+Cloudflare Pages maps HTML files to extensionless routes and uses the top-level
+`404.html` for unknown paths. `_redirects` canonicalizes trailing-slash legal
+and contact routes. The root `_headers` file supplies the Content Security
+Policy, cache policy, language, and response protections. Navigation documents
+and the manifest use `no-store`; CSS, scripts, and media remain long-lived
+because their URLs are versioned. The Content Security Policy allows only
+same-origin scripts, styles, images, and the manifest. Connections, fonts,
+media, frames, forms, objects, workers, inline scripts, and script attributes
+remain disabled.
 
 ## Maintenance rules
 
-1. Change public routes in `tools/build-site.sh` and `sitemap.xml` together.
+1. Change public routes, `_redirects`, and `sitemap.xml` together.
 2. Keep company and creator metadata in HTML even when it is not shown visually.
 3. Keep all visible layout rules in `markdown.css` and icon geometry in
    `brand.css`.
@@ -129,9 +123,9 @@ supported Cloudflare paths receive the restrictive policy and cache rules.
    `document-navigation.js`; source-order products and document navigation must
    remain usable when scripting is unavailable.
 5. Update immutable asset query versions whenever asset contents change.
-6. Keep the build allowlist explicit; never copy the whole repository.
-7. Keep `_headers` and `tools/sites-static-worker.js` aligned.
-8. Run `tools/build-site.sh` and inspect `dist/client/` before publishing.
+6. Keep the repository root limited to files that are safe to publish.
+7. Keep `_headers` and `_redirects` aligned with the public routes.
+8. Validate the committed static files before publishing.
 9. Keep each indexable route's visible heading, metadata, canonical URL,
    structured data, and sitemap entry consistent.
 10. Bump the manifest link query whenever install or launch behavior changes;

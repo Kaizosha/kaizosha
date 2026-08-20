@@ -27,12 +27,10 @@ node_modules/
 jspm_packages/
 .npm/
 .yarn-integrity
-.wrangler/
 .next/
 .vinext/
 
 # Generated output and local exports
-dist/
 outputs/
 work/
 *.tgz

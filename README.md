@@ -10,14 +10,13 @@ progressive enhancement.
 python3 tools/dev-server.py 5173
 ```
 
-## Production build
+## Cloudflare Pages
 
-```sh
-./tools/build-site.sh
-```
-
-The build creates an ignored `dist/` directory containing the exact public
-allowlist and a Cloudflare Worker entrypoint.
+The repository root is the deployable website. Connect this repository to a
+Cloudflare Pages project with framework preset `None`, production branch
+`main`, no build command, and build output directory `.`. Every push to `main`
+publishes the committed static files directly; there is no generated output or
+manual deployment command.
 
 ## Shared design
 

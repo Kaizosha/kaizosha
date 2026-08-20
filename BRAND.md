@@ -21,6 +21,10 @@ Organization `slogan` field.
   theme and can invert cleanly with its two-tone hover panel.
 - Preserve the shared desktop and mobile proportions. Page styles may position
   the complete mark but must not redefine individual bars or glyphs.
+- Keep every bar at the website's compact `3:1` height-to-width ratio, keep the
+  gap between bars at one-half of a bar width, and leave the glyph row close to
+  the bars. Raster exports must use the same geometry instead of stretching the
+  bars to fill the icon canvas.
 - Keep `icon.png` fully transparent outside the bars and glyphs: no badge,
   canvas fill, outer border, shadow, or texture.
 - Do not place `icon.png` in visible page content. Reserve it for favicons,

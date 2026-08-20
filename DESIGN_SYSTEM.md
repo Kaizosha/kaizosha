@@ -144,7 +144,7 @@ inline gutter is removed; the balanced block gutter remains.
    keyboard-accessible skip link.
 5. Keep content inside the balanced shell and shared reading measure.
 6. Update immutable asset query versions when stylesheet contents change.
-7. Add only allowlisted public files to `tools/build-site.sh`.
+7. Keep repository-root files safe for direct Cloudflare Pages publishing.
 8. Keep canonical URLs, descriptions, structured data, sitemap dates, and
    visible page content aligned.
-9. Build and test all supported viewports before publishing.
+9. Test all supported viewports before publishing.

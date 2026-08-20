@@ -13,6 +13,7 @@ fi
 if [ "$#" -eq 0 ]; then
   set -- \
     "$ROOT/../together-web" \
+    "$ROOT/../sekai-web" \
     "$ROOT/../hush-web" \
     "$ROOT/../morph-web" \
     "$ROOT/../modscan-web"
