@@ -306,31 +306,18 @@
     isNavigatingToProduct = true;
     clearScrollHandoffReset();
     setScrollHandoffProgress(record, 1);
-    homeMain.classList.add("is-navigating-product");
 
     if (productStatus) {
       productStatus.textContent = `Opening ${record.cell.dataset.productName} website.`;
     }
 
-    const navigate = () => {
-      const destination = new URL(record.nameLink.href);
+    const destination = new URL(record.nameLink.href);
 
-      if (destination.hostname === "together.kaizosha.org") {
-        destination.searchParams.set(
-          "slot",
-          record.cell.dataset.productSlot,
-        );
-      }
-
-      window.location.assign(destination.href);
-    };
-
-    if (reducedMotion.matches) {
-      navigate();
-      return;
+    if (destination.hostname === "together.kaizosha.org") {
+      destination.searchParams.set("slot", record.cell.dataset.productSlot);
     }
 
-    window.setTimeout(navigate, 180);
+    window.location.assign(destination.href);
   };
 
   const clearDetailHide = (record) => {

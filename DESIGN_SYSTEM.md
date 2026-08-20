@@ -86,9 +86,11 @@ uses a reversed two-tone label for persistent contrast. Expanded information
 anchors to the horizontal side opposite the mark; long description copy remains
 left-aligned for readability. It reveals a description, metadata comment, Close
 control, and destination Explore action. Fine-pointer users can scroll downward
-over an expanded website-backed product to fill an inline handoff rule and open
-that site in the same tab; repository destinations keep their explicit Explore
-action only. Escape closes an expanded product.
+over an expanded website-backed product to fill an inline handoff rule and
+immediately open that site in the same tab. Together carries the active quadrant
+into its destination so the spatial composition remains continuous; repository
+destinations keep their explicit Explore action only. Escape closes an expanded
+product.
 Its top bar owns arrangement controls; the bottom-left bar spells out Terms,
 Privacy, and Contact above 640px and uses `[ T ] / [ P ] / [ C ]` at smaller
 sizes. The logo returns to center when product detail closes. Browser zoom
