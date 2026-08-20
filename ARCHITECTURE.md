@@ -133,3 +133,6 @@ supported Cloudflare paths receive the restrictive policy and cache rules.
    structured data, and sitemap entry consistent.
 10. Bump the manifest link query whenever install or launch behavior changes;
     keep navigation HTML and `site.webmanifest` non-cacheable.
+11. Treat this repository as the shared-design source of truth. Run
+    `tools/sync-shared-design.sh` for every product-site checkout and commit the
+    synchronized copies with each design-system change.

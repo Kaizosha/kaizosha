@@ -1,5 +1,4 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "kaizosha",
   "main": "./dist/server/index.js",
   "compatibility_date": "2026-08-12",
