@@ -313,7 +313,16 @@
     }
 
     const navigate = () => {
-      window.location.assign(record.nameLink.href);
+      const destination = new URL(record.nameLink.href);
+
+      if (destination.hostname === "together.kaizosha.org") {
+        destination.searchParams.set(
+          "slot",
+          record.cell.dataset.productSlot,
+        );
+      }
+
+      window.location.assign(destination.href);
     };
 
     if (reducedMotion.matches) {
