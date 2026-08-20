@@ -5,9 +5,12 @@ mark on the homepage. Its bar and glyph geometry lives in
 `assets/styles/brand.css`; its framed presentation lives in
 `assets/styles/markdown.css`.
 
-`icon.png` is the transparent raster distribution asset. Use it only where a
-browser, operating system, PWA manifest, or metadata consumer requires an image.
-Visible site branding must use the semantic HTML and shared CSS construction.
+`icon.svg` is the transparent browser icon. Its bars are vector rectangles and
+its `改`, `造`, and `社` glyphs remain actual SVG `<text>` elements. It follows the
+browser's light or dark system theme. `icon.png` is the transparent raster
+fallback for Apple touch icons, PWA clients, and metadata consumers that require
+PNG. Visible site branding must use the semantic HTML and shared CSS
+construction.
 
 The brand line is `From Me Comes The Future`. Its public use is limited to the
 homepage company introduction, homepage description metadata, and the
@@ -25,10 +28,12 @@ Organization `slogan` field.
   gap between bars at one-half of a bar width, and leave the glyph row close to
   the bars. Raster exports must use the same geometry instead of stretching the
   bars to fill the icon canvas.
-- Keep `icon.png` fully transparent outside the bars and glyphs: no badge,
-  canvas fill, outer border, shadow, or texture.
-- Do not place `icon.png` in visible page content. Reserve it for favicons,
-  touch icons, PWA installation, and machine-readable logo metadata.
+- Keep `icon.svg` and `icon.png` fully transparent outside the bars and glyphs:
+  no badge, canvas fill, outer border, shadow, or texture.
+- Keep the Japanese glyphs as real `<text>` elements in `icon.svg`; do not
+  convert them to traced paths.
+- Do not place either icon in visible page content. Reserve them for browser
+  icons, touch icons, PWA installation, and machine-readable logo metadata.
 - Use no accent color, gradient, glow, bevel, raster texture, or external logo
   library.
 - Keep motion restrained to the shared entrance and panel transition, and

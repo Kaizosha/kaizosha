@@ -22,6 +22,7 @@ fi
 FILES="
 BRAND.md
 DESIGN_SYSTEM.md
+icon.svg
 icon.png
 assets/styles/brand.css
 assets/styles/markdown.css
