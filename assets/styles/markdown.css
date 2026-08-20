@@ -155,6 +155,11 @@ body[data-page-family="directory"] {
   animation: frame-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+.home-main.is-navigating-product {
+  pointer-events: none;
+  animation: frame-out var(--speed) ease both;
+}
+
 .home-intro {
   position: absolute;
   z-index: 4;
@@ -618,6 +623,35 @@ body[data-page-family="directory"] {
   outline-color: var(--ink);
 }
 
+.product-cell__scroll-cue {
+  --scroll-handoff-progress: 0;
+  position: relative;
+  margin: 0.85rem 0 0;
+  padding: 0.7rem 0 0.45rem;
+  border-top: 1px dashed var(--line-soft);
+  color: var(--ink-muted);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.product-cell__scroll-cue::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  background: var(--ink);
+  content: "";
+  transform: scaleX(var(--scroll-handoff-progress));
+  transform-origin: left;
+  transition: transform 80ms linear;
+}
+
+.product-cell__scroll-cue[hidden] {
+  display: none;
+}
+
 .home-products.has-active .product-cell:not(.is-active) {
   pointer-events: none;
 }
@@ -700,10 +734,20 @@ body[data-page-family="directory"] {
 
 .home-main[data-active-slot="top-right"]
   .product-cell.is-active
-  :is(.product-cell__heading, .product-cell__eyebrow, .product-cell__meta),
+  :is(
+    .product-cell__heading,
+    .product-cell__eyebrow,
+    .product-cell__meta,
+    .product-cell__scroll-cue
+  ),
 .home-main[data-active-slot="bottom-right"]
   .product-cell.is-active
-  :is(.product-cell__heading, .product-cell__eyebrow, .product-cell__meta) {
+  :is(
+    .product-cell__heading,
+    .product-cell__eyebrow,
+    .product-cell__meta,
+    .product-cell__scroll-cue
+  ) {
   text-align: right;
 }
 
@@ -1179,6 +1223,17 @@ body[data-page-family="error"] {
   }
 }
 
+@keyframes frame-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.992);
+  }
+}
+
 @keyframes grid-drift {
   0%,
   100% {
@@ -1288,6 +1343,12 @@ body[data-page-family="error"] {
   .document-footer:hover a,
   .document-footer:focus-within a {
     opacity: 1;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .product-cell__scroll-cue {
+    display: none;
   }
 }
 
@@ -1495,6 +1556,12 @@ body[data-page-family="error"] {
 
   .product-cell__actions {
     margin-top: 0.75rem;
+  }
+
+  .product-cell__scroll-cue {
+    margin-top: 0.65rem;
+    padding-top: 0.55rem;
+    font-size: 0.62rem;
   }
 
   .product-cell__actions button,

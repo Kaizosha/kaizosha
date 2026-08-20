@@ -40,7 +40,10 @@ metadata, and the Organization `slogan` field.
   announces user-requested arrangements, balances repeats when the catalog is
   shorter than the grid, and keeps a stable previous/next history. It also owns
   the expanded-product state for hover, keyboard focus, touch, Close, and
-  Escape; CSS owns the geometry and transition.
+  Escape. For non-GitHub website destinations, it accumulates downward wheel
+  intent only after any overflowing details reach their end, then performs a
+  same-tab handoff after the CSS exit transition. Explicit controls remain the
+  keyboard and touch path; CSS owns the geometry, cue, and transition.
   Candidate scoring strongly avoids the same product in the same recent slot
   and favors products that have appeared less recently as the catalog grows.
 - `assets/scripts/document-navigation.js` runs only on document pages. A
@@ -82,8 +85,10 @@ keeps the resting theme color. Only interactive product-name labels and actions
 invert on hover, keyboard focus, or press. Expanded content anchors to the
 horizontal edge opposite the logo while retaining a broad reading measure;
 description copy remains left-aligned, and narrow screens allow the block to use
-the full available width. Source-order product names remain direct destination
-links when scripting is unavailable.
+the full available width. A website-backed product adds an inline scroll cue on
+fine-pointer devices; its progress rule fills before the frame exits and the
+browser navigates in the same tab. Source-order product names remain direct
+destination links when scripting is unavailable.
 
 ## Build and Cloudflare handoff
 

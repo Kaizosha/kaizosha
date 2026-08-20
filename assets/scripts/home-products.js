@@ -97,6 +97,7 @@
     productGrid.querySelectorAll(".product-cell[data-product-slot]"),
   )
     .map((cell) => {
+      const content = cell.querySelector(".product-cell__content");
       const nameLink = cell.querySelector(".product-cell__name");
       const detail = cell.querySelector(".product-cell__detail");
       const eyebrow = cell.querySelector(".product-cell__eyebrow");
@@ -104,21 +105,25 @@
       const meta = cell.querySelector(".product-cell__meta");
       const closeButton = cell.querySelector("[data-product-close]");
       const exploreLink = cell.querySelector(".product-cell__explore");
+      const scrollCue = cell.querySelector("[data-product-scroll-cue]");
 
       if (
+        !content ||
         !nameLink ||
         !detail ||
         !eyebrow ||
         !description ||
         !meta ||
         !closeButton ||
-        !exploreLink
+        !exploreLink ||
+        !scrollCue
       ) {
         return null;
       }
 
       return {
         cell,
+        content,
         nameLink,
         detail,
         eyebrow,
@@ -126,6 +131,7 @@
         meta,
         closeButton,
         exploreLink,
+        scrollCue,
       };
     })
     .filter(Boolean);
@@ -260,8 +266,63 @@
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const detailHideTimers = new Map();
+  const scrollHandoffThreshold = 220;
   let activeRecord = null;
+  let isNavigatingToProduct = false;
+  let scrollHandoffProgress = 0;
+  let scrollHandoffResetTimer = null;
   let suppressFocusActivation = false;
+
+  const clearScrollHandoffReset = () => {
+    if (scrollHandoffResetTimer !== null) {
+      window.clearTimeout(scrollHandoffResetTimer);
+      scrollHandoffResetTimer = null;
+    }
+  };
+
+  const setScrollHandoffProgress = (record, value) => {
+    const progress = Math.min(1, Math.max(0, value));
+
+    scrollHandoffProgress = progress;
+
+    if (record) {
+      record.scrollCue.style.setProperty(
+        "--scroll-handoff-progress",
+        String(progress),
+      );
+    }
+  };
+
+  const resetScrollHandoff = (record = activeRecord) => {
+    clearScrollHandoffReset();
+    setScrollHandoffProgress(record, 0);
+  };
+
+  const openProductWebsite = (record) => {
+    if (isNavigatingToProduct) {
+      return;
+    }
+
+    isNavigatingToProduct = true;
+    clearScrollHandoffReset();
+    setScrollHandoffProgress(record, 1);
+    homeMain.classList.add("is-navigating-product");
+
+    if (productStatus) {
+      productStatus.textContent = `Opening ${record.cell.dataset.productName} website.`;
+    }
+
+    const navigate = () => {
+      window.location.assign(record.nameLink.href);
+    };
+
+    if (reducedMotion.matches) {
+      navigate();
+      return;
+    }
+
+    window.setTimeout(navigate, 180);
+  };
 
   const clearDetailHide = (record) => {
     const timer = detailHideTimers.get(record);
@@ -298,9 +359,11 @@
   } = {}) => {
     const record = activeRecord;
 
-    if (!record) {
+    if (!record || isNavigatingToProduct) {
       return;
     }
+
+    resetScrollHandoff(record);
 
     if (focus) {
       suppressFocusActivation = true;
@@ -330,7 +393,7 @@
   closeProductDetails = deactivateProduct;
 
   const activateProduct = (record, { announce = false } = {}) => {
-    if (intro?.open || activeRecord === record) {
+    if (intro?.open || activeRecord === record || isNavigatingToProduct) {
       return;
     }
 
@@ -344,6 +407,7 @@
     void record.detail.offsetWidth;
 
     activeRecord = record;
+    resetScrollHandoff(record);
     homeLogo.classList.add("is-ready");
     homeMain.dataset.activeProduct = record.cell.dataset.productName;
     homeMain.dataset.activeSlot = record.cell.dataset.productSlot;
@@ -358,6 +422,7 @@
 
   const renderCell = (record, product) => {
     const destinationLabel = getDestinationLabel(product.url);
+    const hasWebsiteHandoff = destinationLabel === "website";
 
     record.cell.dataset.productName = product.name;
     record.nameLink.textContent = product.name;
@@ -379,6 +444,9 @@
       "aria-label",
       `Explore ${product.name} ${destinationLabel} (opens in a new tab)`,
     );
+    record.scrollCue.textContent = `[ SCROLL TO OPEN ${product.name} ↓ ]`;
+    record.scrollCue.hidden = !hasWebsiteHandoff;
+    record.scrollCue.style.setProperty("--scroll-handoff-progress", "0");
     record.detail.setAttribute("aria-hidden", "true");
     record.detail.hidden = true;
   };
@@ -422,11 +490,76 @@
     if (
       finePointer.matches &&
       activeRecord &&
+      !isNavigatingToProduct &&
       !activeRecord.cell.contains(document.activeElement)
     ) {
       deactivateProduct();
     }
   });
+
+  homeMain.addEventListener(
+    "wheel",
+    (event) => {
+      const record = activeRecord;
+
+      if (
+        !record ||
+        intro?.open ||
+        isNavigatingToProduct ||
+        !finePointer.matches ||
+        getDestinationLabel(record.nameLink.href) !== "website" ||
+        event.target.closest?.("a, button")
+      ) {
+        return;
+      }
+
+      const multiplier =
+        event.deltaMode === 1
+          ? 16
+          : event.deltaMode === 2
+            ? window.innerHeight
+            : 1;
+      const deltaX = event.deltaX * multiplier;
+      const deltaY = event.deltaY * multiplier;
+
+      if (deltaY <= 0 || Math.abs(deltaY) <= Math.abs(deltaX)) {
+        if (deltaY < 0) {
+          resetScrollHandoff(record);
+        }
+
+        return;
+      }
+
+      const overflowY = window.getComputedStyle(record.content).overflowY;
+      const hasScrollableContent =
+        /^(auto|scroll)$/.test(overflowY) &&
+        record.content.scrollHeight > record.content.clientHeight + 2;
+      const isAtContentEnd =
+        record.content.scrollTop + record.content.clientHeight >=
+        record.content.scrollHeight - 2;
+
+      if (hasScrollableContent && !isAtContentEnd) {
+        return;
+      }
+
+      event.preventDefault();
+      clearScrollHandoffReset();
+      setScrollHandoffProgress(
+        record,
+        scrollHandoffProgress + deltaY / scrollHandoffThreshold,
+      );
+
+      if (scrollHandoffProgress >= 1) {
+        openProductWebsite(record);
+        return;
+      }
+
+      scrollHandoffResetTimer = window.setTimeout(() => {
+        resetScrollHandoff(record);
+      }, 1100);
+    },
+    { passive: false },
+  );
 
   productGrid.addEventListener("focusout", () => {
     const record = activeRecord;
@@ -443,7 +576,7 @@
   });
 
   homeMain.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && activeRecord) {
+    if (event.key === "Escape" && activeRecord && !isNavigatingToProduct) {
       event.preventDefault();
       deactivateProduct({ focus: true, announce: true });
     }

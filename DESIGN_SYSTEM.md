@@ -85,7 +85,10 @@ expands toward bottom-left and sends the mark to bottom-left. Its product name
 uses a reversed two-tone label for persistent contrast. Expanded information
 anchors to the horizontal side opposite the mark; long description copy remains
 left-aligned for readability. It reveals a description, metadata comment, Close
-control, and destination Explore action. Escape closes an expanded product.
+control, and destination Explore action. Fine-pointer users can scroll downward
+over an expanded website-backed product to fill an inline handoff rule and open
+that site in the same tab; repository destinations keep their explicit Explore
+action only. Escape closes an expanded product.
 Its top bar owns arrangement controls; the bottom-left bar spells out Terms,
 Privacy, and Contact above 640px and uses `[ T ] / [ P ] / [ C ]` at smaller
 sizes. The logo returns to center when product detail closes. Browser zoom
@@ -116,6 +119,8 @@ inline gutter is removed; the balanced block gutter remains.
 - Every page remains readable without hover, animation, or JavaScript.
 - Product detail is available through fine-pointer hover, keyboard focus, and
   touch activation; Close and Explore remain explicit controls.
+- Scroll handoff is supplementary, appears only for website destinations on
+  fine pointers, and waits until overflowing detail content reaches its end.
 - The compact active-product mark keeps its fenced-code labels clear of the
   brand glyph at mobile widths.
 - Light and dark palettes must follow `prefers-color-scheme` without a flash of
