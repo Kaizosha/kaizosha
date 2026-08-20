@@ -1346,12 +1346,6 @@ body[data-page-family="error"] {
   }
 }
 
-@media (hover: none), (pointer: coarse) {
-  .product-cell__scroll-cue {
-    display: none;
-  }
-}
-
 @media (min-width: 861px) {
   body[data-page-family="document"] {
     --document-file-bar-offset: var(--document-file-bar-height);
@@ -1522,6 +1516,7 @@ body[data-page-family="error"] {
 
   .product-cell.is-active .product-cell__content {
     overflow: auto;
+    overscroll-behavior-y: contain;
     padding: 1rem;
     scrollbar-width: thin;
   }

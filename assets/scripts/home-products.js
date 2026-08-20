@@ -267,11 +267,15 @@
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const detailHideTimers = new Map();
   const scrollHandoffThreshold = 220;
+  const touchHandoffThreshold = 120;
   let activeRecord = null;
   let isNavigatingToProduct = false;
   let scrollHandoffProgress = 0;
   let scrollHandoffResetTimer = null;
   let suppressFocusActivation = false;
+  let touchHandoffRecord = null;
+  let touchHandoffStartX = 0;
+  let touchHandoffStartY = 0;
 
   const clearScrollHandoffReset = () => {
     if (scrollHandoffResetTimer !== null) {
@@ -298,12 +302,50 @@
     setScrollHandoffProgress(record, 0);
   };
 
+  const scheduleScrollHandoffReset = (record, delay = 1100) => {
+    clearScrollHandoffReset();
+    scrollHandoffResetTimer = window.setTimeout(() => {
+      if (activeRecord === record && !isNavigatingToProduct) {
+        resetScrollHandoff(record);
+      }
+    }, delay);
+  };
+
+  const clearTouchHandoff = () => {
+    touchHandoffRecord = null;
+    touchHandoffStartX = 0;
+    touchHandoffStartY = 0;
+  };
+
+  const getHandoffScrollState = (record) => {
+    const overflowY = window.getComputedStyle(record.content).overflowY;
+    const hasScrollableContent =
+      /^(auto|scroll)$/.test(overflowY) &&
+      record.content.scrollHeight > record.content.clientHeight + 2;
+    const isAtContentEnd =
+      record.content.scrollTop + record.content.clientHeight >=
+      record.content.scrollHeight - 2;
+
+    return { hasScrollableContent, isAtContentEnd };
+  };
+
+  const canHandoffToWebsite = (record, target) =>
+    Boolean(
+      record &&
+        !intro?.open &&
+        !isNavigatingToProduct &&
+        getDestinationLabel(record.nameLink.href) === "website" &&
+        record.cell.contains(target) &&
+        !target.closest?.("a, button"),
+    );
+
   const openProductWebsite = (record) => {
     if (isNavigatingToProduct) {
       return;
     }
 
     isNavigatingToProduct = true;
+    clearTouchHandoff();
     clearScrollHandoffReset();
     setScrollHandoffProgress(record, 1);
 
@@ -359,6 +401,7 @@
       return;
     }
 
+    clearTouchHandoff();
     resetScrollHandoff(record);
 
     if (focus) {
@@ -440,7 +483,9 @@
       "aria-label",
       `Explore ${product.name} ${destinationLabel} (opens in a new tab)`,
     );
-    record.scrollCue.textContent = `[ SCROLL TO OPEN ${product.name} ↓ ]`;
+    record.scrollCue.textContent = finePointer.matches
+      ? `[ SCROLL TO OPEN ${product.name} ↓ ]`
+      : `[ SWIPE UP TO OPEN ${product.name} ↑ ]`;
     record.scrollCue.hidden = !hasWebsiteHandoff;
     record.scrollCue.style.setProperty("--scroll-handoff-progress", "0");
     record.detail.setAttribute("aria-hidden", "true");
@@ -526,13 +571,8 @@
         return;
       }
 
-      const overflowY = window.getComputedStyle(record.content).overflowY;
-      const hasScrollableContent =
-        /^(auto|scroll)$/.test(overflowY) &&
-        record.content.scrollHeight > record.content.clientHeight + 2;
-      const isAtContentEnd =
-        record.content.scrollTop + record.content.clientHeight >=
-        record.content.scrollHeight - 2;
+      const { hasScrollableContent, isAtContentEnd } =
+        getHandoffScrollState(record);
 
       if (hasScrollableContent && !isAtContentEnd) {
         return;
@@ -550,12 +590,98 @@
         return;
       }
 
-      scrollHandoffResetTimer = window.setTimeout(() => {
-        resetScrollHandoff(record);
-      }, 1100);
+      scheduleScrollHandoffReset(record);
     },
     { passive: false },
   );
+
+  homeMain.addEventListener(
+    "touchstart",
+    (event) => {
+      const record = activeRecord;
+
+      if (
+        event.touches.length !== 1 ||
+        !canHandoffToWebsite(record, event.target)
+      ) {
+        clearTouchHandoff();
+        return;
+      }
+
+      const touch = event.touches[0];
+      const { hasScrollableContent, isAtContentEnd } =
+        getHandoffScrollState(record);
+
+      if (hasScrollableContent && !isAtContentEnd) {
+        clearTouchHandoff();
+        resetScrollHandoff(record);
+        return;
+      }
+
+      resetScrollHandoff(record);
+      touchHandoffRecord = record;
+      touchHandoffStartX = touch.clientX;
+      touchHandoffStartY = touch.clientY;
+    },
+    { passive: true },
+  );
+
+  homeMain.addEventListener(
+    "touchmove",
+    (event) => {
+      const record = touchHandoffRecord;
+
+      if (
+        event.touches.length !== 1 ||
+        record !== activeRecord ||
+        !canHandoffToWebsite(record, event.target)
+      ) {
+        if (record && !isNavigatingToProduct) {
+          resetScrollHandoff(record);
+        }
+        clearTouchHandoff();
+        return;
+      }
+
+      const touch = event.touches[0];
+      const deltaX = touch.clientX - touchHandoffStartX;
+      const deltaY = touchHandoffStartY - touch.clientY;
+
+      if (deltaY <= 0 || Math.abs(deltaY) <= Math.abs(deltaX)) {
+        setScrollHandoffProgress(record, 0);
+        return;
+      }
+
+      setScrollHandoffProgress(record, deltaY / touchHandoffThreshold);
+    },
+    { passive: true },
+  );
+
+  homeMain.addEventListener("touchend", (event) => {
+    const record = touchHandoffRecord;
+    const shouldOpen =
+      record === activeRecord &&
+      scrollHandoffProgress >= 1 &&
+      canHandoffToWebsite(record, event.target);
+
+    clearTouchHandoff();
+
+    if (shouldOpen) {
+      openProductWebsite(record);
+    } else if (record && !isNavigatingToProduct) {
+      resetScrollHandoff(record);
+    }
+  });
+
+  homeMain.addEventListener("touchcancel", () => {
+    const record = touchHandoffRecord;
+
+    clearTouchHandoff();
+
+    if (record && !isNavigatingToProduct) {
+      resetScrollHandoff(record);
+    }
+  });
 
   productGrid.addEventListener("focusout", () => {
     const record = activeRecord;
