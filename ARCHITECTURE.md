@@ -43,10 +43,16 @@ metadata, and the Organization `slogan` field.
   the expanded-product state for hover, keyboard focus, touch, Close, and
   Escape. For non-GitHub website destinations, it accumulates downward wheel
   intent or a deliberate upward touch swipe only after any overflowing details
-  reach their end, then immediately performs a same-tab handoff. Kaizōsha
-  product sites receive the active quadrant through a `slot` query parameter so
-  their first frame preserves the product position. Explicit controls remain
-  available for every input path; CSS owns the geometry, cue, and transition.
+  reach their end. That progress expands the outer frame into the viewport's
+  equal-edge content box, paints the completed frame, and then performs a
+  same-tab handoff. Kaizōsha product sites receive the active quadrant through
+  `slot` and `scroll` query parameters so their first frame preserves the
+  product position and any required short-viewport lead offset. Their first
+  view repeats the directory card and full-edge shell before deeper product
+  content continues below it. A synchronous first-paint bootstrap resolves the
+  requested slot, carried scroll offset, and input-specific cue before the body
+  becomes visible. Explicit controls remain available for every input path;
+  CSS owns the geometry, cue, and transition.
   Inert template entries let the catalog grow beyond the four no-script cells
   without adding hidden interactive controls. Candidate scoring strongly avoids
   the same product in the same recent slot
@@ -91,9 +97,10 @@ invert on hover, keyboard focus, or press. Expanded content anchors to the
 horizontal edge opposite the logo while retaining a broad reading measure;
 description copy remains left-aligned, and narrow screens allow the block to use
 the full available width. A website-backed product adds an inline scroll cue
-for wheel and touch input; its progress rule fills before the browser
-immediately navigates in the same tab. Source-order product names remain direct
-destination links when scripting is unavailable.
+for wheel and touch input; its progress rule and the outer width/height advance
+together. The frame reaches the same equal-edge geometry used by product pages
+before the browser navigates in the same tab. Source-order product names remain
+direct destination links when scripting is unavailable.
 
 ## Cloudflare Pages handoff
 

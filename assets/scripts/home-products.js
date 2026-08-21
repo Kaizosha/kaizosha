@@ -286,10 +286,14 @@
   const detailHideTimers = new Map();
   const scrollHandoffThreshold = 220;
   const touchHandoffThreshold = 120;
+  const handoffFrameCompletion = 0.82;
+  const handoffNavigationDelay = 160;
   let activeRecord = null;
   let isNavigatingToProduct = false;
   let scrollHandoffProgress = 0;
   let scrollHandoffResetTimer = null;
+  let handoffFrameOrigin = null;
+  let handoffFrameResetTimer = null;
   let suppressFocusActivation = false;
   let touchHandoffRecord = null;
   let touchHandoffStartX = 0;
@@ -300,6 +304,111 @@
       window.clearTimeout(scrollHandoffResetTimer);
       scrollHandoffResetTimer = null;
     }
+  };
+
+  const clearHandoffFrameReset = () => {
+    if (handoffFrameResetTimer !== null) {
+      window.clearTimeout(handoffFrameResetTimer);
+      handoffFrameResetTimer = null;
+    }
+  };
+
+  const getHandoffFrameTarget = () => {
+    const bodyStyle = window.getComputedStyle(document.body);
+    const viewportWidth =
+      window.visualViewport?.width ?? document.documentElement.clientWidth;
+    const viewportHeight =
+      window.visualViewport?.height ?? document.documentElement.clientHeight;
+    const horizontalPadding =
+      Number.parseFloat(bodyStyle.paddingLeft) +
+      Number.parseFloat(bodyStyle.paddingRight);
+    const verticalPadding =
+      Number.parseFloat(bodyStyle.paddingTop) +
+      Number.parseFloat(bodyStyle.paddingBottom);
+
+    return {
+      width: Math.max(0, viewportWidth - horizontalPadding),
+      height: Math.max(0, viewportHeight - verticalPadding),
+    };
+  };
+
+  const rebaseHandoffFrameOrigin = () => {
+    const handoffWidth = homeMain.style.getPropertyValue(
+      "--handoff-frame-width",
+    );
+    const handoffHeight = homeMain.style.getPropertyValue(
+      "--handoff-frame-height",
+    );
+
+    homeMain.style.removeProperty("--handoff-frame-width");
+    homeMain.style.removeProperty("--handoff-frame-height");
+
+    const frame = homeMain.getBoundingClientRect();
+
+    if (handoffWidth) {
+      homeMain.style.setProperty("--handoff-frame-width", handoffWidth);
+    }
+
+    if (handoffHeight) {
+      homeMain.style.setProperty("--handoff-frame-height", handoffHeight);
+    }
+
+    handoffFrameOrigin = {
+      width: frame.width,
+      height: frame.height,
+    };
+  };
+
+  const updateHandoffFrame = (progress) => {
+    clearHandoffFrameReset();
+    homeMain.classList.remove("is-handoff-resetting");
+
+    if (!handoffFrameOrigin) {
+      const frame = homeMain.getBoundingClientRect();
+
+      handoffFrameOrigin = {
+        width: frame.width,
+        height: frame.height,
+      };
+    }
+
+    const target = getHandoffFrameTarget();
+    const frameProgress = Math.min(1, progress / handoffFrameCompletion);
+    const width =
+      handoffFrameOrigin.width +
+      (target.width - handoffFrameOrigin.width) *
+        frameProgress;
+    const height =
+      handoffFrameOrigin.height +
+      (target.height - handoffFrameOrigin.height) *
+        frameProgress;
+
+    homeMain.classList.add("is-handoff-preview");
+    homeMain.style.setProperty("--handoff-frame-width", `${width}px`);
+    homeMain.style.setProperty("--handoff-frame-height", `${height}px`);
+  };
+
+  const resetHandoffFrame = () => {
+    clearHandoffFrameReset();
+    homeMain.classList.remove("is-handoff-preview");
+    homeMain.classList.remove("is-wheel-handoff");
+
+    if (reducedMotion.matches) {
+      handoffFrameOrigin = null;
+      homeMain.classList.remove("is-handoff-resetting");
+      homeMain.style.removeProperty("--handoff-frame-width");
+      homeMain.style.removeProperty("--handoff-frame-height");
+      return;
+    }
+
+    homeMain.classList.add("is-handoff-resetting");
+    homeMain.style.removeProperty("--handoff-frame-width");
+    homeMain.style.removeProperty("--handoff-frame-height");
+    handoffFrameResetTimer = window.setTimeout(() => {
+      handoffFrameOrigin = null;
+      homeMain.classList.remove("is-handoff-resetting");
+      handoffFrameResetTimer = null;
+    }, 220);
   };
 
   const setScrollHandoffProgress = (record, value) => {
@@ -313,11 +422,16 @@
         String(progress),
       );
     }
+
+    if (progress > 0 && (!reducedMotion.matches || progress === 1)) {
+      updateHandoffFrame(progress);
+    }
   };
 
   const resetScrollHandoff = (record = activeRecord) => {
     clearScrollHandoffReset();
     setScrollHandoffProgress(record, 0);
+    resetHandoffFrame();
   };
 
   const scheduleScrollHandoffReset = (record, delay = 1100) => {
@@ -366,21 +480,43 @@
     clearTouchHandoff();
     clearScrollHandoffReset();
     setScrollHandoffProgress(record, 1);
+    homeMain.classList.add("is-navigating-product");
+    void homeMain.offsetHeight;
 
     if (productStatus) {
       productStatus.textContent = `Opening ${record.cell.dataset.productName} website.`;
     }
 
-    const destination = new URL(record.nameLink.href);
+    const navigate = () => {
+      const destination = new URL(record.nameLink.href);
 
-    if (
-      destination.hostname.endsWith(".kaizosha.org") &&
-      destination.hostname !== "kaizosha.org"
-    ) {
-      destination.searchParams.set("slot", record.cell.dataset.productSlot);
-    }
+      if (
+        destination.hostname.endsWith(".kaizosha.org") &&
+        destination.hostname !== "kaizosha.org"
+      ) {
+        const handoffScrollTop = Math.max(0, record.content.scrollTop);
 
-    window.location.assign(destination.href);
+        destination.searchParams.set("slot", record.cell.dataset.productSlot);
+
+        if (handoffScrollTop > 0) {
+          destination.searchParams.set(
+            "scroll",
+            String(Math.round(handoffScrollTop * 100) / 100),
+          );
+        }
+      }
+
+      window.location.assign(destination.href);
+    };
+
+    window.requestAnimationFrame(() => {
+      if (reducedMotion.matches) {
+        window.requestAnimationFrame(navigate);
+        return;
+      }
+
+      window.setTimeout(navigate, handoffNavigationDelay);
+    });
   };
 
   const clearDetailHide = (record) => {
@@ -513,6 +649,22 @@
     record.detail.hidden = true;
   };
 
+  const syncScrollCues = () => {
+    cellRecords.forEach((record) => {
+      const productName = record.cell.dataset.productName;
+
+      if (!productName || record.scrollCue.hidden) {
+        return;
+      }
+
+      record.scrollCue.textContent = finePointer.matches
+        ? `[ SCROLL TO OPEN ${productName} ↓ ]`
+        : `[ SWIPE UP TO OPEN ${productName} ↑ ]`;
+    });
+  };
+
+  finePointer.addEventListener?.("change", syncScrollCues);
+
   homeLogo.addEventListener(
     "animationend",
     (event) => {
@@ -601,6 +753,7 @@
 
       event.preventDefault();
       clearScrollHandoffReset();
+      homeMain.classList.add("is-wheel-handoff");
       setScrollHandoffProgress(
         record,
         scrollHandoffProgress + deltaY / scrollHandoffThreshold,
@@ -640,6 +793,7 @@
       }
 
       resetScrollHandoff(record);
+      homeMain.classList.remove("is-wheel-handoff");
       touchHandoffRecord = record;
       touchHandoffStartX = touch.clientX;
       touchHandoffStartY = touch.clientY;
@@ -669,7 +823,7 @@
       const deltaY = touchHandoffStartY - touch.clientY;
 
       if (deltaY <= 0 || Math.abs(deltaY) <= Math.abs(deltaX)) {
-        setScrollHandoffProgress(record, 0);
+        resetScrollHandoff(record);
         return;
       }
 
@@ -701,6 +855,52 @@
 
     if (record && !isNavigatingToProduct) {
       resetScrollHandoff(record);
+    }
+  });
+
+  const syncActiveHandoffFrame = () => {
+    if (
+      scrollHandoffProgress > 0 &&
+      (!reducedMotion.matches || scrollHandoffProgress === 1)
+    ) {
+      rebaseHandoffFrameOrigin();
+      updateHandoffFrame(scrollHandoffProgress);
+    }
+  };
+
+  window.addEventListener("resize", syncActiveHandoffFrame);
+  window.visualViewport?.addEventListener("resize", syncActiveHandoffFrame);
+
+  window.addEventListener("pageshow", (event) => {
+    if (!event.persisted && !isNavigatingToProduct) {
+      return;
+    }
+
+    isNavigatingToProduct = false;
+    clearTouchHandoff();
+    clearScrollHandoffReset();
+    clearHandoffFrameReset();
+    scrollHandoffProgress = 0;
+    handoffFrameOrigin = null;
+    homeMain.classList.remove(
+      "is-handoff-preview",
+      "is-handoff-resetting",
+      "is-wheel-handoff",
+      "is-navigating-product",
+    );
+    homeMain.style.removeProperty("--handoff-frame-width");
+    homeMain.style.removeProperty("--handoff-frame-height");
+    homeMain.removeAttribute("aria-busy");
+
+    if (activeRecord) {
+      activeRecord.scrollCue.style.setProperty(
+        "--scroll-handoff-progress",
+        "0",
+      );
+    }
+
+    if (productStatus) {
+      productStatus.textContent = "";
     }
   });
 

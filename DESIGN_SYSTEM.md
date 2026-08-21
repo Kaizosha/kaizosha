@@ -87,11 +87,17 @@ anchors to the horizontal side opposite the mark; long description copy remains
 left-aligned for readability. It reveals a description, metadata comment, Close
 control, and destination Explore action. Fine-pointer users can scroll downward,
 and touch users can deliberately swipe upward, over an expanded website-backed
-product to fill an inline handoff rule and immediately open that site in the
-same tab. The handoff waits until overflowing details reach their end. Each
-Kaizōsha product site carries the active quadrant into its destination so the
-spatial composition remains continuous; repository destinations keep their
-explicit Explore action only. Escape closes an expanded product.
+product to fill an inline handoff rule and open that site in the same tab.
+While that intent accumulates, the outer frame grows into the viewport's
+equal-edge content box; it reaches the final geometry before navigation
+commits. The handoff waits until overflowing details reach their end. Each
+Kaizōsha product site opens in that same full-edge frame, carries the active
+quadrant into its destination, and repeats the directory's first-view copy,
+actions, bars, mark, and cue before its longer content begins. The destination
+applies the incoming quadrant, carried scroll offset, and input-specific cue
+before its body can paint, so a cold load cannot flash the default layout.
+Repository destinations keep their explicit Explore action only. Escape closes
+an expanded product.
 Its top bar owns arrangement controls; the bottom-left bar spells out Terms,
 Privacy, and Contact above 640px and uses `[ T ] / [ P ] / [ C ]` at smaller
 sizes. The logo returns to center when product detail closes. Browser zoom
@@ -124,7 +130,8 @@ inline gutter is removed; the balanced block gutter remains.
   touch activation; Close and Explore remain explicit controls.
 - Scroll handoff is supplementary, appears only for website destinations, uses
   downward wheel intent or a deliberate upward touch swipe, and waits until
-  overflowing detail content reaches its end.
+  overflowing detail content reaches its end. A cancelled gesture restores the
+  resting frame; a committed gesture paints the full-edge frame before leaving.
 - The compact active-product mark keeps its fenced-code labels clear of the
   brand glyph at mobile widths.
 - Light and dark palettes must follow `prefers-color-scheme` without a flash of
