@@ -96,6 +96,13 @@ quadrant into its destination, and repeats the directory's first-view copy,
 actions, bars, mark, and cue before its longer content begins. The destination
 applies the incoming quadrant, carried scroll offset, and input-specific cue
 before its body can paint, so a cold load cannot flash the default layout.
+At the end of every product continuation, further downward wheel intent or an
+upward touch swipe reverses the same handoff. The EOF canvas fades into an
+inert copy of the product lead while the full-edge frame contracts to the
+directory frame. Navigation commits only after that compact product card is
+painted; Kaizōsha then restores the same product, quadrant, and card scroll
+position before revealing the directory. The EOF cue is also a real return link
+for keyboard and no-script use.
 Repository destinations keep their explicit Explore action only. Escape closes
 an expanded product.
 Its top bar owns arrangement controls; the bottom-left bar spells out Terms,
@@ -132,6 +139,9 @@ inline gutter is removed; the balanced block gutter remains.
   downward wheel intent or a deliberate upward touch swipe, and waits until
   overflowing detail content reaches its end. A cancelled gesture restores the
   resting frame; a committed gesture paints the full-edge frame before leaving.
+- Every product site mirrors that contract at EOF: continued downward intent
+  contracts the shell into its matching directory card, cancellation restores
+  the product shell, and reduced motion snaps only after the gesture commits.
 - The compact active-product mark keeps its fenced-code labels clear of the
   brand glyph at mobile widths.
 - Light and dark palettes must follow `prefers-color-scheme` without a flash of
