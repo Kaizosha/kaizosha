@@ -96,6 +96,11 @@ quadrant into its destination, and repeats the directory's first-view copy,
 actions, bars, mark, and cue before its longer content begins. The destination
 applies the incoming quadrant, carried scroll offset, and input-specific cue
 before its body can paint, so a cold load cannot flash the default layout.
+Product-site chrome identifies its own document instead of repeating generic
+company metadata: the top-left file label reads `[ PRODUCT / README.md ]`,
+while the bottom-right status carries the canonical product sequence, product
+name, and current public version or development state. Product privacy links
+open the product's own policy; Terms and Contact remain company-wide links.
 Repository destinations keep their explicit Explore action only. Escape closes
 an expanded product.
 Its top bar owns arrangement controls; the bottom-left bar spells out Terms,

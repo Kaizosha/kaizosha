@@ -359,11 +359,22 @@ body[data-page-family="directory"] {
   border-top: 1px solid var(--line);
 }
 
+.home-toolbar__file,
+.home-statusbar__product {
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .home-pagination,
 .home-legal {
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
   gap: 0.45rem;
+  white-space: nowrap;
 }
 
 .home-legal__compact {
