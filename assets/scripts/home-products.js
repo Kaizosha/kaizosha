@@ -1,89 +1,11 @@
 (() => {
   "use strict";
 
-  const returnProducts = new Map([
-    ["together", "Together"],
-    ["sekai", "Sekai"],
-    ["hush", "Hush"],
-    ["modscan", "ModScan"],
-    ["morph", "Morph"],
-  ]);
-  const returnSlots = new Set([
-    "top-left",
-    "top-right",
-    "bottom-left",
-    "bottom-right",
-  ]);
-  const directoryUrl = new URL(window.location.href);
-  const savedDirectoryReturn = window.history.state?.kaizoshaReturn;
-  const hasDirectoryReturnQuery =
-    directoryUrl.searchParams.get("handoff") === "return";
-  const requestedProductKey = String(
-    hasDirectoryReturnQuery
-      ? directoryUrl.searchParams.get("product") ?? ""
-      : savedDirectoryReturn?.product ?? "",
-  ).toLowerCase();
-  const requestedSlot = hasDirectoryReturnQuery
-    ? directoryUrl.searchParams.get("slot")
-    : savedDirectoryReturn?.slot;
-  const requestedScroll = Number.parseFloat(
-    String(
-      hasDirectoryReturnQuery
-        ? directoryUrl.searchParams.get("scroll") ?? "0"
-        : savedDirectoryReturn?.scroll ?? "0",
-    ),
-  );
-  const directoryReturn =
-    returnProducts.has(requestedProductKey) && returnSlots.has(requestedSlot)
-      ? {
-          product: returnProducts.get(requestedProductKey),
-          slot: requestedSlot,
-          scroll:
-            Number.isFinite(requestedScroll) && requestedScroll > 0
-              ? Math.min(requestedScroll, 1000000)
-              : 0,
-        }
-      : null;
-  let isRestoringDirectoryReturn = Boolean(directoryReturn);
-
-  const getMergedHistoryState = () =>
-    window.history.state && typeof window.history.state === "object"
-      ? { ...window.history.state }
-      : {};
-
-  const clearDirectoryReturnState = () => {
-    const state = getMergedHistoryState();
-
-    if (!("kaizoshaReturn" in state)) {
-      return;
-    }
-
-    delete state.kaizoshaReturn;
-    window.history.replaceState(state, "", window.location.href);
-  };
-
-  const saveDirectoryReturnState = ({ product, slot, scroll = 0 }) => {
-    const state = getMergedHistoryState();
-
-    state.kaizoshaReturn = {
-      version: 1,
-      product,
-      slot,
-      scroll: Math.max(0, Math.round(scroll * 100) / 100),
-    };
-
-    return state;
-  };
-
   const intro = document.querySelector("[data-home-intro]");
   const introClose = intro?.querySelector("[data-home-intro-close]");
   const introTitle = intro?.querySelector("[data-home-intro-title]");
   const introOpen = document.querySelector("[data-home-intro-open]");
   let closeProductDetails = () => {};
-
-  if (directoryReturn) {
-    intro?.removeAttribute("open");
-  }
 
   const syncIntroState = () => {
     introOpen?.setAttribute("aria-expanded", String(Boolean(intro?.open)));
@@ -98,14 +20,7 @@
   };
 
   const showIntro = () => {
-    if (!intro) {
-      return;
-    }
-
-    isRestoringDirectoryReturn = false;
-    clearDirectoryReturnState();
-
-    if (intro.open) {
+    if (!intro || intro.open) {
       return;
     }
 
@@ -176,11 +91,6 @@
     !homeLogo
   ) {
     return;
-  }
-
-  if (directoryReturn) {
-    homeMain.classList.add("is-directory-return");
-    homeMain.style.animation = "none";
   }
 
   const cellRecords = Array.from(
@@ -388,21 +298,6 @@
   let touchHandoffRecord = null;
   let touchHandoffStartX = 0;
   let touchHandoffStartY = 0;
-  let isDirectoryReturnGuarded = Boolean(directoryReturn);
-  let directoryReturnGuardTimer = null;
-
-  const armDirectoryReturnGuard = (delay = 550) => {
-    isDirectoryReturnGuarded = true;
-
-    if (directoryReturnGuardTimer !== null) {
-      window.clearTimeout(directoryReturnGuardTimer);
-    }
-
-    directoryReturnGuardTimer = window.setTimeout(() => {
-      isDirectoryReturnGuarded = false;
-      directoryReturnGuardTimer = null;
-    }, delay);
-  };
 
   const clearScrollHandoffReset = () => {
     if (scrollHandoffResetTimer !== null) {
@@ -568,10 +463,9 @@
 
   const canHandoffToWebsite = (record, target) =>
     Boolean(
-        record &&
+      record &&
         !intro?.open &&
         !isNavigatingToProduct &&
-        !isDirectoryReturnGuarded &&
         getDestinationLabel(record.nameLink.href) === "website" &&
         record.cell.contains(target) &&
         !target.closest?.("a, button"),
@@ -595,12 +489,13 @@
 
     const navigate = () => {
       const destination = new URL(record.nameLink.href);
-      const handoffScrollTop = Math.max(0, record.content.scrollTop);
 
       if (
         destination.hostname.endsWith(".kaizosha.org") &&
         destination.hostname !== "kaizosha.org"
       ) {
+        const handoffScrollTop = Math.max(0, record.content.scrollTop);
+
         destination.searchParams.set("slot", record.cell.dataset.productSlot);
 
         if (handoffScrollTop > 0) {
@@ -609,16 +504,6 @@
             String(Math.round(handoffScrollTop * 100) / 100),
           );
         }
-
-        window.history.replaceState(
-          saveDirectoryReturnState({
-            product: record.cell.dataset.productName,
-            slot: record.cell.dataset.productSlot,
-            scroll: handoffScrollTop,
-          }),
-          "",
-          window.location.href,
-        );
       }
 
       window.location.assign(destination.href);
@@ -648,14 +533,12 @@
 
     if (immediate || reducedMotion.matches) {
       record.detail.hidden = true;
-      record.cell.classList.remove("is-directory-return-origin");
       return;
     }
 
     const timer = window.setTimeout(() => {
       if (activeRecord !== record) {
         record.detail.hidden = true;
-        record.cell.classList.remove("is-directory-return-origin");
       }
 
       detailHideTimers.delete(record);
@@ -691,10 +574,6 @@
     delete homeMain.dataset.activeProduct;
     delete homeMain.dataset.activeSlot;
     hideDetail(record, immediate);
-
-    if (!isRestoringDirectoryReturn) {
-      clearDirectoryReturnState();
-    }
 
     if (announce && productStatus) {
       productStatus.textContent = `${record.cell.dataset.productName} details closed.`;
@@ -741,7 +620,6 @@
     const destinationLabel = getDestinationLabel(product.url);
     const hasWebsiteHandoff = destinationLabel === "website";
 
-    record.cell.classList.remove("is-directory-return-origin");
     record.cell.dataset.productName = product.name;
     record.nameLink.textContent = product.name;
     record.nameLink.href = product.url;
@@ -857,15 +735,6 @@
             : 1;
       const deltaX = event.deltaX * multiplier;
       const deltaY = event.deltaY * multiplier;
-
-      if (isDirectoryReturnGuarded) {
-        if (deltaY > 0 && Math.abs(deltaY) > Math.abs(deltaX)) {
-          event.preventDefault();
-          armDirectoryReturnGuard();
-        }
-
-        return;
-      }
 
       if (deltaY <= 0 || Math.abs(deltaY) <= Math.abs(deltaX)) {
         if (deltaY < 0) {
@@ -1033,26 +902,6 @@
     if (productStatus) {
       productStatus.textContent = "";
     }
-
-    if (directoryReturn) {
-      armDirectoryReturnGuard();
-    }
-  });
-
-  window.addEventListener("pagehide", () => {
-    if (!activeRecord || !window.history.state?.kaizoshaReturn) {
-      return;
-    }
-
-    window.history.replaceState(
-      saveDirectoryReturnState({
-        product: activeRecord.cell.dataset.productName,
-        slot: activeRecord.cell.dataset.productSlot,
-        scroll: activeRecord.content.scrollTop,
-      }),
-      "",
-      window.location.href,
-    );
   });
 
   productGrid.addEventListener("focusout", () => {
@@ -1079,100 +928,45 @@
   const sourceArrangement = cellRecords.map((record) =>
     record.nameLink.textContent.trim(),
   );
-  const createReturnArrangement = () => {
-    const arrangement = [...sourceArrangement];
-    const targetIndex = cellRecords.findIndex(
-      (record) => record.cell.dataset.productSlot === directoryReturn?.slot,
-    );
-    const sourceIndex = arrangement.indexOf(directoryReturn?.product);
-
-    if (targetIndex < 0) {
-      return arrangement;
-    }
-
-    if (sourceIndex >= 0) {
-      [arrangement[targetIndex], arrangement[sourceIndex]] = [
-        arrangement[sourceIndex],
-        arrangement[targetIndex],
-      ];
-    } else if (directoryReturn?.product) {
-      arrangement[targetIndex] = directoryReturn.product;
-    }
-
-    return arrangement;
-  };
-  const initialArrangement = directoryReturn
-    ? createReturnArrangement()
-    : createArrangement(sourceArrangement, [], 0);
-  const arrangementHistory = [initialArrangement];
+  const history = [createArrangement(sourceArrangement, [], 0)];
   let historyIndex = 0;
 
-  const render = (
-    announce = false,
-    { activateName = null, animate = true } = {},
-  ) => {
+  const render = (announce = false) => {
     deactivateProduct({ immediate: true });
 
     cellRecords.forEach((record, index) => {
-      const product = productsByName.get(
-        arrangementHistory[historyIndex][index],
-      );
+      const product = productsByName.get(history[historyIndex][index]);
 
       if (product) {
         renderCell(record, product);
       }
     });
 
-    if (activateName) {
-      const record = cellRecords.find(
-        (candidate) => candidate.cell.dataset.productName === activateName,
-      );
-
-      if (record) {
-        activateProduct(record);
-      }
-    }
-
     if (announce && productStatus) {
-      productStatus.textContent = `Products shown: ${arrangementHistory[
-        historyIndex
-      ].join(", ")}.`;
+      productStatus.textContent = `Products shown: ${history[historyIndex].join(", ")}.`;
     }
 
     productGrid.classList.remove("is-updating");
-
-    if (animate) {
-      void productGrid.offsetWidth;
-      productGrid.classList.add("is-updating");
-    }
+    void productGrid.offsetWidth;
+    productGrid.classList.add("is-updating");
   };
 
   previousButton.addEventListener("click", () => {
     if (historyIndex > 0) {
       historyIndex -= 1;
     } else {
-      arrangementHistory.unshift(
-        createArrangement(
-          arrangementHistory[0],
-          arrangementHistory,
-          0,
-        ),
-      );
+      history.unshift(createArrangement(history[0], history, 0));
     }
 
     render(true);
   });
 
   nextButton.addEventListener("click", () => {
-    if (historyIndex < arrangementHistory.length - 1) {
+    if (historyIndex < history.length - 1) {
       historyIndex += 1;
     } else {
-      arrangementHistory.push(
-        createArrangement(
-          arrangementHistory[historyIndex],
-          arrangementHistory,
-          historyIndex,
-        ),
+      history.push(
+        createArrangement(history[historyIndex], history, historyIndex),
       );
       historyIndex += 1;
     }
@@ -1181,75 +975,5 @@
   });
 
   controls.hidden = false;
-
-  if (directoryReturn) {
-    armDirectoryReturnGuard(650);
-    render(false, {
-      activateName: directoryReturn.product,
-      animate: false,
-    });
-
-    const returnedRecord = cellRecords.find(
-      (record) =>
-        record.cell.dataset.productName === directoryReturn.product &&
-        record.cell.dataset.productSlot === directoryReturn.slot,
-    );
-    const restoreScroll = () => {
-      if (returnedRecord) {
-        returnedRecord.content.scrollTop = directoryReturn.scroll;
-      }
-    };
-
-    returnedRecord?.cell.classList.add("is-directory-return-origin");
-    restoreScroll();
-    window.requestAnimationFrame(restoreScroll);
-
-    const cleanUrl = new URL(window.location.href);
-
-    cleanUrl.searchParams.delete("handoff");
-    cleanUrl.searchParams.delete("product");
-    cleanUrl.searchParams.delete("slot");
-    cleanUrl.searchParams.delete("scroll");
-
-    const remainingQuery = cleanUrl.searchParams.toString();
-
-    window.history.replaceState(
-      saveDirectoryReturnState(directoryReturn),
-      "",
-      `${cleanUrl.pathname}${remainingQuery ? `?${remainingQuery}` : ""}${cleanUrl.hash}`,
-    );
-
-    void homeMain.offsetHeight;
-    document.documentElement.classList.remove("directory-return-booting");
-    isRestoringDirectoryReturn = false;
-
-    window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => {
-        homeMain.classList.remove("is-directory-return");
-      });
-    });
-  } else {
-    render();
-
-    if (hasDirectoryReturnQuery) {
-      const cleanUrl = new URL(window.location.href);
-      const state = getMergedHistoryState();
-
-      cleanUrl.searchParams.delete("handoff");
-      cleanUrl.searchParams.delete("product");
-      cleanUrl.searchParams.delete("slot");
-      cleanUrl.searchParams.delete("scroll");
-      delete state.kaizoshaReturn;
-
-      const remainingQuery = cleanUrl.searchParams.toString();
-
-      window.history.replaceState(
-        state,
-        "",
-        `${cleanUrl.pathname}${remainingQuery ? `?${remainingQuery}` : ""}${cleanUrl.hash}`,
-      );
-    }
-
-    document.documentElement.classList.remove("directory-return-booting");
-  }
+  render();
 })();

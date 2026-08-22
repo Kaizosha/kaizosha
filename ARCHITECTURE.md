@@ -52,25 +52,11 @@ metadata, and the Organization `slogan` field.
   content continues below it. A synchronous first-paint bootstrap resolves the
   requested slot, carried scroll offset, and input-specific cue before the body
   becomes visible. Explicit controls remain available for every input path;
-  CSS owns the geometry, cue, and transition. Product continuations share a
-  reverse state machine at EOF: additional downward wheel intent or an upward
-  touch swipe pins the scroller at its end, overlays an inert copy of the lead,
-  contracts the shell to the measured directory frame, and navigates to a
-  validated `handoff=return` URL. The homepage consumes that request before
-  paint, creates a deterministic arrangement with the product in its carried
-  slot, restores the card scroll position, stores namespaced history state, and
-  removes the handoff parameters without discarding unrelated query data.
+  CSS owns the geometry, cue, and transition.
   Inert template entries let the catalog grow beyond the four no-script cells
   without adding hidden interactive controls. Candidate scoring strongly avoids
   the same product in the same recent slot
   and favors products that have appeared less recently as the catalog grows.
-- `assets/scripts/directory-return-boot.js` is a synchronous, same-origin
-  homepage bootstrap. It hides only validated return requests before CSS can
-  paint; `home-products.js` reveals the already-restored card, with a
-  `DOMContentLoaded` fail-safe if initialization cannot finish.
-- `assets/scripts/product-page-boot.js` provides the matching CSP-safe
-  first-paint gate on every product site. The continuation script resolves the
-  carried slot and scroll position, then releases that gate synchronously.
 - `assets/scripts/document-navigation.js` runs only on document pages. A
   requestAnimationFrame-throttled scroll check marks the current section and
   the sticky state; layout and navigation remain functional without it.
