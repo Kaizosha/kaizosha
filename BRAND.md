@@ -12,6 +12,16 @@ fallback for Apple touch icons, PWA clients, and metadata consumers that require
 PNG. Visible site branding must use the semantic HTML and shared CSS
 construction.
 
+While a homepage is visible, the three glyph units continuously and
+independently choose real-text phonetic renderings of `KAI`, `ZŌ`, and `SHA`
+in Latin, Japanese katakana, Korean Hangul, Georgian, Devanagari, Arabic, and
+Cyrillic. They never settle back to the all-Japanese canonical mark while
+JavaScript is active. These forms are brand transliterations, not word-for-word
+translations. The randomized cycle starts automatically on every site load and
+pauses while the page is hidden. Reduced-motion preferences receive one
+randomized static multilingual mix instead of a cycle; the canonical `改`,
+`造`, and `社` remain the no-JavaScript fallback.
+
 The brand line is `From Me Comes The Future`. Its public use is limited to the
 homepage company introduction, homepage description metadata, and the
 Organization `slogan` field.
@@ -36,8 +46,9 @@ Organization `slogan` field.
   icons, touch icons, PWA installation, and machine-readable logo metadata.
 - Use no accent color, gradient, glow, bevel, raster texture, or external logo
   library.
-- Keep motion restrained to the shared entrance and panel transition, and
-  respect reduced-motion preferences.
+- Keep motion restrained to the shared entrance, independently randomized
+  multilingual glyph cycle, and panel transition. Pause the cycle offscreen,
+  never interaction-trigger it, and respect reduced-motion preferences.
 - Preserve the canonical text `Kaizōsha` in titles, metadata, structured data,
   and social previews.
 - Preserve the line's title case. Use it only in the homepage company

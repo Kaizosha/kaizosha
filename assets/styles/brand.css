@@ -13,6 +13,7 @@
 
 .brand-lockup__unit {
   display: flex;
+  width: 30px;
   flex-direction: column;
   align-items: center;
 }
@@ -25,10 +26,19 @@
 
 .brand-lockup__glyph {
   margin-top: 5px;
+  min-height: 24px;
   color: currentColor;
   font-size: 24px;
   font-weight: 600;
   line-height: 1;
+  text-align: center;
+  unicode-bidi: isolate;
+  white-space: nowrap;
+}
+
+.brand-lockup__glyph[data-brand-token-width="wide"] {
+  font-size: 17px;
+  letter-spacing: -0.04em;
 }
 
 @media (max-width: 640px) {
@@ -41,8 +51,17 @@
     height: 60px;
   }
 
+  .brand-lockup__unit {
+    width: 20px;
+  }
+
   .brand-lockup__glyph {
     margin-top: 4px;
+    min-height: 16px;
     font-size: 16px;
+  }
+
+  .brand-lockup__glyph[data-brand-token-width="wide"] {
+    font-size: 11px;
   }
 }

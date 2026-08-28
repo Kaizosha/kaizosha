@@ -26,6 +26,7 @@ icon.svg
 icon.png
 assets/styles/brand.css
 assets/styles/markdown.css
+assets/scripts/brand-language-intro.js
 assets/scripts/document-navigation.js
 assets/scripts/site-motion.js
 "
