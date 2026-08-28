@@ -21,10 +21,10 @@ without becoming visually empty.
 5. Use the system monospace stack. Do not load web fonts, icon libraries, or
    frontend dependencies.
 6. Motion is restrained and structural: entrance, color inversion, focus, an
-   independently randomized multilingual mark cycle, and a continuously
-   drifting grid that responds to a fine pointer. Disable pointer motion and
-   replace the mark cycle with one static multilingual mix for reduced-motion
-   preferences.
+   unbounded multilingual mark cycle that changes one unit at a time, and a
+   continuously drifting grid that responds to a fine pointer. Disable pointer
+   motion and replace the mark cycle with one static multilingual mix for
+   reduced-motion preferences.
 7. Preserve semantic HTML, plain language, company metadata, creator metadata,
    legal content, browser zoom, keyboard access, and system accessibility
    preferences.
@@ -44,7 +44,7 @@ without becoming visually empty.
 | Metadata | Rendered like an HTML comment |
 | Footer | Four equal related-link cells; text reveals on fine-pointer hover |
 | Homepage grid | Four equal product cells on shared animated tracks; the selected cell pushes its siblings to the edges |
-| Homepage mark | Centered fenced-code button whose three text units independently choose multilingual phonetic renderings while the page is visible, then moves toward the selected cell's expansion corner |
+| Homepage mark | Centered fenced-code button whose three text units form a non-repeating mixed-language phonetic sequence while the page is visible, then moves toward the selected cell's expansion corner |
 | Homepage introduction | Centered `COMPANY.md` panel with legal identity and `[ EXPLORE ]` |
 | Homepage controls | Stable `[ PREV ] / [ NEXT ]` arrangement history |
 
@@ -134,10 +134,12 @@ inline gutter is removed; the balanced block gutter remains.
 - Browser zoom remains available on every page through at least 200%.
 - Every page remains readable without hover, animation, or JavaScript.
 - The multilingual mark cycle uses real text, keeps all three unit widths fixed,
-  randomizes each unit independently without returning to an all-Japanese
-  resting state, pauses offscreen, and remains hidden from assistive technology
-  behind the stable Kaizōsha control label. Reduced motion shows one randomized
-  static mix, while `改 造 社` remains the no-JavaScript fallback.
+  and shows three different languages and scripts at once. It changes one unit
+  at a time, avoids recent complete-mark repeats, never returns to an
+  all-Japanese resting state, pauses offscreen, and remains hidden from
+  assistive technology behind the stable Kaizōsha control label. Reduced motion
+  shows one randomized static mix, while `改 造 社` remains the
+  no-JavaScript fallback.
 - Product detail is available through fine-pointer hover, keyboard focus, and
   touch activation; Close and Explore remain explicit controls.
 - Scroll handoff is supplementary, appears only for website destinations, uses

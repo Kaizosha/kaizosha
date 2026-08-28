@@ -41,6 +41,16 @@
   letter-spacing: -0.04em;
 }
 
+.brand-lockup__glyph[data-brand-token-width="extra-wide"] {
+  font-size: 14px;
+  letter-spacing: -0.06em;
+}
+
+.brand-lockup__glyph[data-brand-token-width="ultra-wide"] {
+  font-size: 10px;
+  letter-spacing: -0.08em;
+}
+
 @media (max-width: 640px) {
   .brand-lockup__mark {
     gap: 10px;
@@ -63,5 +73,13 @@
 
   .brand-lockup__glyph[data-brand-token-width="wide"] {
     font-size: 11px;
+  }
+
+  .brand-lockup__glyph[data-brand-token-width="extra-wide"] {
+    font-size: 9px;
+  }
+
+  .brand-lockup__glyph[data-brand-token-width="ultra-wide"] {
+    font-size: 6.5px;
   }
 }
