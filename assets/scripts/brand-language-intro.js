@@ -266,6 +266,7 @@
   const shouldCycle = (record) =>
     isPageActive &&
     document.visibilityState !== "hidden" &&
+    document.body.dataset.motionPaused !== "true" &&
     !reduceMotion.matches &&
     record.isIntersecting;
 
@@ -380,6 +381,7 @@
   }
 
   document.addEventListener("visibilitychange", syncAllRecords);
+  document.addEventListener("kaizosha:motionchange", syncAllRecords);
   window.addEventListener("resize", () => {
     markRecords.forEach(({ glyphs }) => glyphs.forEach(fitToken));
   });

@@ -18,8 +18,9 @@ without becoming visually empty.
    centered Kaizōsha mark. Four equal product cells fill the canvas behind it;
    a hovered, focused, or tapped product expands across that canvas and exposes
    its description and destination action.
-5. Use the system monospace stack. Do not load web fonts, icon libraries, or
-   frontend dependencies.
+5. Use the system monospace stack. Do not load web fonts or icon libraries.
+   The story family may use a system serif for its literary title and a locally
+   vendored renderer for the artwork; directory and product pages stay dependency-free.
 6. Motion is restrained and structural: entrance, color inversion, focus, an
    unbounded multilingual mark cycle that changes one unit at a time, and a
    continuously drifting grid that responds to a fine pointer. Disable pointer
@@ -55,6 +56,17 @@ without becoming visually empty.
 | `directory` | Homepage | Company introduction, equal product grid, centered Kaizōsha mark |
 | `document` | Terms, Privacy, Contact | File bar, breadcrumb, full-width sections, related links |
 | `error` | 404 | Framed `404.md` panel and one home link |
+| `story` | i / Prologue | Equal-edge frame, real-time art gallery, numbered narrative, accessible reading mode |
+
+Story pages preserve the system-theme file bars, one-pixel rules, real-text
+multilingual mark, and two-tone palette. Their original monochrome artwork may
+use tonal shading and readability scrims. A perspective WebGL scene may frame
+and spatially layer that artwork; the artwork itself is a credited raster asset.
+All narrative text remains semantic HTML above the art. No canvas-only content,
+scroll hijacking, autoplay sound, accounts, or fake copy-protection is required.
+Optional device motion needs an explicit user gesture, is processed locally,
+and must have touch/pointer alternatives. Reduced motion, a page-wide pause,
+reading mode, and a still-image fallback preserve access to every public word.
 
 ## Foundations
 
@@ -166,7 +178,9 @@ inline gutter is removed; the balanced block gutter remains.
    keyboard-accessible skip link.
 5. Keep content inside the balanced shell and shared reading measure.
 6. Update immutable asset query versions when stylesheet contents change.
-7. Keep repository-root files safe for direct Cloudflare Pages publishing.
+7. Keep repository-root files safe for direct Cloudflare static publishing.
+   The main site uses Pages; current product sites use Workers Builds. Neither
+   requires a frontend compilation step. A new Worker needs its own Git connection.
 8. Keep canonical URLs, descriptions, structured data, sitemap dates, and
    visible page content aligned.
 9. Test all supported viewports before publishing.

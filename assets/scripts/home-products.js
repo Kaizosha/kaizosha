@@ -141,6 +141,7 @@
     url: record.nameLink.href,
     description: record.description.textContent.trim(),
     meta: record.meta.textContent.trim(),
+    kind: "product",
     sequence: String(index + 1).padStart(2, "0"),
   }));
   const catalogTemplate = document.querySelector(
@@ -155,11 +156,13 @@
     url: item.dataset.productUrl?.trim() ?? "",
     description: item.dataset.productDescription?.trim() ?? "",
     meta: item.dataset.productMeta?.trim() ?? "",
+    kind: item.dataset.productKind === "story" ? "story" : "product",
+    pending: item.hasAttribute("data-product-pending"),
     sequence: String(sourceCatalog.length + index + 1).padStart(2, "0"),
   }));
   const catalog = [...sourceCatalog, ...additionalCatalog].filter(
     (product) =>
-      product.name && product.url && product.description && product.meta,
+      !product.pending && product.name && product.url && product.description && product.meta,
   );
   const productsByName = new Map(
     catalog.map((product) => [product.name, product]),
@@ -492,7 +495,8 @@
 
       if (
         destination.hostname.endsWith(".kaizosha.org") &&
-        destination.hostname !== "kaizosha.org"
+        destination.hostname !== "kaizosha.org" &&
+        record.cell.dataset.productKind !== "story"
       ) {
         const handoffScrollTop = Math.max(0, record.content.scrollTop);
 
@@ -612,7 +616,7 @@
     record.nameLink.setAttribute("aria-expanded", "true");
 
     if (announce && productStatus) {
-      productStatus.textContent = `${record.cell.dataset.productName} product details shown.`;
+      productStatus.textContent = `${record.cell.dataset.productName} details shown.`;
     }
   };
 
@@ -621,6 +625,7 @@
     const hasWebsiteHandoff = destinationLabel === "website";
 
     record.cell.dataset.productName = product.name;
+    record.cell.dataset.productKind = product.kind;
     record.nameLink.textContent = product.name;
     record.nameLink.href = product.url;
     record.nameLink.setAttribute(
@@ -628,7 +633,7 @@
       `View ${product.name} ${destinationLabel} (opens in a new tab)`,
     );
     record.nameLink.setAttribute("aria-expanded", "false");
-    record.eyebrow.textContent = `product / ${product.sequence}`;
+    record.eyebrow.textContent = `${product.kind} / ${product.sequence}`;
     record.description.textContent = product.description;
     record.meta.textContent = product.meta;
     record.closeButton.setAttribute(

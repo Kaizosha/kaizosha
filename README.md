@@ -41,3 +41,14 @@ Synchronize those files to every known sibling product repository with:
 
 Pass one or more repository paths to target a subset, and use `--check` before
 the paths to verify that product sites have not drifted from the shared core.
+
+## Story catalog
+
+`i-web` is the new spatial-story sibling and participates in shared-design sync.
+Its `i.kaizosha.org` catalog record is deliberately marked
+`data-product-pending="deployment"` until the separate Cloudflare Worker and
+custom domain are connected and verified. Pending records are omitted from the
+public rotation, avoiding a broken destination. Remove that attribute after
+verification. Story records use `data-product-kind="story"`, so their labels and
+handoff are not treated as software products. The existing product navigation
+ring is unchanged while the story domain is pending.

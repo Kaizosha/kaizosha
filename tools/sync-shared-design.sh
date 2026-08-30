@@ -16,7 +16,8 @@ if [ "$#" -eq 0 ]; then
     "$ROOT/../sekai-web" \
     "$ROOT/../hush-web" \
     "$ROOT/../morph-web" \
-    "$ROOT/../modscan-web"
+    "$ROOT/../modscan-web" \
+    "$ROOT/../i-web"
 fi
 
 FILES="

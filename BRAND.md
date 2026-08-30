@@ -50,11 +50,15 @@ Organization `slogan` field.
 - Do not place either icon in visible page content. Reserve them for browser
   icons, touch icons, PWA installation, and machine-readable logo metadata.
 - Use no accent color, gradient, glow, bevel, raster texture, or external logo
-  library.
+  library in the brand mark. Original story artwork is content, not a logo;
+  it may use monochrome tonal depth without replacing the constructed mark.
 - Keep motion restrained to the shared entrance, unbounded one-unit-at-a-time
   multilingual glyph cycle, and panel transition. Keep the three visible
   languages and scripts distinct, pause the cycle offscreen, never
   interaction-trigger it, and respect reduced-motion preferences.
+- A page-level motion pause also pauses the multilingual mark. Set
+  `body[data-motion-paused="true"]` and dispatch `kaizosha:motionchange` when
+  the pause state changes. Reading mode must not leave decorative motion running.
 - Preserve the canonical text `Kaizōsha` in titles, metadata, structured data,
   and social previews.
 - Preserve the line's title case. Use it only in the homepage company
