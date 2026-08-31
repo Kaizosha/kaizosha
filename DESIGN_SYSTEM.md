@@ -56,12 +56,16 @@ without becoming visually empty.
 | `directory` | Homepage | Company introduction, equal product grid, centered Kaizōsha mark |
 | `document` | Terms, Privacy, Contact | File bar, breadcrumb, full-width sections, related links |
 | `error` | 404 | Framed `404.md` panel and one home link |
-| `story` | i / Prologue | Equal-edge frame, real-time art gallery, numbered narrative, accessible reading mode |
+| `story` | i / Prologue | Equal-edge frame, real-time illustrated relief, numbered narrative, accessible reading mode |
 
 Story pages preserve the system-theme file bars, one-pixel rules, real-text
-multilingual mark, and two-tone palette. Their original monochrome artwork may
-use tonal shading and readability scrims. A perspective WebGL scene may frame
-and spatially layer that artwork; the artwork itself is a credited raster asset.
+multilingual mark, and two-tone UI palette. Original story illustrations may
+retain a restrained content-specific palette, including muted manga cel colors
+on paper. This exception applies to art, not the shared mark or navigation.
+A perspective WebGL scene may frame, sculpt, and spatially layer that artwork;
+the artwork itself is a credited raster asset. Distinguish illustrated relief
+and drawn turnaround sheets from fully rigged 3D models. Character-development
+pages use the document shell and actual text labels outside the artwork.
 All narrative text remains semantic HTML above the art. No canvas-only content,
 scroll hijacking, autoplay sound, accounts, or fake copy-protection is required.
 Optional device motion needs an explicit user gesture, is processed locally,

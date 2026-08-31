@@ -51,7 +51,8 @@ Organization `slogan` field.
   icons, touch icons, PWA installation, and machine-readable logo metadata.
 - Use no accent color, gradient, glow, bevel, raster texture, or external logo
   library in the brand mark. Original story artwork is content, not a logo;
-  it may use monochrome tonal depth without replacing the constructed mark.
+  it may keep its own restrained illustration palette and dimensional shading
+  without recoloring or replacing the constructed mark or shared UI chrome.
 - Keep motion restrained to the shared entrance, unbounded one-unit-at-a-time
   multilingual glyph cycle, and panel transition. Keep the three visible
   languages and scripts distinct, pause the cycle offscreen, never
