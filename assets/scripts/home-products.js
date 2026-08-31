@@ -141,8 +141,9 @@
     url: record.nameLink.href,
     description: record.description.textContent.trim(),
     meta: record.meta.textContent.trim(),
-    kind: "product",
-    sequence: String(index + 1).padStart(2, "0"),
+    kind: record.cell.dataset.productKind === "story" ? "story" : "product",
+    featured: record.cell.hasAttribute("data-product-featured"),
+    sequence: record.cell.dataset.productSequence || String(index + 1).padStart(2, "0"),
   }));
   const catalogTemplate = document.querySelector(
     "template[data-product-catalog]",
@@ -158,7 +159,8 @@
     meta: item.dataset.productMeta?.trim() ?? "",
     kind: item.dataset.productKind === "story" ? "story" : "product",
     pending: item.hasAttribute("data-product-pending"),
-    sequence: String(sourceCatalog.length + index + 1).padStart(2, "0"),
+    featured: item.hasAttribute("data-product-featured"),
+    sequence: item.dataset.productSequence || String(sourceCatalog.length + index + 1).padStart(2, "0"),
   }));
   const catalog = [...sourceCatalog, ...additionalCatalog].filter(
     (product) =>
@@ -293,6 +295,9 @@
   const handoffNavigationDelay = 160;
   let activeRecord = null;
   let isNavigatingToProduct = false;
+  let navigationFrame = null;
+  let navigationTimer = null;
+  let brandMotionBeforeHandoff;
   let scrollHandoffProgress = 0;
   let scrollHandoffResetTimer = null;
   let handoffFrameOrigin = null;
@@ -301,6 +306,20 @@
   let touchHandoffRecord = null;
   let touchHandoffStartX = 0;
   let touchHandoffStartY = 0;
+
+  const cancelNavigation = () => {
+    window.cancelAnimationFrame(navigationFrame);
+    window.clearTimeout(navigationTimer);
+    navigationFrame = navigationTimer = null;
+  };
+
+  const restoreBrandMotion = () => {
+    if (brandMotionBeforeHandoff === undefined) return;
+    if (brandMotionBeforeHandoff === null) delete document.body.dataset.motionPaused;
+    else document.body.dataset.motionPaused = brandMotionBeforeHandoff;
+    brandMotionBeforeHandoff = undefined;
+    document.dispatchEvent(new Event("kaizosha:motionchange"));
+  };
 
   const clearScrollHandoffReset = () => {
     if (scrollHandoffResetTimer !== null) {
@@ -395,6 +414,7 @@
     clearHandoffFrameReset();
     homeMain.classList.remove("is-handoff-preview");
     homeMain.classList.remove("is-wheel-handoff");
+    homeMain.classList.remove("is-story-handoff");
 
     if (reducedMotion.matches) {
       handoffFrameOrigin = null;
@@ -418,6 +438,7 @@
     const progress = Math.min(1, Math.max(0, value));
 
     scrollHandoffProgress = progress;
+    homeMain.classList.toggle("is-story-handoff", progress > 0 && record?.cell.dataset.productKind === "story");
 
     if (record) {
       record.scrollCue.style.setProperty(
@@ -479,11 +500,18 @@
       return;
     }
 
+    const destination = new URL(record.nameLink.href);
     isNavigatingToProduct = true;
+    cancelNavigation();
     clearTouchHandoff();
     clearScrollHandoffReset();
     setScrollHandoffProgress(record, 1);
     homeMain.classList.add("is-navigating-product");
+    if (record.cell.dataset.productKind === "story") {
+      brandMotionBeforeHandoff = document.body.dataset.motionPaused ?? null;
+      document.body.dataset.motionPaused = "true";
+      document.dispatchEvent(new Event("kaizosha:motionchange"));
+    }
     void homeMain.offsetHeight;
 
     if (productStatus) {
@@ -491,16 +519,26 @@
     }
 
     const navigate = () => {
-      const destination = new URL(record.nameLink.href);
-
+      navigationFrame = navigationTimer = null;
+      if (!isNavigatingToProduct) return;
       if (
         destination.hostname.endsWith(".kaizosha.org") &&
-        destination.hostname !== "kaizosha.org" &&
-        record.cell.dataset.productKind !== "story"
+        destination.hostname !== "kaizosha.org"
       ) {
         const handoffScrollTop = Math.max(0, record.content.scrollTop);
 
         destination.searchParams.set("slot", record.cell.dataset.productSlot);
+
+        if (record.cell.dataset.productKind === "story") {
+          destination.searchParams.set("from", "kaizosha");
+          const mark = Array.from(homeLogo.querySelectorAll(".brand-lockup__glyph")).map((glyph) => ({
+            text: glyph.textContent,
+            lang: glyph.lang || "",
+            dir: glyph.dir || "ltr",
+            width: glyph.dataset.brandTokenWidth || "",
+          }));
+          destination.searchParams.set("mark", JSON.stringify(mark));
+        }
 
         if (handoffScrollTop > 0) {
           destination.searchParams.set(
@@ -513,13 +551,15 @@
       window.location.assign(destination.href);
     };
 
-    window.requestAnimationFrame(() => {
+    navigationFrame = window.requestAnimationFrame(() => {
+      navigationFrame = null;
+      if (!isNavigatingToProduct) return;
       if (reducedMotion.matches) {
-        window.requestAnimationFrame(navigate);
+        navigationFrame = window.requestAnimationFrame(navigate);
         return;
       }
 
-      window.setTimeout(navigate, handoffNavigationDelay);
+      navigationTimer = window.setTimeout(navigate, handoffNavigationDelay);
     });
   };
 
@@ -630,7 +670,7 @@
     record.nameLink.href = product.url;
     record.nameLink.setAttribute(
       "aria-label",
-      `View ${product.name} ${destinationLabel} (opens in a new tab)`,
+      `View ${product.name} ${destinationLabel}${product.kind === "story" ? "" : " (opens in a new tab)"}`,
     );
     record.nameLink.setAttribute("aria-expanded", "false");
     record.eyebrow.textContent = `${product.kind} / ${product.sequence}`;
@@ -643,7 +683,7 @@
     record.exploreLink.href = product.url;
     record.exploreLink.setAttribute(
       "aria-label",
-      `Explore ${product.name} ${destinationLabel} (opens in a new tab)`,
+      `Explore ${product.name} ${destinationLabel}${product.kind === "story" ? "" : " (opens in a new tab)"}`,
     );
     record.scrollCue.textContent = finePointer.matches
       ? `[ SCROLL TO OPEN ${product.name} ↓ ]`
@@ -680,6 +720,9 @@
     { once: true },
   );
 
+  const isPlainActivation = (event) =>
+    (event.button ?? 0) === 0 && !event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey;
+
   cellRecords.forEach((record) => {
     record.cell.addEventListener("pointerenter", (event) => {
       if (finePointer.matches && event.pointerType !== "touch") {
@@ -694,10 +737,22 @@
     });
 
     record.nameLink.addEventListener("click", (event) => {
+      if (!isPlainActivation(event)) return;
       if (event.detail > 0 && !finePointer.matches) {
         event.preventDefault();
         activateProduct(record, { announce: true });
+      } else if (record.cell.dataset.productKind === "story" && !intro?.open) {
+        event.preventDefault();
+        activateProduct(record);
+        openProductWebsite(record);
       }
+    });
+
+    record.exploreLink.addEventListener("click", (event) => {
+      if (record.cell.dataset.productKind !== "story" || !isPlainActivation(event) || intro?.open) return;
+      event.preventDefault();
+      activateProduct(record);
+      openProductWebsite(record);
     });
 
     record.closeButton.addEventListener("click", () => {
@@ -876,12 +931,19 @@
   window.addEventListener("resize", syncActiveHandoffFrame);
   window.visualViewport?.addEventListener("resize", syncActiveHandoffFrame);
 
+  window.addEventListener("pagehide", () => {
+    cancelNavigation();
+    isNavigatingToProduct = false;
+  });
+
   window.addEventListener("pageshow", (event) => {
     if (!event.persisted && !isNavigatingToProduct) {
       return;
     }
 
     isNavigatingToProduct = false;
+    cancelNavigation();
+    restoreBrandMotion();
     clearTouchHandoff();
     clearScrollHandoffReset();
     clearHandoffFrameReset();
@@ -892,6 +954,7 @@
       "is-handoff-resetting",
       "is-wheel-handoff",
       "is-navigating-product",
+      "is-story-handoff",
     );
     homeMain.style.removeProperty("--handoff-frame-width");
     homeMain.style.removeProperty("--handoff-frame-height");
@@ -933,7 +996,16 @@
   const sourceArrangement = cellRecords.map((record) =>
     record.nameLink.textContent.trim(),
   );
-  const history = [createArrangement(sourceArrangement, [], 0)];
+  const firstArrangement = createArrangement(sourceArrangement, [], 0);
+  // Keep the new story discoverable on every initial visit; the remaining
+  // products still rotate through the ordinary Prev / Next directory.
+  catalog.filter((product) => product.featured).forEach((product) => {
+    if (!firstArrangement.includes(product.name)) {
+      const replaceIndex = firstArrangement.findLastIndex((name) => !productsByName.get(name).featured);
+      if (replaceIndex >= 0) firstArrangement[replaceIndex] = product.name;
+    }
+  });
+  const history = [firstArrangement];
   let historyIndex = 0;
 
   const render = (announce = false) => {
@@ -957,6 +1029,7 @@
   };
 
   previousButton.addEventListener("click", () => {
+    if (isNavigatingToProduct) return;
     if (historyIndex > 0) {
       historyIndex -= 1;
     } else {
@@ -967,6 +1040,7 @@
   });
 
   nextButton.addEventListener("click", () => {
+    if (isNavigatingToProduct) return;
     if (historyIndex < history.length - 1) {
       historyIndex += 1;
     } else {

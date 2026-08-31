@@ -1,0 +1,39 @@
+/* Same entry contract on kaizosha.org and i.kaizosha.org; no build dependency. */
+.story-handoff-chrome { display: none; }
+.home-main.is-story-handoff > .home-toolbar:not(.story-handoff-chrome),
+.home-main.is-story-handoff > .home-statusbar:not(.story-handoff-chrome) { visibility: hidden; }
+.home-main.is-story-handoff > .story-handoff-chrome { display: flex; }
+.story-entry-return { display: flex; align-items: center; gap: .8rem; }
+.story-entry-return a { display: inline-flex; align-items: center; min-height: 2rem; color: inherit; font: inherit; text-decoration: none; }
+.story-entry-return a:hover { color: var(--ink); text-decoration: underline; }
+.home-main[data-active-product="i"] .product-cell.is-active .product-cell__content { justify-content: flex-start; justify-content: safe center; }
+.home-main[data-active-product="i"].is-handoff-preview .product-cell__name { background: var(--ink); color: var(--surface); box-shadow: none; }
+.home-main.is-story-handoff.is-navigating-product .product-cell__name { outline: none; }
+.home-main.is-story-handoff.is-navigating-product :is(.home-products, .product-cell, .product-cell__content, .product-cell__heading, .product-cell__name, .product-cell__detail, .product-cell__explore, .home-logo, .brand-lockup) { animation: none; transition: none; }
+.home-main.is-story-handoff.is-navigating-product .product-cell__explore { outline: none; }
+.home-main.is-story-handoff.is-navigating-product .product-cell__explore,
+.story-entry .product-cell__actions .product-cell__explore,
+.story-entry .product-cell.is-active .product-cell__name { background: var(--ink); color: var(--surface); box-shadow: none; }
+.story-entry, .story-entry-space { display: none; }
+html[data-story-entry]:not([data-story-entry-ready]) body { visibility: hidden; }
+html[data-story-entry] .story-entry-space { display: block; height: 100svh; }
+html[data-story-entry] .story-entry {
+  position: fixed; z-index: 12; inset: var(--directory-edge); display: grid;
+  width: auto; height: auto; min-height: 0; margin: 0; animation: none;
+  color: var(--ink); pointer-events: auto;
+}
+html[data-story-entry] .story-entry > .story-handoff-chrome { display: flex; }
+.story-entry .product-cell__heading, .story-entry .home-logo { animation: none; }
+.story-entry .home-products, .story-entry .product-cell, .story-entry .product-cell__content,
+.story-entry .product-cell__detail, .story-entry .home-logo, .story-entry .brand-lockup { transition: none; }
+.story-entry .product-cell.is-active .product-cell__content { overscroll-behavior-y: auto; }
+.story-entry .product-cell__name { cursor: text; }
+.story-entry .product-cell__scroll-cue { --scroll-handoff-progress: 1; text-decoration: none; display: block; }
+.story-entry-mark { display: flex; align-items: flex-start; gap: 15px; color: currentColor; }
+html[data-story-entry-stage="entry"] .story-toolbar,
+html[data-story-entry-stage="entry"] .story-statusbar { visibility: hidden; }
+html[data-story-entry-stage="entry"] body[data-page-family="story"] { --toolbar-height: var(--home-bar-height); --statusbar-height: var(--home-bar-height); }
+html[data-story-entry-stage="scene"] .story-entry { visibility: hidden; pointer-events: none; }
+@media (max-width: 640px) { .story-entry-mark { gap: 10px; } .story-entry-return { gap: .6rem; } }
+@media (forced-colors: active) { .story-entry { forced-color-adjust: auto; } }
+@media print { html[data-story-entry] body { visibility: visible; } .story-entry, html[data-story-entry] .story-entry, .story-entry-space, html[data-story-entry] .story-entry-space { display: none; } }

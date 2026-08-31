@@ -125,9 +125,10 @@
     </script>
     <link rel="stylesheet" href="/assets/styles/brand.css?v=20260828-language-catalog-43">
     <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260821-product-bars-v4">
+    <link rel="stylesheet" href="/assets/styles/story-entry.css?v=20260831-entry-1">
     <script src="/assets/scripts/site-motion.js?v=20260818-dynamic-grid" defer></script>
     <script src="/assets/scripts/brand-language-intro.js?v=20260830-motion-pause-43" defer></script>
-    <script src="/assets/scripts/home-products.js?v=20260830-story-catalog-v1" defer></script>
+    <script src="/assets/scripts/home-products.js?v=20260831-story-handoff-2" defer></script>
   </head>
   <body data-page-family="directory" data-page="home">
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -174,11 +175,16 @@
         </nav>
       </header>
 
+      <header class="home-toolbar story-handoff-chrome">
+        <span class="home-toolbar__file">[ i / README.md ]</span>
+        <nav class="story-entry-return" aria-label="Story navigation"><a href="https://i.kaizosha.org/characters">[ CAST ]</a><a href="https://kaizosha.org/">[ ← KAIZŌSHA ]</a></nav>
+      </header>
+
       <div
         class="home-products"
         data-products
         role="list"
-        aria-label="Products"
+        aria-label="Products and stories"
       >
         <div class="product-cell" data-product-slot="top-left" role="listitem">
           <div class="product-cell__content">
@@ -231,18 +237,18 @@
             </div>
           </div>
         </div>
-        <div class="product-cell" data-product-slot="bottom-right" role="listitem">
+        <div class="product-cell" data-product-slot="bottom-right" data-product-kind="story" data-product-sequence="06" data-product-featured role="listitem">
           <div class="product-cell__content">
             <h2 class="product-cell__heading">
-              <a class="product-cell__name" href="https://modscan.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="View ModScan website (opens in a new tab)" aria-controls="product-detail-4" aria-expanded="false">ModScan</a>
+              <a class="product-cell__name" href="https://i.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="View i story website (opens in a new tab)" aria-controls="product-detail-4" aria-expanded="false">i</a>
             </h2>
             <div class="product-cell__detail" id="product-detail-4" hidden>
-              <p class="product-cell__eyebrow" aria-hidden="true">product / 04</p>
-              <p class="product-cell__description">A keyboard-first terminal interface for finding node_modules, comparing their size and age, and reclaiming disk space.</p>
-              <p class="product-cell__meta">Node.js CLI / JavaScript + Blessed / Available</p>
+              <p class="product-cell__eyebrow" aria-hidden="true">story / 06</p>
+              <p class="product-cell__description">A life before language. A scroll-driven 3D manhwa by Kaizō Konpaku: one enclosed world, a girl growing up, and her father's silence.</p>
+              <p class="product-cell__meta">Story / Interactive art / In development</p>
               <div class="product-cell__actions">
-                <button type="button" data-product-close aria-label="Close ModScan details">[ CLOSE ]</button>
-                <a class="product-cell__explore" href="https://modscan.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="Explore ModScan website (opens in a new tab)">[ EXPLORE ↗ ]</a>
+                <button type="button" data-product-close aria-label="Close i details">[ CLOSE ]</button>
+                <a class="product-cell__explore" href="https://i.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="Explore i story website (opens in a new tab)">[ EXPLORE ↗ ]</a>
               </div>
               <p class="product-cell__scroll-cue" data-product-scroll-cue aria-hidden="true" hidden></p>
             </div>
@@ -253,18 +259,18 @@
         <span
           data-product-catalog-item
           data-product-name="Morph"
+          data-product-sequence="05"
           data-product-url="https://morph.kaizosha.org"
           data-product-description="An iPhone- and iPad-first Safari extension for previewable, reversible edits to the webpage you have open."
           data-product-meta="Safari extension / Swift + SwiftUI / In development"
         ></span>
         <span
           data-product-catalog-item
-          data-product-pending="deployment"
-          data-product-kind="story"
-          data-product-name="i"
-          data-product-url="https://i.kaizosha.org"
-          data-product-description="A life before language. A scroll-driven 3D manhwa by Kaizō Konpaku: one enclosed world, a girl growing up, and her father's silence."
-          data-product-meta="Story / Interactive art / In development"
+          data-product-name="ModScan"
+          data-product-sequence="04"
+          data-product-url="https://modscan.kaizosha.org"
+          data-product-description="A keyboard-first terminal interface for finding node_modules, comparing their size and age, and reclaiming disk space."
+          data-product-meta="Node.js CLI / JavaScript + Blessed / Available"
         ></span>
       </template>
       <p class="u-screen-reader" role="status" aria-live="polite" aria-atomic="true" data-products-status></p>
@@ -305,6 +311,10 @@
           </a>
         </nav>
         <span aria-hidden="true">001 / KAIZŌSHA / EOF</span>
+      </footer>
+      <footer class="home-statusbar story-handoff-chrome">
+        <nav class="home-legal" aria-label="Story information"><a href="https://i.kaizosha.org/rights" aria-label="Rights and credits">[ R ]</a><span aria-hidden="true">/</span><a href="https://i.kaizosha.org/privacy" aria-label="Privacy">[ P ]</a><span aria-hidden="true">/</span><a href="https://kaizosha.org/contact" aria-label="Contact">[ C ]</a></nav>
+        <span class="home-statusbar__product">006 / i / STORY</span>
       </footer>
     </main>
   </body>

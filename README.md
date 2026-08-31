@@ -44,11 +44,20 @@ the paths to verify that product sites have not drifted from the shared core.
 
 ## Story catalog
 
-`i-web` is the new spatial-story sibling and participates in shared-design sync.
-Its `i.kaizosha.org` catalog record is deliberately marked
-`data-product-pending="deployment"` until the separate Cloudflare Worker and
-custom domain are connected and verified. Pending records are omitted from the
-public rotation, avoiding a broken destination. Remove that attribute after
-verification. Story records use `data-product-kind="story"`, so their labels and
-handoff are not treated as software products. The existing product navigation
-ring is unchanged while the story domain is pending.
+`i-web` is the motion-manhwa sibling. Its visible directory record is marked
+`data-product-kind="story"`, `data-product-sequence="06"`, and
+`data-product-featured`, so it appears in the first arrangement on every visit.
+Prev / Next still rotates through all six products and stories. Stable sequence
+attributes keep labels independent of a tile's position.
+
+Scrolling or activating Explore expands the frame and continues into `i` in the
+same tab. The receiving card preserves the copy, slot, internal scroll position,
+multilingual text mark, and story-specific top/bottom bars. Modified clicks keep
+ordinary new-tab behavior. Further native scrolling reveals the manhwa.
+
+`assets/styles/story-entry.css` is a matching two-site contract: keep the copy in
+`i-web` identical when editing it. The ordinary shared-design sync deliberately
+does not add this story-only enhancement to other product sites. No build or
+deployment command was introduced.
+
+Optional controller checks: `node --test tools/*.test.mjs`.
