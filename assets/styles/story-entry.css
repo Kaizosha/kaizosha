@@ -22,6 +22,12 @@ html[data-story-entry] .story-entry {
   width: auto; height: auto; min-height: 0; margin: 0; animation: none;
   color: var(--ink); pointer-events: auto;
 }
+/* On the story site, stay in the reader's scroll chain instead of the page's. */
+html[data-story-entry] .story-scroll .story-entry {
+  position: sticky; inset: auto; top: 0; width: 100%;
+  height: var(--story-reader-height); margin: 0 0 calc(-1 * var(--story-reader-height));
+  border: 0; box-shadow: none;
+}
 html[data-story-entry] .story-entry > .story-handoff-chrome { display: flex; }
 .story-entry .product-cell__heading, .story-entry .home-logo { animation: none; }
 .story-entry .home-products, .story-entry .product-cell, .story-entry .product-cell__content,
