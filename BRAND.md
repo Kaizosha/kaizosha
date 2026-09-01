@@ -14,12 +14,13 @@ construction.
 
 While a homepage is visible, the three glyph units continuously choose
 real-text phonetic renderings of `KAI`, `ZŌ`, and `SHA` from a curated catalog
-of 43 forms representing 38 languages across 32 writing systems. Every visible
-mix uses three different languages and scripts. One unit changes at a time,
-recent complete marks are not repeated, and the randomized sequence continues
-without an endpoint. It never settles back to the all-Japanese canonical mark
-while JavaScript is active. These forms are brand transliterations, not
-word-for-word translations.
+of 25 forms representing Japanese and the 22 languages in the Eighth Schedule
+of the Constitution of India, including Sanskrit, across 15 writing systems.
+Every visible mix uses three different languages and scripts. One unit changes
+at a time, recent complete marks are not repeated, and the randomized sequence
+continues without an endpoint. It never settles back to the all-Japanese
+canonical mark while JavaScript is active. These forms are brand
+transliterations, not word-for-word translations.
 The cycle starts automatically with a new mix on every site load, pauses when
 the mark is offscreen or the page is hidden, and resumes without resetting.
 The catalog stays embedded in the static site so the sequence never depends on
@@ -54,9 +55,9 @@ Organization `slogan` field.
   it may keep its own restrained illustration palette and dimensional shading
   without recoloring or replacing the constructed mark or shared UI chrome.
 - Keep motion restrained to the shared entrance, unbounded one-unit-at-a-time
-  multilingual glyph cycle, and panel transition. Keep the three visible
-  languages and scripts distinct, pause the cycle offscreen, never
-  interaction-trigger it, and respect reduced-motion preferences.
+  Japanese-and-Indian-language glyph cycle, and panel transition. Keep the
+  three visible languages and scripts distinct, pause the cycle offscreen,
+  never interaction-trigger it, and respect reduced-motion preferences.
 - A page-level motion pause also pauses the multilingual mark. Set
   `body[data-motion-paused="true"]` and dispatch `kaizosha:motionchange` when
   the pause state changes. Reading mode must not leave decorative motion running.

@@ -149,7 +149,8 @@ inline gutter is removed; the balanced block gutter remains.
   least a 24px target in each axis.
 - Browser zoom remains available on every page through at least 200%.
 - Every page remains readable without hover, animation, or JavaScript.
-- The multilingual mark cycle uses real text, keeps all three unit widths fixed,
+- The multilingual mark cycle uses real text from Japanese and India’s 22
+  scheduled languages, including Sanskrit. It keeps all three unit widths fixed
   and shows three different languages and scripts at once. It changes one unit
   at a time, avoids recent complete-mark repeats, never returns to an
   all-Japanese resting state, pauses offscreen, and remains hidden from
