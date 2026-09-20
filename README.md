@@ -29,8 +29,10 @@ product sites:
 - `icon.png`
 - `assets/styles/brand.css`
 - `assets/styles/markdown.css`
+- `assets/styles/site-language.css`
 - `assets/scripts/brand-language-intro.js`
 - `assets/scripts/document-navigation.js`
+- `assets/scripts/site-language.js`
 - `assets/scripts/site-motion.js`
 
 Synchronize those files to every known sibling product repository with:

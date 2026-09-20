@@ -149,6 +149,15 @@ inline gutter is removed; the balanced block gutter remains.
   least a 24px target in each axis.
 - Browser zoom remains available on every page through at least 200%.
 - Every page remains readable without hover, animation, or JavaScript.
+- Every page loads the same edge language picker. Country detection runs on each
+  visit, a saved language follows the visitor across Kaizōsha subdomains, and
+  the original English remains available without translation. India exposes
+  English plus all 22 scheduled languages; Japanese and the supported global
+  languages use the same picker and translation status.
+- Keep the language control on the logical viewport edge so it does not compete
+  with page-specific top or bottom bars. The modal must fit within the dynamic
+  viewport, remain keyboard operable, identify automatic translations, and
+  preserve native language names.
 - The multilingual mark cycle uses real text from Japanese and India’s 22
   scheduled languages, including Sanskrit. It keeps all three unit widths fixed
   and shows three different languages and scripts at once. It changes one unit
