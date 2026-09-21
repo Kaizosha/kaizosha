@@ -291,9 +291,8 @@
   let refreshTimer;
   let translationRun = 0;
   let trigger;
-  let dialog;
-  let countrySelect;
-  let languageSelect;
+  let menu;
+  let menuList;
   let status;
   const records = new Map();
 
@@ -542,150 +541,129 @@
     });
   };
 
-  const populateCountries = () => {
-    countrySelect.replaceChildren();
-    const automatic = document.createElement("option");
-    automatic.value = "AUTO";
-    automatic.textContent = `Automatic (${countries[detectedCountry].name})`;
-    countrySelect.append(automatic);
-
-    Object.values(countries).forEach((entry) => {
-      const option = document.createElement("option");
-      option.value = entry.code;
-      option.textContent =
-        entry.name === entry.nativeName
-          ? entry.name
-          : `${entry.name} / ${entry.nativeName}`;
-      countrySelect.append(option);
-    });
-
-    countrySelect.value =
-      readPreference(countryCookie) === "AUTO" ? "AUTO" : currentCountry;
-  };
-
-  const populateLanguages = (countryCode, selectedCode = currentLanguage) => {
-    const resolvedCountry =
-      countryCode === "AUTO" ? detectedCountry : normalizeCountry(countryCode);
-    const suggested = countries[resolvedCountry].languageCodes;
+  const populateLanguages = () => {
+    const suggested = countries[currentCountry].languageCodes;
     const remaining = Object.keys(languages).filter(
       (code) => !suggested.includes(code),
     );
-    languageSelect.replaceChildren();
+    menuList.replaceChildren();
 
     const addGroup = (label, codes) => {
-      const group = document.createElement("optgroup");
-      group.label = label;
+      if (codes.length === 0) {
+        return;
+      }
+      const group = document.createElement("section");
+      group.className = "site-language-menu__group";
+      const heading = document.createElement("p");
+      heading.className = "site-language-menu__label";
+      heading.textContent = label;
+      group.append(heading);
+
       codes.forEach((code) => {
         const entry = languages[code];
-        const option = document.createElement("option");
-        option.value = code;
-        option.textContent =
-          entry.name === entry.nativeName
-            ? entry.name
-            : `${entry.name} / ${entry.nativeName}`;
-        group.append(option);
+        const button = document.createElement("button");
+        button.type = "button";
+        button.dataset.languageCode = code;
+        button.setAttribute("role", "menuitemradio");
+        button.setAttribute("aria-checked", String(code === currentLanguage));
+        button.innerHTML = `<span>${entry.nativeName}</span><span aria-hidden="true">${entry.code.toUpperCase()}</span>`;
+        button.addEventListener("click", () => {
+          currentLanguage = entry.code;
+          writeCookie(languageCookie, currentLanguage);
+          closeMenu();
+          applyLanguage(currentLanguage);
+        });
+        group.append(button);
       });
-      languageSelect.append(group);
+      menuList.append(group);
     };
 
-    addGroup(`Suggested for ${countries[resolvedCountry].name}`, suggested);
-    addGroup("All supported languages", remaining);
-    languageSelect.value = languages[selectedCode] ? selectedCode : "en";
+    addGroup(`Suggested · ${countries[currentCountry].name}`, suggested);
+    addGroup("All languages", remaining);
   };
 
-  const openDialog = () => {
-    populateCountries();
-    populateLanguages(countrySelect.value, currentLanguage);
-    trigger.setAttribute("aria-expanded", "true");
-    if (typeof dialog.showModal === "function") {
-      dialog.showModal();
-    } else {
-      dialog.setAttribute("open", "");
-    }
-    countrySelect.focus();
-  };
-
-  const closeDialog = () => {
+  const closeMenu = ({ restoreFocus = true } = {}) => {
     trigger.setAttribute("aria-expanded", "false");
-    if (typeof dialog.close === "function") {
-      dialog.close();
-    } else {
-      dialog.removeAttribute("open");
+    menu.hidden = true;
+    if (restoreFocus) {
+      trigger.focus();
     }
-    trigger.focus();
+  };
+
+  const openMenu = () => {
+    populateLanguages();
+    trigger.setAttribute("aria-expanded", "true");
+    menu.hidden = false;
+    const active =
+      menu.querySelector('[aria-checked="true"]') ||
+      menu.querySelector('[role="menuitemradio"]');
+    active?.focus();
   };
 
   const createInterface = () => {
+    let host = document.querySelector("[data-language-slot]");
+    if (!host) {
+      host = document.createElement("span");
+      host.className = "site-language-host site-language-host--floating";
+      document.body.append(host);
+    } else {
+      host.classList.add("site-language-host");
+    }
+    host.dataset.languageUi = "";
+
     trigger = document.createElement("button");
     trigger.className = "site-language-control";
     trigger.type = "button";
     trigger.dataset.languageUi = "";
-    trigger.setAttribute("aria-haspopup", "dialog");
-    trigger.setAttribute("aria-controls", "site-language-dialog");
+    trigger.setAttribute("aria-haspopup", "menu");
+    trigger.setAttribute("aria-controls", "site-language-menu");
     trigger.setAttribute("aria-expanded", "false");
 
-    dialog = document.createElement("dialog");
-    dialog.className = "site-language-dialog";
-    dialog.id = "site-language-dialog";
-    dialog.dataset.languageUi = "";
-    dialog.setAttribute("aria-labelledby", "site-language-title");
-
-    const form = document.createElement("form");
-    form.method = "dialog";
-    form.innerHTML = `
-      <header class="site-language-dialog__bar">
-        <span id="site-language-title">[ COUNTRY / LANGUAGE ]</span>
-        <span aria-hidden="true">KAIZŌSHA</span>
-      </header>
-      <div class="site-language-dialog__body">
-        <p class="site-language-dialog__intro">Choose a country for local suggestions, then choose the language you want across every Kaizōsha site.</p>
-        <div class="site-language-dialog__fields">
-          <label>Country / region<select name="country" data-language-country></select></label>
-          <label>Language<select name="language" data-language-select></select></label>
-        </div>
-        <p class="site-language-dialog__note">Automatic translation is generated on Cloudflare. Product names and code stay original. English remains the source edition for legal text.</p>
-        <p class="site-language-dialog__status" data-language-status role="status" aria-live="polite"></p>
-      </div>
-      <footer class="site-language-dialog__actions">
-        <button type="button" data-language-cancel>[ CANCEL ]</button>
-        <button type="submit">[ APPLY ]</button>
-      </footer>
+    menu = document.createElement("div");
+    menu.className = "site-language-menu";
+    menu.id = "site-language-menu";
+    menu.dataset.languageUi = "";
+    menu.setAttribute("role", "menu");
+    menu.setAttribute("aria-label", "Choose language");
+    menu.hidden = true;
+    menu.innerHTML = `
+      <div class="site-language-menu__list" data-language-list></div>
+      <p class="site-language-menu__status" data-language-status role="status" aria-live="polite"></p>
     `;
-    dialog.append(form);
-    document.body.append(trigger, dialog);
+    host.append(trigger, menu);
 
-    countrySelect = dialog.querySelector("[data-language-country]");
-    languageSelect = dialog.querySelector("[data-language-select]");
-    status = dialog.querySelector("[data-language-status]");
+    menuList = menu.querySelector("[data-language-list]");
+    status = menu.querySelector("[data-language-status]");
 
-    trigger.addEventListener("click", openDialog);
-    dialog.querySelector("[data-language-cancel]").addEventListener(
-      "click",
-      closeDialog,
-    );
-    dialog.addEventListener("close", () => {
-      trigger.setAttribute("aria-expanded", "false");
-    });
-    dialog.addEventListener("click", (event) => {
-      if (event.target === dialog) {
-        closeDialog();
+    trigger.addEventListener("click", () => {
+      if (menu.hidden) {
+        openMenu();
+      } else {
+        closeMenu();
       }
     });
-    countrySelect.addEventListener("change", () => {
-      populateLanguages(countrySelect.value, languageSelect.value);
+    menu.addEventListener("keydown", (event) => {
+      const items = [...menu.querySelectorAll('[role="menuitemradio"]')];
+      const index = items.indexOf(document.activeElement);
+      const move = (next) => {
+        event.preventDefault();
+        items[next]?.focus();
+      };
+      if (event.key === "ArrowDown") move((index + 1) % items.length);
+      if (event.key === "ArrowUp") move((index - 1 + items.length) % items.length);
+      if (event.key === "Home") move(0);
+      if (event.key === "End") move(items.length - 1);
     });
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      const countryPreference = countrySelect.value;
-      currentCountry =
-        countryPreference === "AUTO"
-          ? detectedCountry
-          : normalizeCountry(countryPreference);
-      currentLanguage = normalizeLanguage(languageSelect.value) || "en";
-      writeCookie(countryCookie, countryPreference);
-      writeCookie(languageCookie, currentLanguage);
-      closeDialog();
-      applyLanguage(currentLanguage);
+    document.addEventListener("pointerdown", (event) => {
+      if (!menu.hidden && !host.contains(event.target)) {
+        closeMenu({ restoreFocus: false });
+      }
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !menu.hidden) {
+        event.preventDefault();
+        closeMenu();
+      }
     });
 
     updateTrigger();
@@ -751,7 +729,7 @@
   };
 
   window.KaizoshaLanguage = Object.freeze({
-    open: () => dialog && openDialog(),
+    open: () => menu && openMenu(),
     get currentCountry() {
       return currentCountry;
     },

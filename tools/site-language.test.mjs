@@ -101,3 +101,12 @@ test("client uses the shared translation and locale endpoints", () => {
   assert.match(source, /Domain=\.kaizosha\.org/);
   assert.match(source, /MutationObserver/);
 });
+
+test("language UI is a compact immediate-selection menu", () => {
+  assert.match(source, /aria-haspopup", "menu"/);
+  assert.match(source, /menuitemradio/);
+  assert.match(source, /data-language-slot/);
+  assert.doesNotMatch(source, /showModal/);
+  assert.doesNotMatch(source, /data-language-country/);
+  assert.doesNotMatch(source, /\[ APPLY \]/);
+});

@@ -149,11 +149,13 @@ inline gutter is removed; the balanced block gutter remains.
   least a 24px target in each axis.
 - Browser zoom remains available on every page through at least 200%.
 - Every page remains readable without hover, animation, or JavaScript.
-- Every page loads the same edge language picker. Country detection runs on each
-  visit, a saved language follows the visitor across Kaizōsha subdomains, and
-  the original English remains available without translation. India exposes
-  English plus all 22 scheduled languages; Japanese and the supported global
-  languages use the same picker and translation status.
+- Every page loads the same compact language-code menu. On the homepage its
+  `[ EN ]`-style control sits immediately before the edition status; document
+  pages keep the same control at the viewport edge. Country detection runs in
+  the background on each visit only to order suggestions. Selecting a language
+  applies it immediately, and the saved choice follows the visitor across
+  Kaizōsha subdomains. India exposes English plus all 22 scheduled languages;
+  Japanese and the supported global languages use the same menu.
 - Keep the language control on the logical viewport edge so it does not compete
   with page-specific top or bottom bars. The modal must fit within the dynamic
   viewport, remain keyboard operable, identify automatic translations, and

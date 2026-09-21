@@ -368,6 +368,14 @@ body[data-page-family="directory"] {
   white-space: nowrap;
 }
 
+.home-statusbar__end {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: 0.6rem;
+  white-space: nowrap;
+}
+
 .home-pagination,
 .home-legal {
   display: flex;
