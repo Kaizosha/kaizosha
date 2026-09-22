@@ -102,11 +102,12 @@ test("client uses the shared translation and locale endpoints", () => {
   assert.match(source, /MutationObserver/);
 });
 
-test("language UI is a compact immediate-selection menu", () => {
-  assert.match(source, /aria-haspopup", "menu"/);
-  assert.match(source, /menuitemradio/);
+test("language UI is one native immediate-selection picker", () => {
+  assert.match(source, /document\.createElement\("select"\)/);
+  assert.match(source, /document\.createElement\("option"\)/);
   assert.match(source, /data-language-slot/);
   assert.doesNotMatch(source, /showModal/);
   assert.doesNotMatch(source, /data-language-country/);
+  assert.doesNotMatch(source, /menuitemradio/);
   assert.doesNotMatch(source, /\[ APPLY \]/);
 });

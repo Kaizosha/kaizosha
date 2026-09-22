@@ -290,9 +290,7 @@
   let observer;
   let refreshTimer;
   let translationRun = 0;
-  let trigger;
-  let menu;
-  let menuList;
+  let picker;
   let status;
   const records = new Map();
 
@@ -399,20 +397,24 @@
     return payload.translations;
   };
 
-  const updateTrigger = (busy = false) => {
-    if (!trigger) {
+  const updatePicker = (busy = false) => {
+    if (!picker) {
       return;
     }
 
     const selected = languages[currentLanguage] || languages.en;
-    trigger.textContent = busy ? "[ … ]" : `[ ${selected.code.toUpperCase()} ]`;
-    trigger.setAttribute(
+    picker.value = selected.code;
+    const selectedOption = picker.selectedOptions[0];
+    if (selectedOption) {
+      selectedOption.textContent = selected.code.toUpperCase();
+    }
+    picker.setAttribute(
       "aria-label",
       busy
         ? `Translating this page to ${selected.name}`
-        : `Language: ${selected.name}. Open language picker`,
+        : `Language: ${selected.name}`,
     );
-    trigger.title = busy ? "Translating…" : `${selected.name} / Language`;
+    picker.title = busy ? "Translating…" : `${selected.name} / Language`;
   };
 
   const applyLanguage = async (code, { announce = true } = {}) => {
@@ -423,7 +425,7 @@
 
     if (selected.code === "en") {
       restoreEnglish();
-      updateTrigger();
+      updatePicker();
       if (announce && status) {
         status.textContent = "Showing the original English edition.";
       }
@@ -435,7 +437,7 @@
       return;
     }
 
-    updateTrigger(true);
+    updatePicker(true);
     if (status) {
       status.textContent = `Translating to ${selected.name}…`;
     }
@@ -469,7 +471,7 @@
       document.documentElement.lang = selected.locale;
       document.documentElement.dir = selected.direction;
       observeChanges();
-      updateTrigger();
+      updatePicker();
 
       if (status) {
         status.textContent = `${selected.nativeName} is active across Kaizōsha sites.`;
@@ -485,7 +487,7 @@
       }
       currentLanguage = "en";
       restoreEnglish();
-      updateTrigger();
+      updatePicker();
       if (status) {
         status.textContent =
           "Translation is temporarily unavailable. The original English edition remains visible.";
@@ -546,58 +548,27 @@
     const remaining = Object.keys(languages).filter(
       (code) => !suggested.includes(code),
     );
-    menuList.replaceChildren();
+    picker.replaceChildren();
 
     const addGroup = (label, codes) => {
       if (codes.length === 0) {
         return;
       }
-      const group = document.createElement("section");
-      group.className = "site-language-menu__group";
-      const heading = document.createElement("p");
-      heading.className = "site-language-menu__label";
-      heading.textContent = label;
-      group.append(heading);
-
+      const group = document.createElement("optgroup");
+      group.label = label;
       codes.forEach((code) => {
         const entry = languages[code];
-        const button = document.createElement("button");
-        button.type = "button";
-        button.dataset.languageCode = code;
-        button.setAttribute("role", "menuitemradio");
-        button.setAttribute("aria-checked", String(code === currentLanguage));
-        button.innerHTML = `<span>${entry.nativeName}</span><span aria-hidden="true">${entry.code.toUpperCase()}</span>`;
-        button.addEventListener("click", () => {
-          currentLanguage = entry.code;
-          writeCookie(languageCookie, currentLanguage);
-          closeMenu();
-          applyLanguage(currentLanguage);
-        });
-        group.append(button);
+        const option = document.createElement("option");
+        option.value = code;
+        option.textContent = `${entry.code.toUpperCase()} — ${entry.nativeName}`;
+        group.append(option);
       });
-      menuList.append(group);
+      picker.append(group);
     };
 
     addGroup(`Suggested · ${countries[currentCountry].name}`, suggested);
     addGroup("All languages", remaining);
-  };
-
-  const closeMenu = ({ restoreFocus = true } = {}) => {
-    trigger.setAttribute("aria-expanded", "false");
-    menu.hidden = true;
-    if (restoreFocus) {
-      trigger.focus();
-    }
-  };
-
-  const openMenu = () => {
-    populateLanguages();
-    trigger.setAttribute("aria-expanded", "true");
-    menu.hidden = false;
-    const active =
-      menu.querySelector('[aria-checked="true"]') ||
-      menu.querySelector('[role="menuitemradio"]');
-    active?.focus();
+    picker.value = languages[currentLanguage] ? currentLanguage : "en";
   };
 
   const createInterface = () => {
@@ -611,62 +582,29 @@
     }
     host.dataset.languageUi = "";
 
-    trigger = document.createElement("button");
-    trigger.className = "site-language-control";
-    trigger.type = "button";
-    trigger.dataset.languageUi = "";
-    trigger.setAttribute("aria-haspopup", "menu");
-    trigger.setAttribute("aria-controls", "site-language-menu");
-    trigger.setAttribute("aria-expanded", "false");
+    picker = document.createElement("select");
+    picker.className = "site-language-picker";
+    picker.dataset.languageUi = "";
+    picker.setAttribute("aria-label", "Language");
 
-    menu = document.createElement("div");
-    menu.className = "site-language-menu";
-    menu.id = "site-language-menu";
-    menu.dataset.languageUi = "";
-    menu.setAttribute("role", "menu");
-    menu.setAttribute("aria-label", "Choose language");
-    menu.hidden = true;
-    menu.innerHTML = `
-      <div class="site-language-menu__list" data-language-list></div>
-      <p class="site-language-menu__status" data-language-status role="status" aria-live="polite"></p>
-    `;
-    host.append(trigger, menu);
+    status = document.createElement("span");
+    status.className = "site-language-status";
+    status.dataset.languageStatus = "";
+    status.dataset.languageUi = "";
+    status.setAttribute("role", "status");
+    status.setAttribute("aria-live", "polite");
+    host.append(picker, status);
 
-    menuList = menu.querySelector("[data-language-list]");
-    status = menu.querySelector("[data-language-status]");
-
-    trigger.addEventListener("click", () => {
-      if (menu.hidden) {
-        openMenu();
-      } else {
-        closeMenu();
-      }
-    });
-    menu.addEventListener("keydown", (event) => {
-      const items = [...menu.querySelectorAll('[role="menuitemradio"]')];
-      const index = items.indexOf(document.activeElement);
-      const move = (next) => {
-        event.preventDefault();
-        items[next]?.focus();
-      };
-      if (event.key === "ArrowDown") move((index + 1) % items.length);
-      if (event.key === "ArrowUp") move((index - 1 + items.length) % items.length);
-      if (event.key === "Home") move(0);
-      if (event.key === "End") move(items.length - 1);
-    });
-    document.addEventListener("pointerdown", (event) => {
-      if (!menu.hidden && !host.contains(event.target)) {
-        closeMenu({ restoreFocus: false });
-      }
-    });
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && !menu.hidden) {
-        event.preventDefault();
-        closeMenu();
-      }
+    populateLanguages();
+    picker.addEventListener("focus", populateLanguages);
+    picker.addEventListener("blur", () => updatePicker());
+    picker.addEventListener("change", () => {
+      currentLanguage = normalizeLanguage(picker.value) || "en";
+      writeCookie(languageCookie, currentLanguage);
+      applyLanguage(currentLanguage);
     });
 
-    updateTrigger();
+    updatePicker();
   };
 
   const detectCountry = async () => {
@@ -724,12 +662,13 @@
       normalizeLanguage(readPreference(languageCookie)) ||
       browserLanguage();
 
-    updateTrigger();
+    populateLanguages();
+    updatePicker();
     await applyLanguage(currentLanguage, { announce: false });
   };
 
   window.KaizoshaLanguage = Object.freeze({
-    open: () => menu && openMenu(),
+    open: () => picker?.focus(),
     get currentCountry() {
       return currentCountry;
     },

@@ -13,15 +13,14 @@
   bottom: 0.75rem;
 }
 
-.site-language-control {
-  display: inline-flex;
-  min-width: 3.1rem;
+.site-language-picker {
+  width: 4.15rem;
   min-height: 2rem;
-  align-items: center;
-  justify-content: center;
   margin: 0;
-  padding: 0.2rem 0.35rem;
+  padding: 0.2rem;
   border: 0;
+  border-radius: 0;
+  appearance: auto;
   background: transparent;
   color: inherit;
   cursor: pointer;
@@ -31,110 +30,38 @@
   text-transform: uppercase;
 }
 
-.site-language-control:hover,
-.site-language-control:focus-visible,
-.site-language-control[aria-expanded="true"] {
+.site-language-picker:hover,
+.site-language-picker:focus-visible {
   background: var(--ink, CanvasText);
   color: var(--surface, Canvas);
 }
 
-.site-language-control:focus-visible {
+.site-language-picker:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
 }
 
-.site-language-menu {
-  position: absolute;
-  z-index: 80;
-  right: 0;
-  bottom: calc(100% + 0.55rem);
-  width: min(21rem, calc(100vw - 1.5rem));
-  max-height: min(27rem, calc(100dvh - 4.5rem));
-  overflow: auto;
-  border: 1px solid var(--ink, CanvasText);
+.site-language-picker option,
+.site-language-picker optgroup {
   background: var(--surface, Canvas);
   color: var(--ink, CanvasText);
-  box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.24);
-  font: 0.72rem/1.35 var(--font-mono, ui-monospace, monospace);
-  letter-spacing: 0.04em;
+  font-family: var(--font-mono, ui-monospace, monospace);
   text-transform: none;
 }
 
-.site-language-menu[hidden] {
-  display: none;
+.site-language-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-.site-language-menu__list,
-.site-language-menu__group {
-  display: grid;
-}
-
-.site-language-menu__group + .site-language-menu__group {
-  border-top: 1px solid var(--line, currentColor);
-}
-
-.site-language-menu__label,
-.site-language-menu__status {
-  margin: 0;
-  padding: 0.55rem 0.7rem;
-  color: var(--ink-muted, currentColor);
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-}
-
-.site-language-menu [role="menuitemradio"] {
-  display: flex;
-  min-height: 2.45rem;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  width: 100%;
-  padding: 0.48rem 0.7rem;
-  border: 0;
-  border-top: 1px solid var(--line, currentColor);
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
-  font: inherit;
-  text-align: start;
-}
-
-.site-language-menu [role="menuitemradio"] > span:last-child {
-  color: var(--ink-muted, currentColor);
-  font-weight: 700;
-  letter-spacing: 0.09em;
-}
-
-.site-language-menu [role="menuitemradio"]:hover,
-.site-language-menu [role="menuitemradio"]:focus-visible,
-.site-language-menu [role="menuitemradio"][aria-checked="true"] {
-  background: var(--ink, CanvasText);
-  color: var(--surface, Canvas);
-  outline: 0;
-}
-
-.site-language-menu [role="menuitemradio"]:hover > span:last-child,
-.site-language-menu [role="menuitemradio"]:focus-visible > span:last-child,
-.site-language-menu [role="menuitemradio"][aria-checked="true"] > span:last-child {
-  color: inherit;
-}
-
-.site-language-menu [role="menuitemradio"][aria-checked="true"] > span:first-child::before {
-  content: "✓ ";
-}
-
-.site-language-menu__status {
-  min-height: 2rem;
-  border-top: 1px solid var(--line, currentColor);
-  line-height: 1.45;
-  text-transform: none;
-}
-
-html[dir="rtl"] .site-language-menu {
+html[dir="rtl"] .site-language-host--floating {
   right: auto;
-  left: 0;
+  left: 0.75rem;
 }
 
 @media (max-width: 540px) {
@@ -143,23 +70,19 @@ html[dir="rtl"] .site-language-menu {
     bottom: 0.5rem;
   }
 
-  .site-language-menu {
-    width: min(19rem, calc(100vw - 1rem));
-    max-height: min(23rem, calc(100dvh - 4rem));
+  html[dir="rtl"] .site-language-host--floating {
+    right: auto;
+    left: 0.5rem;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .site-language-menu {
-    scroll-behavior: auto;
+  .site-language-picker {
+    width: 3.8rem;
   }
 }
 
 @media (forced-colors: active) {
-  .site-language-control,
-  .site-language-menu,
-  .site-language-menu [role="menuitemradio"] {
-    border-color: CanvasText;
+  .site-language-picker {
+    border: 1px solid CanvasText;
   }
 }
 
