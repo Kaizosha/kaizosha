@@ -106,6 +106,9 @@ test("language UI is one native immediate-selection picker", () => {
   assert.match(source, /document\.createElement\("select"\)/);
   assert.match(source, /document\.createElement\("option"\)/);
   assert.match(source, /data-language-slot/);
+  assert.match(source, /site-language-code/);
+  assert.match(source, /pickerCode\.textContent = selected\.code\.toUpperCase\(\)/);
+  assert.match(source, /entry\.code\.toUpperCase\(\).*entry\.nativeName/);
   assert.doesNotMatch(source, /showModal/);
   assert.doesNotMatch(source, /data-language-country/);
   assert.doesNotMatch(source, /menuitemradio/);

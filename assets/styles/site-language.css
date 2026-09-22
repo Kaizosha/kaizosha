@@ -3,6 +3,8 @@
   display: inline-flex;
   flex: 0 0 auto;
   align-items: center;
+  min-width: 2.5rem;
+  min-height: 2rem;
   font-family: var(--font-mono, ui-monospace, monospace);
 }
 
@@ -13,30 +15,38 @@
   bottom: 0.75rem;
 }
 
-.site-language-picker {
-  width: 4.15rem;
-  min-height: 2rem;
-  margin: 0;
+.site-language-code {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: inherit;
   padding: 0.2rem;
-  border: 0;
-  border-radius: 0;
-  appearance: auto;
-  background: transparent;
-  color: inherit;
-  cursor: pointer;
   font: inherit;
   font-weight: 700;
-  letter-spacing: inherit;
   text-transform: uppercase;
 }
 
-.site-language-picker:hover,
-.site-language-picker:focus-visible {
+.site-language-picker {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  cursor: pointer;
+  font: inherit;
+}
+
+.site-language-host:hover .site-language-code,
+.site-language-host:has(.site-language-picker:focus-visible) .site-language-code {
   background: var(--ink, CanvasText);
   color: var(--surface, Canvas);
 }
 
-.site-language-picker:focus-visible {
+.site-language-host:has(.site-language-picker:focus-visible) {
   outline: 2px solid currentColor;
   outline-offset: 2px;
 }
@@ -75,13 +85,10 @@ html[dir="rtl"] .site-language-host--floating {
     left: 0.5rem;
   }
 
-  .site-language-picker {
-    width: 3.8rem;
-  }
 }
 
 @media (forced-colors: active) {
-  .site-language-picker {
+  .site-language-host {
     border: 1px solid CanvasText;
   }
 }

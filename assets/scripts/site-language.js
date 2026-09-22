@@ -291,6 +291,7 @@
   let refreshTimer;
   let translationRun = 0;
   let picker;
+  let pickerCode;
   let status;
   const records = new Map();
 
@@ -404,9 +405,8 @@
 
     const selected = languages[currentLanguage] || languages.en;
     picker.value = selected.code;
-    const selectedOption = picker.selectedOptions[0];
-    if (selectedOption) {
-      selectedOption.textContent = selected.code.toUpperCase();
+    if (pickerCode) {
+      pickerCode.textContent = selected.code.toUpperCase();
     }
     picker.setAttribute(
       "aria-label",
@@ -587,17 +587,20 @@
     picker.dataset.languageUi = "";
     picker.setAttribute("aria-label", "Language");
 
+    pickerCode = document.createElement("span");
+    pickerCode.className = "site-language-code";
+    pickerCode.dataset.languageUi = "";
+    pickerCode.setAttribute("aria-hidden", "true");
+
     status = document.createElement("span");
     status.className = "site-language-status";
     status.dataset.languageStatus = "";
     status.dataset.languageUi = "";
     status.setAttribute("role", "status");
     status.setAttribute("aria-live", "polite");
-    host.append(picker, status);
+    host.append(pickerCode, picker, status);
 
     populateLanguages();
-    picker.addEventListener("focus", populateLanguages);
-    picker.addEventListener("blur", () => updatePicker());
     picker.addEventListener("change", () => {
       currentLanguage = normalizeLanguage(picker.value) || "en";
       writeCookie(languageCookie, currentLanguage);
