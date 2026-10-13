@@ -30,9 +30,11 @@ async function verifyBehavior(page, id) {
     assert.equal(await video.evaluate(node => node.muted), true);
     await action('time').focus();
     await action('time').press('End');
+    await page.waitForFunction(() => document.querySelector('[data-model-text="elapsed"]').textContent === '0:12');
     assert.equal(await text('elapsed'), '0:12');
     assert.equal(await text('sourceCaption'), "Let's stay here a little longer.");
     await action('time').press('Home');
+    await page.waitForFunction(() => document.querySelector('[data-model-video]').currentTime === 0);
     await action('translation').selectOption('es');
     assert.equal(await region('translatedCaption').isVisible(), true);
     assert.equal(await text('translatedCaption'), 'El sendero sigue el agua.');
@@ -45,7 +47,7 @@ async function verifyBehavior(page, id) {
     await page.waitForFunction(() => document.querySelector('[data-model-video]').currentTime > 0.2);
     const firstTime = await video.evaluate(node => node.currentTime);
     await page.waitForTimeout(450);
-    assert.equal(await video.evaluate(node => node.currentTime > firstTime), true);
+    assert.equal(await video.evaluate((node, previous) => node.currentTime > previous, firstTime), true);
     await action('play').click();
     assert.equal(await video.evaluate(node => node.paused), true);
     await action('play').click();
@@ -149,7 +151,20 @@ function serve(root) {
     }
     res.setHeader("Content-Type", mime[extname(file)] || "application/octet-stream");
     res.setHeader("Content-Security-Policy", csp.replace("; upgrade-insecure-requests", ""));
-    res.end(readFileSync(file));
+    res.setHeader("Permissions-Policy", readFileSync(join(root, "_headers"), "utf8").match(/Permissions-Policy: (.+)/)[1]);
+    const bytes = readFileSync(file);
+    res.setHeader("Accept-Ranges", "bytes");
+    const range = req.headers.range?.match(/^bytes=(\d+)-(\d*)$/);
+    if (range) {
+      const start = Number(range[1]);
+      const end = Math.min(bytes.length - 1, range[2] ? Number(range[2]) : bytes.length - 1);
+      if (start > end) { res.writeHead(416, { "Content-Range": `bytes */${bytes.length}` }).end(); return; }
+      res.writeHead(206, { "Content-Range": `bytes ${start}-${end}/${bytes.length}`, "Content-Length": end - start + 1 });
+      res.end(bytes.subarray(start, end + 1));
+    } else {
+      res.setHeader("Content-Length", bytes.length);
+      res.end(bytes);
+    }
   });
   servers.push(server);
   return new Promise(done => server.listen(0, "127.0.0.1", () => done(`http://127.0.0.1:${server.address().port}/`)));
@@ -172,6 +187,16 @@ try {
       const overflow = await page.evaluate(() => ({ page: document.documentElement.scrollWidth > innerWidth, model: (() => { const e = document.querySelector("[data-working-model]"); return e.scrollWidth > e.clientWidth + 1; })() }));
       assert.deepEqual(overflow, { page: false, model: false }, `${id} overflow at ${width}`);
       assert.deepEqual(errors, [], `${id} script errors at ${width}`);
+      if (id === 'hush') {
+        const overlap = await model.evaluate(element => {
+          const document = element.querySelector('.hush-document').getBoundingClientRect();
+          const activity = element.querySelector('.hush-activity').getBoundingClientRect();
+          const feed = element.querySelector('.hush-feed').getBoundingClientRect();
+          return { documentCovered: document.right > activity.left + 1, feedCovered: activity.bottom > feed.top + 1 };
+        });
+        assert.deepEqual(overlap, { documentCovered: false, feedCovered: false }, `Hush activity does not hide document or feed at ${width}`);
+        assert.equal(await model.locator('.hush-activity').evaluate(panel => panel.scrollWidth <= panel.clientWidth + 1), true, `Hush activity width at ${width}`);
+      }
       if (width === 390 || width === 1440) {
         await page.setViewportSize({ width, height: 1200 });
         await model.evaluate(element => element.scrollIntoView({ block: "center", behavior: "instant" }));

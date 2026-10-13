@@ -10,32 +10,22 @@
       "Hush/Domain/ModelRecord.swift"
     ],
     "regions": [
-      "sidebar",
+      "desktop",
+      "activity",
       "model-picker",
-      "welcome",
-      "context",
-      "conversation",
-      "composer"
+      "feed"
     ]
   },
   "parts": [
-    "Hush display housing",
-    "Hush display rim",
-    "Workspace sidebar",
-    "Conversation history",
-    "Model picker",
-    "Welcome suggestions",
-    "Selected context card",
-    "Sample conversation",
-    "Message composer"
+    "Monitor bezel",
+    "Monitor pedestal",
+    "Monitor base",
+    "Sample desktop document",
+    "Hush activity orb",
+    "Seeing indicator",
+    "Listening waveform",
+    "Observation feed",
+    "Local model picker"
   ],
-  "projection": {
-    "origin": [
-      14,
-      25
-    ],
-    "scale": 0.54,
-    "azimuth": 90,
-    "elevation": 72
-  }
+  "projection": null
 }

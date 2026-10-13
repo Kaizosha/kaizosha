@@ -8,11 +8,11 @@
     { en: "Let's stay here a little longer.", es: 'Quedémonos aquí un poco más.', ja: 'もう少しここにいましょう。' }
   ];
   const activity = [
-    { time: '09:41', app: 'Notes', label: 'DOCUMENT', title: 'Launch review notes', body: 'Bring the release checklist to the 10:00 review.', detail: 'Owners and follow-up still need to be decided.', heard: 'Waiting for the sample spoken note.', summary: 'Start the sample to see and hear the activity.', feed: 'Sample ready · no live capture', seeing: false, listening: false },
-    { time: '09:42', app: 'Notes', label: 'DOCUMENT EDIT', title: 'Launch review notes', body: 'Bring the release checklist to the 10:00 review.', detail: 'Maya will own the follow-up after the meeting.', heard: 'Waiting for the sample spoken note.', summary: 'Saw the document add a follow-up owner.', feed: 'Seeing · Notes updated: Maya owns follow-up', seeing: true, listening: false },
-    { time: '09:43', app: 'Mail', label: 'INBOX', title: 'Launch review · email', body: 'Can we confirm the release checklist before 10:00?', detail: 'From Maya · Review team', heard: 'Waiting for the sample spoken note.', summary: 'Saw a related email asking for the checklist.', feed: 'Seeing · Mail opened: release checklist request', seeing: true, listening: false },
-    { time: '09:44', app: 'Mail', label: 'INBOX', title: 'Launch review · email', body: 'Can we confirm the release checklist before 10:00?', detail: 'From Maya · Review team', heard: '“Please bring the latest checklist and confirm who sends the recap.”', summary: 'Saw a checklist request and heard a note to assign the recap.', feed: 'Listening · Spoken note about checklist and recap', seeing: true, listening: true },
-    { time: '09:45', app: 'Notes', label: 'SUMMARY', title: 'Launch review brief', body: 'Bring the latest release checklist. Confirm open items before 10:00.', detail: 'Maya owns the follow-up; assign a recap sender.', heard: '“Please bring the latest checklist and confirm who sends the recap.”', summary: 'Bring the checklist; confirm open items and who sends the recap.', feed: 'Summary · Checklist, open items, recap owner', seeing: true, listening: true }
+    { time: '09:41', app: 'Notes', label: 'DOCUMENT', title: 'Launch review notes', body: 'Bring the release checklist to the 10:00 review.', detail: 'Owners and follow-up still need to be decided.', heard: 'No spoken note yet.', summary: 'Play to follow the sample activity.', feed: 'Sample ready · no live capture', seeing: false, listening: false },
+    { time: '09:42', app: 'Notes', label: 'DOCUMENT EDIT', title: 'Launch review notes', body: 'Bring the release checklist to the 10:00 review.', detail: 'Maya will own the follow-up after the meeting.', heard: 'No spoken note yet.', summary: 'Saw Maya assigned to follow-up.', feed: 'Seeing · Notes updated: Maya owns follow-up', seeing: true, listening: false },
+    { time: '09:43', app: 'Mail', label: 'INBOX', title: 'Launch review · email', body: 'Can we confirm the release checklist before 10:00?', detail: 'From Maya · Review team', heard: 'No spoken note yet.', summary: 'Saw Mail request the checklist.', feed: 'Seeing · Mail opened: release checklist request', seeing: true, listening: false },
+    { time: '09:44', app: 'Mail', label: 'INBOX', title: 'Launch review · email', body: 'Can we confirm the release checklist before 10:00?', detail: 'From Maya · Review team', heard: '“Bring the latest checklist. Who sends the recap?”', summary: 'Saw the request. Heard the recap needs an owner.', feed: 'Listening · Spoken note about checklist and recap', seeing: true, listening: true },
+    { time: '09:45', app: 'Notes', label: 'SUMMARY', title: 'Launch review brief', body: 'Bring the latest release checklist. Confirm open items before 10:00.', detail: 'Maya owns the follow-up; assign a recap sender.', heard: '“Bring the latest checklist. Who sends the recap?”', summary: 'Bring the checklist. Confirm the recap sender.', feed: 'Summary · Checklist, open items, recap owner', seeing: true, listening: true }
   ];
   const article = {
     title: 'A slower way to see the coast',
@@ -310,7 +310,7 @@
         try { instance.video.currentTime = clamp(value, 0, 12); } catch { mediaSnapshot(instance, 'Sample video unavailable.'); }
       } else if (type === 'reset') {
         instance.video.pause();
-        try { instance.video.currentTime = 0; } catch { /* Metadata may still be loading. */ }
+        try { instance.video.currentTime = 0; } catch { mediaSnapshot(instance, 'Sample video unavailable.'); return; }
         instance.state = instance.model.initial();
       } else instance.state = instance.model.reduce(instance.state, { type, value });
       if (type !== 'translation') mediaSnapshot(instance);

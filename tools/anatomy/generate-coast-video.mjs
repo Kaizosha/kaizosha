@@ -14,12 +14,7 @@ const width = 768;
 const height = 432;
 const fps = 24;
 const duration = 12;
-const cues = [
-  'The path follows the water.',
-  'We can hear the waves below.',
-  'The light changes by the minute.',
-  "Let’s stay here a little longer.",
-];
+
 
 function wave(y, time, offset, length = 540) {
   let d = `M ${offset} ${y.toFixed(2)}`;
@@ -32,7 +27,6 @@ function wave(y, time, offset, length = 540) {
 }
 
 function scene(time) {
-  const cue = cues[Math.min(3, Math.floor(time / 3))];
   const light = 0.22 + 0.13 * Math.sin(time * 0.55);
   const gullX = 484 + time * 5.5;
   const gullY = 109 + Math.sin(time * 1.5) * 3;
@@ -76,9 +70,6 @@ function scene(time) {
   </g>
   <path d="M 42 38 H 102" stroke="#5a5f5d" stroke-width="2"/>
   <text x="42" y="60" font-family="Arial, Helvetica, sans-serif" font-size="10" letter-spacing="3.2" fill="#454b49">TOGETHER</text>
-  <text x="42" y="105" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="500" fill="#303635">${cue}</text>
-  <text x="42" y="125" font-family="Arial, Helvetica, sans-serif" font-size="10" letter-spacing="1.8" fill="#626866">A MOMENT BY THE SEA</text>
-  <text x="727" y="403" text-anchor="end" font-family="Arial, Helvetica, sans-serif" font-size="10" letter-spacing="1.7" fill="#f6f5ef">${String(Math.floor(time / 3) + 1).padStart(2, '0')} / 04</text>
 </svg>`;
 }
 

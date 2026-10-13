@@ -1,9 +1,10 @@
 # App working models
 
 The generator adds an interactive app preview to each product site's about
-section. Each preview uses the app's native interface as its design source.
-Anatomy draws the display housing. HTML keeps the screen's text and controls
-readable at phone widths.
+section. The previews pair each app's workflow with a physical model.
+The Anatomy kit generates the Safari and terminal housings. CSS draws the
+television and monitor frames, and SVG draws the globe. HTML keeps screen text
+and controls readable at phone widths.
 
 The previews show these products:
 
@@ -17,7 +18,7 @@ Hush's activity is illustrative and runs only in the browser. It does not reques
 
 ## Source files
 
-`models/*.mjs` defines each screen, its Anatomy housing, and the native source
+`models/*.mjs` defines each screen, its physical object, and the native source
 paths that informed its design. `manifests/*.json` records those paths and the
 screen's named regions. `app-identity.test.mjs` checks that each model contains
 its app name and recognizable interface regions.
@@ -36,7 +37,16 @@ visible and the external sample controls stay hidden.
 
 Together's native video time drives its captions and timeline. Playback starts only after Play and pauses when the model leaves the viewport or the document becomes hidden. Reduced motion disables automatic playback while keeping manual seeking available. Hush's sample activity also starts only after Play; Next activity remains available with reduced motion.
 
-The canonical Together assets live at `assets/media/together-coast.mp4` and `assets/media/together-coast.svg`. The generator copies them only to `together-web` and includes content hashes in their URLs so immutable asset caching updates correctly. Generate or replace the source media in this repository, then run the generator. The source clip is a twelve-second 768×432 coastal sample divided into four three-second caption cues.
+The canonical Together assets live at `assets/media/together-coast.mp4` and `assets/media/together-coast.svg`. The generator copies them only to `together-web` and includes content hashes in their URLs so immutable asset caching updates correctly. Generate or replace the source media in this repository, then run the generator. The original clip is a twelve-second 768×432 coastal animation. Captions stay in the controller so switching languages changes the text on the TV.
+
+To regenerate the clip and poster, install Sharp and FFmpeg, then run:
+
+```sh
+node tools/anatomy/generate-coast-video.mjs
+node tools/anatomy/build.mjs
+```
+
+The verification server supports video byte ranges and sends the site's CSP and Permissions Policy. Other preview servers also need byte range support for seeking to work.
 
 ## Generate and verify
 

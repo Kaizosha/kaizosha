@@ -2,34 +2,18 @@
   'use strict';
 
   const cues = [
-    ['The path follows the water.', 'El sendero sigue el agua.'],
-    ['We can hear the waves below.', 'Podemos oír las olas abajo.'],
-    ['The light changes by the minute.', 'La luz cambia a cada minuto.'],
-    ["Let's stay here a little longer.", 'Quedémonos aquí un poco más.']
+    { en: 'The path follows the water.', es: 'El sendero sigue el agua.', ja: '小道は海沿いに続きます。' },
+    { en: 'We can hear the waves below.', es: 'Podemos oír las olas abajo.', ja: '下から波の音が聞こえます。' },
+    { en: 'The light changes by the minute.', es: 'La luz cambia a cada minuto.', ja: '光は刻々と変わります。' },
+    { en: "Let's stay here a little longer.", es: 'Quedémonos aquí un poco más.', ja: 'もう少しここにいましょう。' }
   ];
-  const contexts = {
-    microphone: {
-      title: "Tomorrow's meeting",
-      label: 'Spoken note',
-      body: "Tomorrow's meeting is at 10. Bring the draft and decide who will send the follow-up.",
-      prompt: 'Turn this note into a short meeting checklist.',
-      response: 'Meet at 10. Bring the draft. Choose one person to send the follow-up.'
-    },
-    text: {
-      title: "Tomorrow's meeting",
-      label: 'meeting-notes.txt',
-      body: "Tomorrow's meeting is at 10. Bring the draft and decide who will send the follow-up.",
-      prompt: 'Turn this note into a short meeting checklist.',
-      response: 'Meet at 10. Bring the draft. Choose one person to send the follow-up.'
-    },
-    capture: {
-      title: 'Calendar capture',
-      label: 'Calendar capture',
-      body: 'Thursday · 10:00–10:30 · Launch review. Agenda: release checklist, open items, and next steps.',
-      prompt: 'What should I prepare for this meeting?',
-      response: 'Bring the release checklist and a list of open items. Be ready to confirm owners and agree on the next steps.'
-    }
-  };
+  const activity = [
+    { time: '09:41', app: 'Notes', label: 'DOCUMENT', title: 'Launch review notes', body: 'Bring the release checklist to the 10:00 review.', detail: 'Owners and follow-up still need to be decided.', heard: 'No spoken note yet.', summary: 'Play to follow the sample activity.', feed: 'Sample ready · no live capture', seeing: false, listening: false },
+    { time: '09:42', app: 'Notes', label: 'DOCUMENT EDIT', title: 'Launch review notes', body: 'Bring the release checklist to the 10:00 review.', detail: 'Maya will own the follow-up after the meeting.', heard: 'No spoken note yet.', summary: 'Saw Maya assigned to follow-up.', feed: 'Seeing · Notes updated: Maya owns follow-up', seeing: true, listening: false },
+    { time: '09:43', app: 'Mail', label: 'INBOX', title: 'Launch review · email', body: 'Can we confirm the release checklist before 10:00?', detail: 'From Maya · Review team', heard: 'No spoken note yet.', summary: 'Saw Mail request the checklist.', feed: 'Seeing · Mail opened: release checklist request', seeing: true, listening: false },
+    { time: '09:44', app: 'Mail', label: 'INBOX', title: 'Launch review · email', body: 'Can we confirm the release checklist before 10:00?', detail: 'From Maya · Review team', heard: '“Bring the latest checklist. Who sends the recap?”', summary: 'Saw the request. Heard the recap needs an owner.', feed: 'Listening · Spoken note about checklist and recap', seeing: true, listening: true },
+    { time: '09:45', app: 'Notes', label: 'SUMMARY', title: 'Launch review brief', body: 'Bring the latest release checklist. Confirm open items before 10:00.', detail: 'Maya owns the follow-up; assign a recap sender.', heard: '“Bring the latest checklist. Who sends the recap?”', summary: 'Bring the checklist. Confirm the recap sender.', feed: 'Summary · Checklist, open items, recap owner', seeing: true, listening: true }
+  ];
   const article = {
     title: 'A slower way to see the coast',
     deck: 'An afternoon on the path above the water.',
@@ -66,37 +50,29 @@
   };
   const registry = {
     together: {
-      initial: () => ({ time: 0, playing: false, translation: 'off' }),
+      initial: () => ({ time: 0, playing: false, translation: 'off', mediaStatus: 'Sample ready to play.' }),
       reduce(state, action) {
         if (action.type === 'reset') return this.initial();
-        if (action.type === 'time') return { ...state, time: clamp(action.value, 0, 12), playing: false };
-        if (action.type === 'translation') return { ...state, translation: action.value === 'es' ? 'es' : 'off' };
-        if (action.type === 'play') return { ...state, time: state.time >= 12 ? 0 : state.time, playing: !state.playing };
-        if (action.type === 'pause') return { ...state, playing: false };
-        if (action.type === 'tick' && state.playing) {
-          const time = clamp(state.time + Math.max(0, Number(action.value) || 0), 0, 12);
-          return { ...state, time, playing: time < 12 };
-        }
+        if (action.type === 'media') return { ...state, time: clamp(action.time, 0, 12), playing: Boolean(action.playing), mediaStatus: action.status || 'Sample ready to play.' };
+        if (action.type === 'translation') return { ...state, translation: ['off', 'es', 'ja'].includes(action.value) ? action.value : 'off' };
         return state;
       },
       view(state) {
         const cue = cues[Math.min(3, Math.floor(state.time / 3))];
-        const translated = state.translation === 'es';
+        const translated = state.translation !== 'off';
+        const languages = { off: 'Off', es: 'Spanish', ja: 'Japanese' };
         return {
           phase: state.playing ? 'playing' : 'paused',
           texts: {
             playbackState: state.playing ? 'Playing' : 'Paused', playbackSymbol: state.playing ? 'Ⅱ' : '▶',
             elapsed: clock(state.time), remaining: `−${clock(12 - state.time)}`,
-            sourceCaption: cue[0], translatedCaption: cue[1], translationLanguage: translated ? 'Spanish' : 'Off'
+            sourceCaption: cue.en, translatedCaption: translated ? cue[state.translation] : '',
+            translationLanguage: languages[state.translation], mediaStatus: state.mediaStatus
           },
           regions: { translatedCaption: translated },
-          progress: { playbackProgress: { value: state.time, max: 12 } },
-          readout: `${state.time.toFixed(1)} / 12 s · ${cue[0]}${translated ? ` · ${cue[1]}` : ' · Translation off.'}`,
+          readout: `${state.time.toFixed(1)} / 12 s · ${cue.en}${translated ? ` · ${cue[state.translation]}` : ' · Translation off.'}`,
           values: { time: `${state.time.toFixed(1)} s` },
-          controls: {
-            time: { value: state.time }, translation: { value: state.translation },
-            play: { text: state.playing ? 'Pause' : 'Play', pressed: state.playing }
-          }
+          controls: { time: { value: state.time }, translation: { value: state.translation }, play: { text: state.playing ? 'Pause' : 'Play', pressed: state.playing } }
         };
       }
     },
@@ -130,32 +106,26 @@
       }
     },
     hush: {
-      initial: () => ({ source: 'text', stage: 'input' }),
+      initial: () => ({ stage: 0, playing: false }),
       reduce(state, action) {
         if (action.type === 'reset') return this.initial();
-        if (action.type === 'source' && Object.hasOwn(contexts, action.value)) return { source: action.value, stage: 'input' };
-        if (action.type === 'review' && state.stage === 'input') return { ...state, stage: 'reviewed' };
-        if (action.type === 'ask' && state.stage === 'reviewed') return { ...state, stage: 'asked' };
-        if (action.type === 'save' && state.stage === 'asked') return { ...state, stage: 'saved' };
+        if (action.type === 'next') return { stage: Math.min(activity.length - 1, state.stage + 1), playing: false };
+        if (action.type === 'play') return { ...state, playing: state.stage < activity.length - 1 ? !state.playing : false };
+        if (action.type === 'pause') return { ...state, playing: false };
+        if (action.type === 'advance' && state.playing) {
+          const stage = Math.min(activity.length - 1, state.stage + 1);
+          return { stage, playing: stage < activity.length - 1 };
+        }
         return state;
       },
       view(state) {
-        const context = contexts[state.source];
-        const hasConversation = ['asked', 'saved'].includes(state.stage);
-        const statuses = { input: 'Review the sample context to begin.', reviewed: 'Context reviewed. Ask to see the sample response.', asked: 'Prerecorded sample response.', saved: 'Shown in history.' };
+        const item = activity[state.stage];
         return {
-          phase: state.stage,
-          texts: {
-            modelName: 'Apple On-Device', contextTitle: context.title, contextLabel: context.label, contextBody: context.body,
-            conversationTitle: "Tomorrow's meeting", prompt: context.prompt, response: context.response,
-            composer: state.stage === 'reviewed' ? context.prompt : 'Message Hush…', chatStatus: statuses[state.stage]
-          },
-          regions: { welcome: !hasConversation, context: true, conversation: hasConversation, saved: state.stage === 'saved' },
-          readout: `${context.title} · ${statuses[state.stage]} Responses are prerecorded sample content.`,
-          controls: {
-            source: { value: state.source }, review: { disabled: state.stage !== 'input' },
-            ask: { disabled: state.stage !== 'reviewed' }, save: { disabled: state.stage !== 'asked' }
-          }
+          phase: state.playing ? 'playing' : `stage-${state.stage}`,
+          texts: { modelName: 'Apple On-Device', activityTime: item.time, documentApp: item.app, documentLabel: item.label, documentTitle: item.title, documentBody: item.body, documentDetail: item.detail, heardText: item.heard, summary: item.summary, feed: item.feed },
+          signals: { seeing: item.seeing, listening: item.listening },
+          readout: `Sample activity ${state.stage + 1} of ${activity.length}. ${item.feed}. ${item.summary}`,
+          controls: { play: { text: state.playing ? 'Pause sample' : 'Play sample', pressed: state.playing, disabled: state.stage === activity.length - 1 }, next: { disabled: state.stage === activity.length - 1 } }
         };
       }
     },
@@ -308,15 +278,13 @@ function renderGlobe(root, state) {
 
 
 
-  if (typeof module !== 'undefined' && module.exports) module.exports = { registry, inventory, article, contexts, cues };
+  if (typeof module !== 'undefined' && module.exports) module.exports = { registry, inventory, article, activity, cues };
   if (typeof document === 'undefined') return;
 
   const figures = [...document.querySelectorAll('[data-working-model]')];
   if (!figures.length) return;
   const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
   const instances = [];
-  let frameId = 0;
-  let lastFrame = 0;
   let suspended = false;
   const setText = (node, value) => { if (node && node.textContent !== String(value)) node.textContent = String(value); };
   const bindings = (figure, attribute) => {
@@ -329,14 +297,21 @@ function renderGlobe(root, state) {
     return result;
   };
   const canPlay = instance => !suspended && !document.hidden && instance.visible && !motionPreference.matches;
-  const schedule = () => {
-    if (instances.some(instance => instance.kind === 'together' && instance.state.playing && canPlay(instance))) {
-      if (!frameId) frameId = requestAnimationFrame(tick);
-    } else {
-      if (frameId) cancelAnimationFrame(frameId);
-      frameId = 0;
-      lastFrame = 0;
-    }
+  const mediaSnapshot = (instance, status) => {
+    const video = instance.video;
+    instance.state = instance.model.reduce(instance.state, { type: 'media', time: video.currentTime, playing: !video.paused && !video.ended, status: status || (video.error ? 'Sample video unavailable.' : video.ended ? 'Sample ended.' : video.paused ? 'Sample paused.' : 'Playing local sample.') });
+    paint(instance);
+  };
+  const clearActivity = instance => { if (instance.timer) clearInterval(instance.timer); instance.timer = 0; };
+  const scheduleActivity = instance => {
+    clearActivity(instance);
+    if (instance.kind !== 'hush' || !instance.state.playing || !canPlay(instance)) return;
+    instance.timer = setInterval(() => {
+      instance.state = instance.model.reduce(instance.state, { type: 'advance' });
+      paint(instance);
+      setText(instance.status, instance.view.readout);
+      if (!instance.state.playing) clearActivity(instance);
+    }, 2200);
   };
   const paint = instance => {
     const view = instance.model.view(instance.state);
@@ -345,6 +320,8 @@ function renderGlobe(root, state) {
     setText(instance.readout, view.readout);
     for (const [name, value] of Object.entries(view.texts || {})) for (const node of instance.texts.get(name) || []) setText(node, value);
     for (const [name, visible] of Object.entries(view.regions || {})) for (const node of instance.regions.get(name) || []) node.hidden = !visible;
+    if (instance.kind === 'together') for (const node of instance.regions.get('translatedCaption') || []) node.lang = instance.state.translation === 'ja' ? 'ja' : 'es';
+    for (const [name, active] of Object.entries(view.signals || {})) for (const node of instance.signals.get(name) || []) node.setAttribute('data-active', String(active));
     for (const [name, value] of Object.entries(view.values || {})) for (const node of instance.values.get(name) || []) setText(node, value);
     for (const [name, config] of Object.entries(view.progress || {})) {
       for (const node of instance.progress.get(name) || []) {
@@ -355,14 +332,14 @@ function renderGlobe(root, state) {
     for (const control of instance.actions) {
       const action = control.getAttribute('data-model-action');
       const config = view.controls[action] || {};
-      control.disabled = Boolean(config.disabled || action === 'play' && motionPreference.matches);
+      control.disabled = Boolean(config.disabled || action === 'play' && motionPreference.matches || instance.kind === 'together' && instance.video?.error);
       if (config.value !== undefined && control.value !== String(config.value)) control.value = String(config.value);
       if (config.pressed !== undefined) control.setAttribute('aria-pressed', String(config.pressed));
       if (config.text) {
         if (control.hasAttribute('data-model-icon-action')) control.setAttribute('aria-label', config.text);
         else setText(control, config.text);
       }
-      if (action === 'play') control.title = motionPreference.matches ? 'Reduced motion is on. Use the time slider to explore.' : '';
+      if (action === 'play') control.title = motionPreference.matches ? 'Reduced motion is on. Use the timeline or Next activity.' : '';
     }
     for (const note of instance.motionNotes) note.hidden = !motionPreference.matches;
     if (view.projects) {
@@ -400,27 +377,41 @@ function renderGlobe(root, state) {
     if (view.globe && instance.globe && typeof renderGlobe === 'function') renderGlobe(instance.globe, view.globe);
   };
   const dispatch = (instance, type, value, announce = true) => {
-    if (type === 'play' && !canPlay(instance)) return;
-    instance.state = instance.model.reduce(instance.state, { type, value });
-    paint(instance);
+    if (instance.kind === 'together') {
+      if (type === 'play') {
+        if (!canPlay(instance)) return;
+        if (!instance.video.paused) instance.video.pause();
+        else {
+          if (instance.video.ended || instance.video.currentTime >= 11.95) instance.video.currentTime = 0;
+          const attempt = instance.video.play();
+          if (attempt?.catch) attempt.catch(() => mediaSnapshot(instance, 'Sample video could not play. Use the timeline to explore captions.'));
+        }
+      } else if (type === 'time') {
+        instance.video.pause();
+        try { instance.video.currentTime = clamp(value, 0, 12); } catch { mediaSnapshot(instance, 'Sample video unavailable.'); }
+      } else if (type === 'reset') {
+        instance.video.pause();
+        try { instance.video.currentTime = 0; } catch { mediaSnapshot(instance, 'Sample video unavailable.'); return; }
+        instance.state = instance.model.initial();
+      } else instance.state = instance.model.reduce(instance.state, { type, value });
+      if (type !== 'translation') mediaSnapshot(instance);
+      else paint(instance);
+    } else {
+      if (instance.kind === 'hush' && type === 'play' && !canPlay(instance)) return;
+      instance.state = instance.model.reduce(instance.state, { type, value });
+      paint(instance);
+      if (instance.kind === 'hush') scheduleActivity(instance);
+    }
     if (announce) setText(instance.status, instance.view.readout);
-    schedule();
   };
   const stop = instance => {
-    if (instance.kind === 'together' && instance.state.playing) instance.state = instance.model.reduce(instance.state, { type: 'pause' });
-    paint(instance);
-  };
-  function tick(now) {
-    frameId = 0;
-    const elapsed = lastFrame ? Math.min(0.1, (now - lastFrame) / 1000) : 0;
-    lastFrame = now;
-    for (const instance of instances) {
-      if (instance.kind !== 'together' || !instance.state.playing || !canPlay(instance)) continue;
-      instance.state = instance.model.reduce(instance.state, { type: 'tick', value: elapsed });
+    if (instance.kind === 'together') { instance.video.pause(); mediaSnapshot(instance); }
+    if (instance.kind === 'hush') {
+      clearActivity(instance);
+      instance.state = instance.model.reduce(instance.state, { type: 'pause' });
       paint(instance);
     }
-    schedule();
-  }
+  };
   for (const figure of figures) {
     const kind = figure.getAttribute('data-working-model');
     const model = registry[kind];
@@ -434,15 +425,19 @@ function renderGlobe(root, state) {
       kind, figure, model, controls, readout, status, state: model.initial(),
       visible: bounds.bottom > 0 && bounds.top < window.innerHeight,
       texts: bindings(figure, 'data-model-text'), regions: bindings(figure, 'data-model-region'),
-      values: bindings(figure, 'data-model-value'), progress: bindings(figure, 'data-model-progress'),
+      values: bindings(figure, 'data-model-value'), progress: bindings(figure, 'data-model-progress'), signals: bindings(figure, 'data-model-signal'),
       actions: [...figure.querySelectorAll('[data-model-action]')],
       motionNotes: [...figure.querySelectorAll('[data-model-motion-note]')],
       rows: new Map([...figure.querySelectorAll('[data-project-row]')].map(row => [row.getAttribute('data-project-row'), row])),
-      globe: figure.querySelector('[data-globe]'), rowOrder: ''
+      globe: figure.querySelector('[data-globe]'), video: figure.querySelector('[data-model-video]'), timer: 0, rowOrder: ''
     };
     instances.push(instance);
     paint(instance);
     controls.hidden = false;
+    if (instance.video) {
+      for (const event of ['timeupdate', 'play', 'pause', 'ended', 'loadedmetadata', 'seeked', 'error']) instance.video.addEventListener(event, () => mediaSnapshot(instance));
+      instance.video.addEventListener('play', () => { if (!canPlay(instance)) instance.video.pause(); });
+    }
     figure.addEventListener('click', event => {
       const control = event.target.closest('button[data-model-action]');
       if (control && figure.contains(control) && !control.disabled) dispatch(instance, control.getAttribute('data-model-action'), control.getAttribute('data-model-value'));
@@ -464,26 +459,21 @@ function renderGlobe(root, state) {
       instance.visible = entry.isIntersecting;
       if (!instance.visible) stop(instance);
     }
-    schedule();
   }, { threshold: 0 }) : null;
   for (const instance of instances) observer?.observe(instance.figure);
   motionPreference.addEventListener('change', () => {
     for (const instance of instances) stop(instance);
-    schedule();
   });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) for (const instance of instances) stop(instance);
-    schedule();
   });
   window.addEventListener('pagehide', () => {
     suspended = true;
     for (const instance of instances) stop(instance);
     observer?.disconnect();
-    schedule();
   });
   window.addEventListener('pageshow', () => {
     suspended = false;
     for (const instance of instances) observer?.observe(instance.figure);
-    schedule();
   });
 })();

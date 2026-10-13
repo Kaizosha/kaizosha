@@ -14,7 +14,7 @@
     "regions": [
       "navigation",
       "globe",
-      "inspector",
+      "settings",
       "atlas-credit"
     ]
   },
@@ -34,25 +34,15 @@
     "sampling": "First 4096 native particles in atlas rank order. Actual LOD 0 boundary segments with length at least 0.7 degrees."
   },
   "parts": [
-    "Sekai display housing",
-    "Sekai display rim",
-    "native navigation bar",
-    "orthographic globe viewport",
-    "Natural Earth land particle layer",
-    "Natural Earth map unit boundary layer",
-    "great circle route layer",
-    "city marker layer",
-    "city label layer",
-    "Sekai inspector",
-    "atlas attribution"
+    "Tilted meridian ring",
+    "Orthographic globe sphere",
+    "Natural Earth land particles",
+    "Natural Earth map boundaries",
+    "Great circle routes",
+    "City markers and labels",
+    "Slanted globe axis",
+    "Physical globe stand and base",
+    "Atlas attribution"
   ],
-  "projection": {
-    "origin": [
-      14,
-      25
-    ],
-    "scale": 0.54,
-    "azimuth": 90,
-    "elevation": 72
-  }
+  "projection": null
 }

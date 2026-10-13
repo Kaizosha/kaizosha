@@ -2,7 +2,7 @@
   "product": "together",
   "identity": {
     "app": "Together",
-    "platform": "iPadOS",
+    "platform": "TV",
     "sources": [
       "Together/Features/Video/Playback/Chrome/TogetherPlayerChrome+Controls.swift",
       "Together/Features/Video/Playback/Chrome/TogetherPlayerChrome+CaptionMenus.swift",
@@ -17,23 +17,13 @@
     ]
   },
   "parts": [
-    "Together display housing",
-    "Together display rim",
-    "Local video picture",
-    "Player control capsules",
+    "Television bezel",
+    "Two television feet",
+    "Local coastal video",
     "Original caption layer",
     "Translated caption layer",
     "Playback timeline",
-    "Source language pill",
-    "Translation language pill"
+    "On-screen language selector"
   ],
-  "projection": {
-    "origin": [
-      14,
-      25
-    ],
-    "scale": 0.54,
-    "azimuth": 90,
-    "elevation": 72
-  }
+  "projection": null
 }

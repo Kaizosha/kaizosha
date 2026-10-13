@@ -13,7 +13,7 @@ function globeSVG() {
     getAttribute: name => name === 'data-globe-points' ? pointJSON : lineJSON,
     querySelector: selector => layers[selector.replace('[data-globe-', '').replace(']', '')]
   }, initialGlobe);
-  return `<svg class="sekai-globe" data-globe viewBox="0 0 400 410" role="img" aria-labelledby="sekai-globe-title" data-globe-points='${pointJSON}' data-globe-lines='${lineJSON}'>
+  return `<svg class="sekai-globe" data-globe viewBox="0 -20 400 430" role="img" aria-labelledby="sekai-globe-title" data-globe-points='${pointJSON}' data-globe-lines='${lineJSON}'>
     <title id="sekai-globe-title">Sekai globe with actual Natural Earth land particles, map unit boundaries, Chicago, Tokyo, Paris, and great circle routes.</title>
     <defs><clipPath id="sekai-globe-clip"><circle cx="200" cy="154" r="132"/></clipPath></defs>
     <ellipse class="sekai-meridian" cx="200" cy="154" rx="146" ry="158" transform="rotate(-22 200 154)"/>
