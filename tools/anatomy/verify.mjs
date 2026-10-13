@@ -11,7 +11,7 @@ const workspace = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const shots = join(workspace, ".audit/anatomy-shots");
 mkdirSync(shots, { recursive: true });
 const ids = ["together", "sekai", "hush", "morph", "modscan"];
-const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".png": "image/png", ".json": "application/json" };
+const mime = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".svg": "image/svg+xml", ".png": "image/png", ".json": "application/json", ".mp4": "video/mp4" };
 const servers = [];
 const browser = await chromium.launch({ headless: true });
 
@@ -25,7 +25,9 @@ async function verifyBehavior(page, id) {
   const reset = () => action('reset').click();
   assert.equal(await surface.getAttribute('data-app-surface'), id);
   if (id === 'together') {
-    assert.equal(await action('play').isDisabled(), true);
+    const video = surface.locator('[data-model-video]');
+    assert.equal(await video.evaluate(node => node.paused), true);
+    assert.equal(await video.evaluate(node => node.muted), true);
     await action('time').focus();
     await action('time').press('End');
     assert.equal(await text('elapsed'), '0:12');
@@ -34,18 +36,21 @@ async function verifyBehavior(page, id) {
     await action('translation').selectOption('es');
     assert.equal(await region('translatedCaption').isVisible(), true);
     assert.equal(await text('translatedCaption'), 'El sendero sigue el agua.');
+    await action('translation').selectOption('ja');
+    assert.equal(await text('translatedCaption'), '小道は海沿いに続きます。');
     await reset();
     assert.equal(await region('translatedCaption').isVisible(), false);
     await page.emulateMedia({ reducedMotion: 'no-preference' });
-    await surface.locator('[data-model-action="play"]').click();
-    await page.waitForFunction(() => document.querySelector('[data-model-progress]').value > 0.1);
     await action('play').click();
-    const paused = await model.locator('[data-model-readout]').textContent();
-    await page.waitForTimeout(250);
-    assert.equal(await model.locator('[data-model-readout]').textContent(), paused);
+    await page.waitForFunction(() => document.querySelector('[data-model-video]').currentTime > 0.2);
+    const firstTime = await video.evaluate(node => node.currentTime);
+    await page.waitForTimeout(450);
+    assert.equal(await video.evaluate(node => node.currentTime > firstTime), true);
+    await action('play').click();
+    assert.equal(await video.evaluate(node => node.paused), true);
     await action('play').click();
     await page.locator('#product-title').scrollIntoViewIfNeeded();
-    await page.waitForFunction(() => document.querySelector('[data-working-model]').dataset.modelPhase === 'paused');
+    await page.waitForFunction(() => document.querySelector('[data-model-video]').paused);
     await model.scrollIntoViewIfNeeded();
     await reset();
   } else if (id === 'sekai') {
@@ -65,20 +70,25 @@ async function verifyBehavior(page, id) {
     assert.equal(await particles.getAttribute('d'), original);
     assert.equal(await text('previewCount'), '4,096');
   } else if (id === 'hush') {
-    assert.equal(await action('ask').isDisabled(), true);
-    await action('source').selectOption('capture');
-    await action('review').click();
-    assert.equal(await phase(), 'reviewed');
-    await surface.locator('[data-model-action="ask"]').click();
-    assert.equal(await region('conversation').isVisible(), true);
-    assert.match(await text('response'), /release checklist/);
-    await action('save').click();
-    assert.equal(await region('saved').isVisible(), true);
-    await action('source').selectOption('microphone');
-    assert.equal(await phase(), 'input');
-    assert.equal(await region('conversation').isVisible(), false);
+    assert.match(await text('feed'), /no live capture/);
+    assert.equal(await surface.locator('[data-model-signal="seeing"]').getAttribute('data-active'), 'false');
+    await action('next').click();
+    assert.equal(await surface.locator('[data-model-signal="seeing"]').getAttribute('data-active'), 'true');
+    assert.match(await text('feed'), /Notes updated/);
+    await action('next').click();
+    assert.equal(await text('documentApp'), 'Mail');
+    await action('next').click();
+    assert.equal(await surface.locator('[data-model-signal="listening"]').getAttribute('data-active'), 'true');
+    assert.match(await text('heardText'), /latest checklist/);
+    await action('next').click();
+    assert.match(await text('summary'), /recap/);
     await reset();
-    assert.equal(await action('source').inputValue(), 'text');
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+    await action('play').click();
+    await page.waitForFunction(() => document.querySelector('[data-working-model]').dataset.modelPhase === 'playing');
+    await page.locator('#product-title').scrollIntoViewIfNeeded();
+    await page.waitForFunction(() => document.querySelector('[data-working-model]').dataset.modelPhase.startsWith('stage-'));
+    await model.scrollIntoViewIfNeeded();
   } else if (id === 'morph') {
     const original = await text('articleTitle');
     assert.equal(await action('undo').isDisabled(), true);
@@ -178,7 +188,8 @@ try {
     await still.goto(url);
     const staticModel = still.locator("[data-working-model]");
     await staticModel.scrollIntoViewIfNeeded();
-    assert.equal(await staticModel.locator(".app-housing").isVisible(), true, `${id} static housing`);
+    if (id === "sekai") assert.equal(await staticModel.locator(".sekai-globe").isVisible(), true, "Sekai static globe");
+    else assert.equal(await staticModel.locator(".app-screen").isVisible(), true, `${id} static housing`);
     assert.equal(await staticModel.locator("[data-model-controls]").isVisible(), false, `${id} unavailable controls hidden`);
     assert.equal(await staticModel.locator("[data-app-surface]").isVisible(), true, `${id} static app screen`);
     assert.equal(await staticModel.locator("[data-app-surface] button:not([disabled])").count(), 0, `${id} static actions disabled`);

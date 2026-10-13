@@ -2,37 +2,30 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const { registry, inventory } = require('./controller.js');
 
-test('Together scrub updates visible original and Spanish captions at the same cue', () => {
+test('Together captions follow media snapshots and support Spanish and Japanese', () => {
   const model = registry.together;
-  let state = model.reduce(model.initial(), { type: 'time', value: 6 });
+  let state = model.reduce(model.initial(), { type: 'media', time: 6.2, playing: false });
   state = model.reduce(state, { type: 'translation', value: 'es' });
-  const view = model.view(state);
+  let view = model.view(state);
   assert.equal(view.texts.sourceCaption, 'The light changes by the minute.');
   assert.equal(view.texts.translatedCaption, 'La luz cambia a cada minuto.');
   assert.equal(view.texts.elapsed, '0:06');
-  assert.equal(view.texts.remaining, '−0:06');
-  assert.equal(view.texts.translationLanguage, 'Spanish');
   assert.equal(view.regions.translatedCaption, true);
-  assert.deepEqual(view.progress.playbackProgress, { value: 6, max: 12 });
-  const reset = model.view(model.reduce(state, { type: 'reset' }));
-  assert.equal(reset.texts.sourceCaption, 'The path follows the water.');
-  assert.equal(reset.texts.translationLanguage, 'Off');
-  assert.equal(reset.regions.translatedCaption, false);
+  state = model.reduce(state, { type: 'translation', value: 'ja' });
+  view = model.view(state);
+  assert.equal(view.texts.translatedCaption, '光は刻々と変わります。');
+  assert.equal(view.controls.translation.value, 'ja');
+  state = model.reduce(state, { type: 'media', time: 11.9, playing: true });
+  assert.equal(model.view(state).texts.sourceCaption, "Let's stay here a little longer.");
+  assert.equal(model.view(state).texts.playbackState, 'Playing');
+  assert.equal(model.view(model.reduce(state, { type: 'reset' })).texts.sourceCaption, 'The path follows the water.');
 });
 
-test('Together reaches the last caption and Play restarts the sample', () => {
+test('Together has no independent tick clock', () => {
   const model = registry.together;
-  let state = model.reduce(model.initial(), { type: 'play' });
-  state = model.reduce(state, { type: 'tick', value: 15 });
-  assert.equal(model.view(state).texts.playbackState, 'Paused');
-  assert.equal(model.view(state).texts.sourceCaption, "Let's stay here a little longer.");
-  assert.equal(model.view(state).progress.playbackProgress.value, 12);
-  state = model.reduce(state, { type: 'play' });
-  assert.equal(model.view(state).texts.playbackState, 'Playing');
-  assert.equal(model.view(state).texts.sourceCaption, 'The path follows the water.');
-  state = model.reduce(state, { type: 'time', value: -2 });
-  assert.equal(model.view(state).texts.elapsed, '0:00');
-  assert.equal(model.view(state).texts.playbackState, 'Paused');
+  const initial = model.initial();
+  assert.deepEqual(model.reduce(initial, { type: 'tick', value: 3 }), initial);
+  assert.equal(model.view(model.reduce(initial, { type: 'media', time: 12, playing: false })).texts.elapsed, '0:12');
 });
 
 test('Sekai camera, density, and inspector layers produce a renderable globe view', () => {
@@ -58,40 +51,36 @@ test('Sekai clamps native camera ranges and rejects unsupported preview densitie
   assert.equal(model.view(state).texts.previewCount, '4,096');
 });
 
-test('Hush shows chosen context, review, sample conversation, and history', () => {
+test('Hush sample sees document and email, hears speech, then summarizes', () => {
   const model = registry.hush;
   let state = model.initial();
   assert.equal(model.view(state).texts.modelName, 'Apple On-Device');
-  assert.equal(model.view(state).texts.contextTitle, "Tomorrow's meeting");
-  state = model.reduce(state, { type: 'ask' });
-  assert.equal(model.view(state).regions.conversation, false);
-  state = model.reduce(state, { type: 'source', value: 'capture' });
-  assert.equal(model.view(state).texts.contextTitle, 'Calendar capture');
-  assert.match(model.view(state).texts.contextBody, /10:00–10:30/);
-  state = model.reduce(state, { type: 'review' });
-  assert.equal(model.view(state).texts.composer, 'What should I prepare for this meeting?');
-  assert.equal(model.view(state).controls.ask.disabled, false);
-  state = model.reduce(state, { type: 'ask' });
-  assert.equal(model.view(state).regions.welcome, false);
-  assert.equal(model.view(state).regions.conversation, true);
-  assert.equal(model.view(state).texts.response, 'Bring the release checklist and a list of open items. Be ready to confirm owners and agree on the next steps.');
-  state = model.reduce(state, { type: 'save' });
-  assert.equal(model.view(state).regions.saved, true);
-  assert.equal(model.view(state).texts.chatStatus, 'Shown in history.');
+  assert.equal(model.view(state).signals.seeing, false);
+  state = model.reduce(state, { type: 'next' });
+  assert.equal(model.view(state).signals.seeing, true);
+  assert.match(model.view(state).texts.feed, /Notes updated/);
+  state = model.reduce(state, { type: 'next' });
+  assert.equal(model.view(state).texts.documentApp, 'Mail');
+  state = model.reduce(state, { type: 'next' });
+  assert.equal(model.view(state).signals.listening, true);
+  assert.match(model.view(state).texts.heardText, /latest checklist/);
+  state = model.reduce(state, { type: 'next' });
+  assert.match(model.view(state).texts.summary, /recap/);
+  assert.equal(model.view(state).controls.next.disabled, true);
+  assert.equal(model.view(model.reduce(state, { type: 'reset' })).signals.listening, false);
 });
 
-test('Hush choosing a different sample clears the conversation and history', () => {
+test('Hush playback advances only after explicit start and pause preserves progress', () => {
   const model = registry.hush;
-  let state = model.reduce(model.initial(), { type: 'review' });
-  state = model.reduce(state, { type: 'ask' });
-  state = model.reduce(state, { type: 'save' });
-  state = model.reduce(state, { type: 'source', value: 'text' });
-  const view = model.view(state);
-  assert.equal(view.texts.contextTitle, "Tomorrow's meeting");
-  assert.equal(view.regions.conversation, false);
-  assert.equal(view.regions.saved, false);
-  assert.equal(view.regions.welcome, true);
-  assert.equal(view.controls.ask.disabled, true);
+  let state = model.initial();
+  assert.deepEqual(model.reduce(state, { type: 'advance' }), state);
+  state = model.reduce(state, { type: 'play' });
+  state = model.reduce(state, { type: 'advance' });
+  assert.equal(state.stage, 1);
+  state = model.reduce(state, { type: 'pause' });
+  assert.equal(state.stage, 1);
+  assert.equal(state.playing, false);
+  assert.deepEqual(model.reduce(state, { type: 'advance' }), state);
 });
 
 test('Morph Edit changes the article title and displays summary and draft decisions', () => {

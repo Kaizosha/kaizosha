@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync } from "node:fs";
 import { dirname, resolve, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
@@ -14,6 +14,26 @@ const end = "<!-- anatomy:model:end -->";
 const escape = value => String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
 let stale = false;
 const previews = [];
+const media = ['assets/media/together-coast.mp4', 'assets/media/together-coast.svg'];
+function mediaVersion(asset) {
+  const source = join(company, asset);
+  if (!existsSync(source)) throw new Error(`Missing canonical media: ${source}`);
+  return createHash('sha256').update(readFileSync(source)).digest('hex').slice(0, 12);
+}
+function copyMedia(asset, root) {
+  const target = join(root, asset);
+  const source = join(company, asset);
+  if (check) {
+    if (!existsSync(target) || !readFileSync(target).equals(readFileSync(source))) {
+      console.error(`Out of date: ${target}`);
+      stale = true;
+    }
+  } else {
+    mkdirSync(dirname(target), { recursive: true });
+    copyFileSync(source, target);
+  }
+}
+
 
 function emit(path, content) {
   if (check) {
@@ -37,6 +57,9 @@ const versions = Object.fromEntries(assets.map(asset => [asset, createHash("sha2
 for (const [id, model] of Object.entries(config)) {
   const { buildModel } = await import(`./models/${id}.mjs`);
   const scene = buildModel(kit);
+  if (id === 'together') for (const asset of media) {
+    scene.screen = scene.screen.replace(`/${asset}`, `/${asset}?v=${mediaVersion(asset)}`);
+  }
   if (!scene.parts.length || new Set(scene.parts).size !== scene.parts.length) throw new Error(`${id} needs unique, purposeful interface parts`);
   if (!scene.screen || !scene.kind || !scene.identity?.sources?.length || scene.identity.regions.length < 3) throw new Error(`${id} needs a source-grounded app screen`);
   if (!scene.screen.includes(`data-app-name="${scene.identity.app}"`)) throw new Error(`${id} does not identify its app on screen`);
@@ -79,6 +102,7 @@ for (const [id, model] of Object.entries(config)) {
     if (from < 0 || to < 0) throw new Error(`${id} has no about section`);
     html = html.slice(0, to) + figure + "\n              " + html.slice(to);
   }
+  if (id === 'together') for (const asset of media) copyMedia(asset, root);
   for (const asset of assets) {
     const isStyle = asset.endsWith(".css");
     const tag = isStyle

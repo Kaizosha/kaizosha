@@ -5,18 +5,15 @@ section. Each preview uses the app's native interface as its design source.
 Anatomy draws the display housing. HTML keeps the screen's text and controls
 readable at phone widths.
 
-The previews show these app interfaces:
+The previews show these products:
 
-- Together's player, caption layers, language pills, and timeline.
-- Sekai's globe and inspector, with land points and boundaries from its native
-  atlas.
-- Hush's Mac workspace, model picker, context card, conversation, and composer.
+- Together as a television with a real local coastal video, original English captions, on-screen Spanish and Japanese translations, and a video-backed timeline.
+- Sekai as a mounted physical globe with native atlas land points, boundaries, city markers, and routes.
+- Hush as a desktop monitor with a local sample document, email, spoken note, seeing and listening indicators, and an observation feed.
 - Morph's Safari live editor beside an article, with Edit, Undo, and Keep.
 - ModScan's terminal inventory, status rows, filters, and storage totals.
 
-The models use sample content. Hush shows prerecorded responses, Morph edits a
-sample article, and ModScan removes entries from a sample inventory. These
-actions stay in the browser.
+Hush's activity is illustrative and runs only in the browser. It does not request screen or microphone access. Morph edits a sample article and ModScan removes entries from a sample inventory.
 
 ## Source files
 
@@ -37,9 +34,9 @@ screen in its `index.html`. The sites load these assets from their own origins.
 Production needs no frontend build. Without JavaScript, each screen remains
 visible and the external sample controls stay hidden.
 
-Together advances its timeline only after Play. Playback pauses when the model
-leaves the viewport or the document becomes hidden. Reduced motion disables
-automatic playback while keeping manual timeline controls available.
+Together's native video time drives its captions and timeline. Playback starts only after Play and pauses when the model leaves the viewport or the document becomes hidden. Reduced motion disables automatic playback while keeping manual seeking available. Hush's sample activity also starts only after Play; Next activity remains available with reduced motion.
+
+The canonical Together assets live at `assets/media/together-coast.mp4` and `assets/media/together-coast.svg`. The generator copies them only to `together-web` and includes content hashes in their URLs so immutable asset caching updates correctly. Generate or replace the source media in this repository, then run the generator. The source clip is a twelve-second 768×432 coastal sample divided into four three-second caption cues.
 
 ## Generate and verify
 
