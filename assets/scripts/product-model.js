@@ -2,27 +2,66 @@
   'use strict';
 
   const cues = [
-    ['Welcome to the bench.', 'Bienvenido a la mesa.'],
-    ['Keep the original in view.', 'Mantén el original a la vista.'],
-    ['Translate only when you choose.', 'Traduce solo cuando lo decidas.'],
-    ['Make room for every voice.', 'Haz espacio para cada voz.']
+    ['The path follows the water.', 'El sendero sigue el agua.'],
+    ['We can hear the waves below.', 'Podemos oír las olas abajo.'],
+    ['The light changes by the minute.', 'La luz cambia a cada minuto.'],
+    ["Let's stay here a little longer.", 'Quedémonos aquí un poco más.']
   ];
-  const sources = {
-    microphone: 'A sample spoken note about tomorrow\'s meeting.',
-    text: 'A sample text note with the meeting agenda.',
-    capture: 'A sample screen capture of the meeting calendar.'
+  const contexts = {
+    microphone: {
+      title: "Tomorrow's meeting",
+      label: 'Spoken note',
+      body: "Tomorrow's meeting is at 10. Bring the draft and decide who will send the follow-up.",
+      prompt: 'Turn this note into a short meeting checklist.',
+      response: 'Meet at 10. Bring the draft. Choose one person to send the follow-up.'
+    },
+    text: {
+      title: "Tomorrow's meeting",
+      label: 'meeting-notes.txt',
+      body: "Tomorrow's meeting is at 10. Bring the draft and decide who will send the follow-up.",
+      prompt: 'Turn this note into a short meeting checklist.',
+      response: 'Meet at 10. Bring the draft. Choose one person to send the follow-up.'
+    },
+    capture: {
+      title: 'Calendar capture',
+      label: 'Calendar capture',
+      body: 'Thursday · 10:00–10:30 · Launch review. Agenda: release checklist, open items, and next steps.',
+      prompt: 'What should I prepare for this meeting?',
+      response: 'Bring the release checklist and a list of open items. Be ready to confirm owners and agree on the next steps.'
+    }
+  };
+  const article = {
+    title: 'A slower way to see the coast',
+    deck: 'An afternoon on the path above the water.',
+    body: 'We left the car by the old harbor and took the narrow path along the cliffs. Every bend opened a different view. With no schedule to keep, we stopped to listen to the waves.',
+    editedTitle: 'Walking the coast without a schedule'
   };
   const inventory = [
-    { id: '0', path: '/sample/projects/journal/node_modules', size: 64, age: 12 },
-    { id: '1', path: '/sample/projects/atlas/node_modules', size: 180, age: 45 },
-    { id: '2', path: '/sample/projects/studio/node_modules', size: 320, age: 90 },
-    { id: '3', path: '/sample/projects/sandbox/node_modules', size: 96, age: 7 }
+    { id: '0', name: 'journal', path: '/sample/projects/journal/node_modules', size: 64, age: 12 },
+    { id: '1', name: 'atlas', path: '/sample/projects/atlas/node_modules', size: 180, age: 45 },
+    { id: '2', name: 'studio', path: '/sample/projects/studio/node_modules', size: 320, age: 90 },
+    { id: '3', name: 'sandbox', path: '/sample/projects/sandbox/node_modules', size: 96, age: 7 }
   ];
-  const part = (fraction = 0, visible = true, active = false) => ({ fraction, visible, active });
-  const matches = (project, filter) => filter === 'large' ? project.size > 100 : filter === 'old' ? project.age > 30 : true;
-  const available = state => inventory.filter(project => !state.removed.includes(project.id) && matches(project, state.filter));
-  const selectAvailable = state => {
-    const projects = available(state);
+  const clamp = (value, minimum, maximum) => Math.max(minimum, Math.min(maximum, Number(value) || 0));
+  const clock = value => `0:${String(Math.floor(value)).padStart(2, '0')}`;
+  const layerNames = ['particles', 'boundaries', 'routes', 'labels'];
+  const sorts = {
+    size: (a, b) => b.size - a.size,
+    date: (a, b) => b.age - a.age,
+    name: (a, b) => a.name.localeCompare(b.name),
+    path: (a, b) => a.path.localeCompare(b.path)
+  };
+  const filters = {
+    all: () => true,
+    active: (project, state) => !state.removed.includes(project.id),
+    deleted: (project, state) => state.removed.includes(project.id),
+    large: project => project.size > 100,
+    old: project => project.age > 30
+  };
+  const sortedProjects = state => [...inventory].sort(sorts[state.sort]);
+  const matchingProjects = state => sortedProjects(state).filter(project => filters[state.filter](project, state));
+  const selectMatching = state => {
+    const projects = matchingProjects(state);
     return { ...state, selected: projects.some(project => project.id === state.selected) ? state.selected : projects[0]?.id ?? '' };
   };
   const registry = {
@@ -30,12 +69,12 @@
       initial: () => ({ time: 0, playing: false, translation: 'off' }),
       reduce(state, action) {
         if (action.type === 'reset') return this.initial();
-        if (action.type === 'time') return { ...state, time: Math.max(0, Math.min(12, Number(action.value) || 0)), playing: false };
+        if (action.type === 'time') return { ...state, time: clamp(action.value, 0, 12), playing: false };
         if (action.type === 'translation') return { ...state, translation: action.value === 'es' ? 'es' : 'off' };
         if (action.type === 'play') return { ...state, time: state.time >= 12 ? 0 : state.time, playing: !state.playing };
         if (action.type === 'pause') return { ...state, playing: false };
         if (action.type === 'tick' && state.playing) {
-          const time = Math.min(12, state.time + action.value);
+          const time = clamp(state.time + Math.max(0, Number(action.value) || 0), 0, 12);
           return { ...state, time, playing: time < 12 };
         }
         return state;
@@ -45,8 +84,14 @@
         const translated = state.translation === 'es';
         return {
           phase: state.playing ? 'playing' : 'paused',
-          parts: { transport: part(state.time / 12), playhead: part(state.time / 12), translation: part(translated ? 1 : 0, true, translated) },
-          readout: `${state.time.toFixed(1)} / 12 s · Original: ${cue[0]}${translated ? ` · Spanish: ${cue[1]}` : ' · Translation off.'}`,
+          texts: {
+            playbackState: state.playing ? 'Playing' : 'Paused', playbackSymbol: state.playing ? 'Ⅱ' : '▶',
+            elapsed: clock(state.time), remaining: `−${clock(12 - state.time)}`,
+            sourceCaption: cue[0], translatedCaption: cue[1], translationLanguage: translated ? 'Spanish' : 'Off'
+          },
+          regions: { translatedCaption: translated },
+          progress: { playbackProgress: { value: state.time, max: 12 } },
+          readout: `${state.time.toFixed(1)} / 12 s · ${cue[0]}${translated ? ` · ${cue[1]}` : ' · Translation off.'}`,
           values: { time: `${state.time.toFixed(1)} s` },
           controls: {
             time: { value: state.time }, translation: { value: state.translation },
@@ -56,100 +101,214 @@
       }
     },
     sekai: {
-      initial: () => ({ particles: true, boundaries: true, labels: true }),
+      initial: () => ({ latitude: 12, longitude: 10, count: 4096, particles: true, boundaries: true, routes: true, labels: true }),
       reduce(state, action) {
         if (action.type === 'reset') return this.initial();
-        if (['particles', 'boundaries', 'labels'].includes(action.type)) return { ...state, [action.type]: !state[action.type] };
+        if (action.type === 'latitude') return { ...state, latitude: clamp(action.value, -70, 70) };
+        if (action.type === 'longitude') return { ...state, longitude: clamp(action.value, -180, 180) };
+        if (action.type === 'density') return { ...state, count: [256, 1024, 4096].includes(Number(action.value)) ? Number(action.value) : 4096 };
+        if (layerNames.includes(action.type)) return { ...state, [action.type]: !state[action.type] };
         return state;
       },
       view(state) {
-        const layers = Object.keys(state);
+        const latitude = `${Math.abs(state.latitude)}° ${state.latitude < 0 ? 'S' : 'N'}`;
+        const longitude = `${Math.abs(state.longitude)}° ${state.longitude < 0 ? 'W' : 'E'}`;
         return {
-          phase: `${layers.filter(layer => state[layer]).length}-layers`,
-          parts: Object.fromEntries(layers.map(layer => [layer, part(0, state[layer], state[layer])])),
-          readout: `Sample atlas · ${layers.filter(layer => state[layer]).length} of 3 layers visible. ${layers.map(layer => `${layer[0].toUpperCase()}${layer.slice(1)} ${state[layer] ? 'on' : 'off'}`).join(' · ')}.`,
-          controls: Object.fromEntries(layers.map(layer => [layer, { pressed: state[layer] }]))
+          phase: 'globe', globe: { ...state },
+          texts: {
+            camera: `${latitude} · ${longitude}`, density: `${state.count.toLocaleString('en-US')} points`,
+            presentation: state.particles && state.boundaries ? 'Both' : state.particles ? 'Particles' : state.boundaries ? 'Boundaries' : 'None', routes: state.routes ? 'On' : 'Off',
+            labels: state.labels ? 'On' : 'Off', projection: 'Orthographic', previewCount: state.count.toLocaleString('en-US')
+          },
+          readout: `${latitude} · ${longitude} · ${state.count.toLocaleString('en-US')} preview points. ${layerNames.map(layer => `${layer[0].toUpperCase()}${layer.slice(1)} ${state[layer] ? 'on' : 'off'}`).join(' · ')}.`,
+          values: { latitude, longitude },
+          controls: {
+            latitude: { value: state.latitude }, longitude: { value: state.longitude }, density: { value: state.count },
+            ...Object.fromEntries(layerNames.map(layer => [layer, { pressed: state[layer] }]))
+          }
         };
       }
     },
     hush: {
-      initial: () => ({ source: 'microphone', stage: 'input' }),
+      initial: () => ({ source: 'text', stage: 'input' }),
       reduce(state, action) {
         if (action.type === 'reset') return this.initial();
-        if (action.type === 'source' && Object.hasOwn(sources, action.value)) return { source: action.value, stage: 'input' };
-        if (action.type === 'review') return { ...state, stage: 'reviewed' };
+        if (action.type === 'source' && Object.hasOwn(contexts, action.value)) return { source: action.value, stage: 'input' };
+        if (action.type === 'review' && state.stage === 'input') return { ...state, stage: 'reviewed' };
         if (action.type === 'ask' && state.stage === 'reviewed') return { ...state, stage: 'asked' };
         if (action.type === 'save' && state.stage === 'asked') return { ...state, stage: 'saved' };
         return state;
       },
       view(state) {
-        const stage = ['input', 'reviewed', 'asked', 'saved'].indexOf(state.stage);
-        const messages = [
-          'Review the sample context before asking.',
-          'Sample context reviewed. Ready to ask an external provider.',
-          'Sample request routed to the external provider. Sample answer ready.',
-          'Sample session saved to the local spool in this model.'
-        ];
+        const context = contexts[state.source];
+        const hasConversation = ['asked', 'saved'].includes(state.stage);
+        const statuses = { input: 'Review the sample context to begin.', reviewed: 'Context reviewed. Ask to see the sample response.', asked: 'Prerecorded sample response.', saved: 'Shown in history.' };
         return {
           phase: state.stage,
-          parts: {
-            ...Object.fromEntries(Object.keys(sources).map(source => [source, part(state.source === source ? 1 : 0, true, state.source === source)])),
-            review: part(stage >= 1 ? 1 : 0, true, stage === 1),
-            request: part(stage >= 2 ? 1 : 0, true, stage >= 2), session: part(stage >= 3 ? 1 : 0, true, stage >= 3)
+          texts: {
+            modelName: 'Apple On-Device', contextTitle: context.title, contextLabel: context.label, contextBody: context.body,
+            conversationTitle: "Tomorrow's meeting", prompt: context.prompt, response: context.response,
+            composer: state.stage === 'reviewed' ? context.prompt : 'Message Hush…', chatStatus: statuses[state.stage]
           },
-          readout: `${sources[state.source]} ${messages[stage]}`,
+          regions: { welcome: !hasConversation, context: true, conversation: hasConversation, saved: state.stage === 'saved' },
+          readout: `${context.title} · ${statuses[state.stage]} Responses are prerecorded sample content.`,
           controls: {
-            source: { value: state.source }, review: { disabled: state.stage === 'reviewed' },
+            source: { value: state.source }, review: { disabled: state.stage !== 'input' },
             ask: { disabled: state.stage !== 'reviewed' }, save: { disabled: state.stage !== 'asked' }
           }
         };
       }
     },
     morph: {
-      waitForMotion: ['preview', 'apply', 'undo'],
       initial: () => ({ stage: 'original' }),
       reduce(state, action) {
-        if (action.type === 'reset' || action.type === 'undo' && state.stage === 'applied') return this.initial();
-        if (action.type === 'preview' && state.stage === 'original') return { stage: 'preview' };
-        if (action.type === 'apply' && state.stage === 'preview') return { stage: 'applied' };
+        if (action.type === 'reset' || action.type === 'undo' && state.stage !== 'original') return this.initial();
+        if (action.type === 'edit' && state.stage === 'original') return { stage: 'draft' };
+        if (action.type === 'keep' && state.stage === 'draft') return { stage: 'kept' };
         return state;
       },
       view(state) {
-        const applied = state.stage === 'applied';
-        const original = state.stage === 'original';
+        const edited = state.stage !== 'original';
         return {
           phase: state.stage,
-          parts: { draft: part(original ? 0 : 1, true, !original), press: part(applied ? 1 : 0, true, applied), proof: part(applied ? 1 : 0, true, applied) },
-          readout: original ? 'Original plate ready. Preview a sample edit before applying.' : applied ? 'Sample edit applied. The proof is in the viewing tray. Undo restores the original.' : 'Sample edit previewed. The original plate remains fixed. Apply to make a proof.',
-          controls: { preview: { disabled: !original }, apply: { disabled: state.stage !== 'preview' }, undo: { disabled: !applied } }
+          texts: {
+            articleTitle: edited ? article.editedTitle : article.title,
+            articleDeck: article.deck,
+            articleBody: article.body,
+            editorStatus: state.stage === 'draft' ? 'Review changes' : 'Ready',
+            editPrompt: 'Make the title clearer and add a short summary.',
+            activity: state.stage === 'original' ? 'Tell Morph what to change.' : state.stage === 'draft' ? 'Clarified the title and added a short summary.' : 'Changes kept on this sample page.'
+          },
+          regions: { decision: state.stage === 'draft', editedSummary: edited },
+          readout: state.stage === 'original' ? 'Original sample article. Edit previews a clearer title and a short summary.' : state.stage === 'draft' ? 'Sample title changed and summary added. Keep the changes or Undo to restore the original.' : 'Changes kept. Undo restores the original sample article.',
+          controls: { edit: { disabled: edited }, keep: { disabled: state.stage !== 'draft' }, undo: { disabled: !edited } }
         };
       }
     },
     modscan: {
-      initial: () => ({ selected: '0', filter: 'all', removed: [] }),
+      initial: () => ({ selected: '2', sort: 'size', filter: 'all', removed: [] }),
       reduce(state, action) {
         if (action.type === 'reset') return this.initial();
-        if (action.type === 'filter') return selectAvailable({ ...state, filter: ['large', 'old'].includes(action.value) ? action.value : 'all' });
-        if (action.type === 'select' && available(state).some(project => project.id === action.value)) return { ...state, selected: action.value };
-        if (action.type === 'remove' && state.selected !== '') return selectAvailable({ ...state, removed: [...state.removed, state.selected] });
+        if (action.type === 'filter') return selectMatching({ ...state, filter: Object.hasOwn(filters, action.value) ? action.value : 'all' });
+        if (action.type === 'sort') return selectMatching({ ...state, sort: Object.hasOwn(sorts, action.value) ? action.value : 'size' });
+        if (action.type === 'select' && matchingProjects(state).some(project => project.id === String(action.value))) return { ...state, selected: String(action.value) };
+        if (action.type === 'remove' && state.selected && !state.removed.includes(state.selected)) return selectMatching({ ...state, removed: [...state.removed, state.selected] });
         return state;
       },
       view(state) {
-        const projects = available(state);
+        const visible = matchingProjects(state);
         const selected = inventory.find(project => project.id === state.selected);
+        const active = inventory.filter(project => !state.removed.includes(project.id));
         const freed = inventory.filter(project => state.removed.includes(project.id)).reduce((sum, project) => sum + project.size, 0);
+        const activeSize = active.reduce((sum, project) => sum + project.size, 0);
+        const deleted = selected && state.removed.includes(selected.id);
+        const sortNames = { size: 'size ↓', date: 'modified ↓', name: 'project A–Z', path: 'path A–Z' };
+        const filterNames = { all: 'all', active: 'active', deleted: 'deleted', large: '>100 MB', old: '>30 days' };
         return {
-          phase: `${4 - state.removed.length}-active`,
-          parts: Object.fromEntries(inventory.map(project => [`project-${project.id}`, part(state.removed.includes(project.id) ? 1 : state.selected === project.id ? 0.18 : 0, !state.removed.includes(project.id) && matches(project, state.filter), state.selected === project.id)])),
-          readout: `${4 - state.removed.length} sample projects active · ${freed} MB freed in this model. ${selected ? `Selected ${selected.path} · ${selected.size} MB · ${selected.age} days old.` : 'No sample projects match this filter.'}`,
-          controls: { select: { value: state.selected, disabled: !projects.length }, filter: { value: state.filter }, remove: { disabled: !selected } },
-          projects: inventory.map(project => ({ id: project.id, visible: projects.includes(project) }))
+          phase: `${active.length}-active`,
+          texts: {
+            sort: sortNames[state.sort], filter: filterNames[state.filter], activeCount: String(active.length),
+            activeSize: `${activeSize} MB`, freedSize: `${freed} MB`, selectedProject: selected?.name ?? 'No project selected',
+            selectedPath: selected?.path ?? 'No matching sample projects', selectedSize: selected ? `${selected.size} MB` : '—',
+            selectedModified: selected ? `${selected.age} days ago` : '—', selectedStatus: selected ? deleted ? 'Deleted' : 'Available' : 'Empty',
+            scanStatus: `Showing ${visible.length} of 4 modules (${state.filter} filter)`, emptyState: 'No matching sample modules.'
+          },
+          regions: { emptyState: !visible.length },
+          readout: `${active.length} sample projects active · ${activeSize} MB active · ${freed} MB freed. ${selected ? `${selected.name} · ${selected.size} MB · ${deleted ? 'Deleted' : 'Available'}.` : 'No matching sample projects.'}`,
+          controls: {
+            select: { value: state.selected, disabled: !visible.length }, filter: { value: state.filter },
+            sort: { value: state.sort }, remove: { disabled: !selected || deleted }
+          },
+          projects: sortedProjects(state).map(project => ({ ...project, visible: visible.some(item => item.id === project.id), selected: project.id === state.selected, deleted: state.removed.includes(project.id), status: state.removed.includes(project.id) ? 'Deleted' : 'Available' }))
         };
       }
     }
   };
 
-  if (typeof module !== 'undefined' && module.exports) module.exports = { registry, inventory };
+function renderGlobe(root, state) {
+  if (!root) return;
+  const points = JSON.parse(root.getAttribute('data-globe-points'));
+  const lines = JSON.parse(root.getAttribute('data-globe-lines'));
+  const radians = Math.PI / 180;
+  const phi = state.latitude * radians;
+  const lambda = state.longitude * radians;
+  const sinPhi = Math.sin(phi);
+  const cosPhi = Math.cos(phi);
+  const sinLambda = Math.sin(lambda);
+  const cosLambda = Math.cos(lambda);
+  const rounded = value => Number(value.toFixed(2));
+  const project = ([x, y, z]) => ({
+    x: 200 + 132 * (-sinLambda * x + cosLambda * z),
+    y: 154 - 132 * (-sinPhi * cosLambda * x + cosPhi * y - sinPhi * sinLambda * z),
+    depth: cosPhi * cosLambda * x + sinPhi * y + cosPhi * sinLambda * z
+  });
+  const normalize = vector => {
+    const length = Math.hypot(...vector);
+    return vector.map(value => value / length);
+  };
+  const vector = (latitude, longitude) => {
+    const lat = latitude * radians;
+    const lon = longitude * radians;
+    return [Math.cos(lat) * Math.cos(lon), Math.sin(lat), Math.cos(lat) * Math.sin(lon)];
+  };
+  const segment = (a, b) => {
+    let from = project(a);
+    let to = project(b);
+    if (from.depth < 0 && to.depth < 0) return '';
+    if ((from.depth < 0) !== (to.depth < 0)) {
+      const fraction = from.depth / (from.depth - to.depth);
+      const horizon = project(normalize(a.map((value, axis) => value + (b[axis] - value) * fraction)));
+      if (from.depth < 0) from = horizon;
+      else to = horizon;
+    }
+    return `M${rounded(from.x)} ${rounded(from.y)}L${rounded(to.x)} ${rounded(to.y)}`;
+  };
+  const particles = state.particles ? points.slice(0, Math.min(points.length, state.count)).map(point => {
+    const position = project(point);
+    return position.depth >= 0 ? `M${rounded(position.x)} ${rounded(position.y)}h.01` : '';
+  }).join('') : '';
+  const boundaries = state.boundaries ? lines.map(line => segment(line.slice(0, 3), line.slice(3, 6))).join('') : '';
+  const places = [
+    { name: 'Chicago', latitude: 41.8781, longitude: -87.6298 },
+    { name: 'Tokyo', latitude: 35.6762, longitude: 139.6503 },
+    { name: 'Paris', latitude: 48.8566, longitude: 2.3522 }
+  ];
+  const routes = state.routes ? [[0, 1], [2, 1]].map(([from, to]) => {
+    const a = vector(places[from].latitude, places[from].longitude);
+    const b = vector(places[to].latitude, places[to].longitude);
+    const angle = Math.acos(Math.max(-1, Math.min(1, a.reduce((total, value, axis) => total + value * b[axis], 0))));
+    const sine = Math.sin(angle);
+    const arc = Array.from({ length: 65 }, (_, index) => {
+      const fraction = index / 64;
+      const start = Math.sin((1 - fraction) * angle) / sine;
+      const end = Math.sin(fraction * angle) / sine;
+      return a.map((value, axis) => value * start + b[axis] * end);
+    });
+    return arc.slice(1).map((point, index) => segment(arc[index], point)).join('');
+  }).join('') : '';
+  let markers = '';
+  let labels = '';
+  for (const place of places) {
+    const position = project(vector(place.latitude, place.longitude));
+    if (position.depth < 0) continue;
+    const x = rounded(position.x);
+    const y = rounded(position.y);
+    markers += `<circle cx="${x}" cy="${y}" r="3.1"><title>${place.name}</title></circle>`;
+    if (state.labels) {
+      const left = x > 284;
+      labels += `<text x="${rounded(x + (left ? -7 : 7))}" y="${rounded(y - 7)}" text-anchor="${left ? 'end' : 'start'}">${place.name}</text>`;
+    }
+  }
+  for (const [name, value] of Object.entries({ particles, boundaries, routes })) {
+    root.querySelector(`[data-globe-${name}]`).setAttribute('d', value);
+  }
+  root.querySelector('[data-globe-markers]').innerHTML = markers;
+  root.querySelector('[data-globe-labels]').innerHTML = labels;
+}
+
+
+
+  if (typeof module !== 'undefined' && module.exports) module.exports = { registry, inventory, article, contexts, cues };
   if (typeof document === 'undefined') return;
 
   const figures = [...document.querySelectorAll('[data-working-model]')];
@@ -159,137 +318,140 @@
   let frameId = 0;
   let lastFrame = 0;
   let suspended = false;
-  const setText = (node, value) => { if (node && node.textContent !== value) node.textContent = value; };
-  const canMove = instance => !suspended && !document.hidden && instance.visible && !motionPreference.matches;
-  const hasWork = () => instances.some(instance => canMove(instance) && (instance.animation || instance.state.playing));
+  const setText = (node, value) => { if (node && node.textContent !== String(value)) node.textContent = String(value); };
+  const bindings = (figure, attribute) => {
+    const result = new Map();
+    for (const node of figure.querySelectorAll(`[${attribute}]`)) {
+      const name = node.getAttribute(attribute);
+      if (!result.has(name)) result.set(name, []);
+      result.get(name).push(node);
+    }
+    return result;
+  };
+  const canPlay = instance => !suspended && !document.hidden && instance.visible && !motionPreference.matches;
   const schedule = () => {
-    if (hasWork()) {
+    if (instances.some(instance => instance.kind === 'together' && instance.state.playing && canPlay(instance))) {
       if (!frameId) frameId = requestAnimationFrame(tick);
     } else {
-      cancelAnimationFrame(frameId);
+      if (frameId) cancelAnimationFrame(frameId);
       frameId = 0;
       lastFrame = 0;
     }
   };
-  const paintParts = (instance, fractions, finished) => {
-    for (const [name, nodes] of instance.parts) {
-      const target = instance.view.parts[name];
-      if (!target) continue;
-      const fraction = fractions[name] ?? target.fraction;
-      instance.fractions[name] = fraction;
-      for (const node of nodes) {
-        const dx = Number(node.getAttribute('data-dx')) || 0;
-        const dy = Number(node.getAttribute('data-dy')) || 0;
-        node.setAttribute('transform', `translate(${(dx * fraction).toFixed(3)} ${(dy * fraction).toFixed(3)})`);
-        node.setAttribute('data-active', String(target.active));
-        if (target.visible || !finished && instance.animation?.moving[name]) node.removeAttribute('hidden');
-        else node.setAttribute('hidden', '');
-      }
-    }
-  };
-  const paintControls = instance => {
-    const view = instance.view;
+  const paint = instance => {
+    const view = instance.model.view(instance.state);
+    instance.view = view;
     instance.figure.setAttribute('data-model-phase', view.phase);
     setText(instance.readout, view.readout);
-    for (const [name, value] of Object.entries(view.values || {})) {
-      for (const node of instance.figure.querySelectorAll(`[data-model-value="${name}"]`)) setText(node, value);
+    for (const [name, value] of Object.entries(view.texts || {})) for (const node of instance.texts.get(name) || []) setText(node, value);
+    for (const [name, visible] of Object.entries(view.regions || {})) for (const node of instance.regions.get(name) || []) node.hidden = !visible;
+    for (const [name, value] of Object.entries(view.values || {})) for (const node of instance.values.get(name) || []) setText(node, value);
+    for (const [name, config] of Object.entries(view.progress || {})) {
+      for (const node of instance.progress.get(name) || []) {
+        node.max = config.max;
+        node.value = config.value;
+      }
     }
-    for (const control of instance.controls.querySelectorAll('[data-model-action]')) {
+    for (const control of instance.actions) {
       const action = control.getAttribute('data-model-action');
       const config = view.controls[action] || {};
-      const motionPending = instance.animation && instance.model.waitForMotion?.includes(action);
-      control.disabled = Boolean(config.disabled || motionPending || action === 'play' && motionPreference.matches);
-      if (config.value !== undefined) control.value = String(config.value);
+      control.disabled = Boolean(config.disabled || action === 'play' && motionPreference.matches);
+      if (config.value !== undefined && control.value !== String(config.value)) control.value = String(config.value);
       if (config.pressed !== undefined) control.setAttribute('aria-pressed', String(config.pressed));
-      if (config.text) setText(control, config.text);
+      if (config.text) {
+        if (control.hasAttribute('data-model-icon-action')) control.setAttribute('aria-label', config.text);
+        else setText(control, config.text);
+      }
       if (action === 'play') control.title = motionPreference.matches ? 'Reduced motion is on. Use the time slider to explore.' : '';
     }
+    for (const note of instance.motionNotes) note.hidden = !motionPreference.matches;
     if (view.projects) {
-      const select = instance.controls.querySelector('[data-model-action="select"]');
+      const projectControl = instance.actions.find(control => control.getAttribute('data-model-action') === 'select');
       for (const project of view.projects) {
-        const option = select.querySelector(`[value="${project.id}"]`);
-        if (option) { option.hidden = !project.visible; option.disabled = !project.visible; }
+        const row = instance.rows.get(project.id);
+        if (row) {
+          row.hidden = !project.visible;
+          row.setAttribute('data-selected', String(project.selected));
+          row.setAttribute('aria-selected', String(project.selected));
+          row.setAttribute('data-deleted', String(project.deleted));
+          for (const status of row.querySelectorAll('[data-project-status]')) setText(status, project.status);
+        }
+        const option = projectControl?.querySelector(`[value="${project.id}"]`);
+        if (option) {
+          option.hidden = !project.visible;
+          option.disabled = !project.visible;
+          setText(option, `${project.name} · ${project.size} MB${project.deleted ? ' · Deleted' : ''}`);
+        }
       }
-      const empty = select.querySelector('[value=""]');
-      if (empty) empty.hidden = view.projects.some(project => project.visible);
-      select.value = instance.state.selected;
+      const order = view.projects.map(project => project.id).join(',');
+      if (instance.rowOrder !== order && instance.rows.size) {
+        for (const project of view.projects) {
+          const row = instance.rows.get(project.id);
+          if (row) row.parentNode.appendChild(row);
+        }
+        instance.rowOrder = order;
+      }
+      if (projectControl) {
+        const empty = projectControl.querySelector('[value=""]');
+        if (empty) empty.hidden = view.projects.some(project => project.visible);
+        projectControl.value = instance.state.selected;
+      }
     }
-    for (const note of instance.controls.querySelectorAll('[data-model-motion-note]')) note.hidden = !motionPreference.matches;
-  };
-  const update = (instance, animate = false) => {
-    instance.view = instance.model.view(instance.state);
-    const to = Object.fromEntries(Object.entries(instance.view.parts).map(([name, target]) => [name, target.fraction]));
-    const moving = Object.fromEntries(Object.entries(to).map(([name, value]) => [name, Math.abs((instance.fractions[name] ?? value) - value) > 0.001]));
-    if (animate && !instance.state.playing && canMove(instance) && Object.values(moving).some(Boolean)) {
-      instance.animation = { from: { ...instance.fractions }, to, moving, start: performance.now() };
-      paintParts(instance, instance.fractions, false);
-    } else {
-      instance.animation = null;
-      paintParts(instance, to, true);
-    }
-    paintControls(instance);
-    schedule();
+    if (view.globe && instance.globe && typeof renderGlobe === 'function') renderGlobe(instance.globe, view.globe);
   };
   const dispatch = (instance, type, value, announce = true) => {
+    if (type === 'play' && !canPlay(instance)) return;
     instance.state = instance.model.reduce(instance.state, { type, value });
-    update(instance, type !== 'time' && type !== 'play');
+    paint(instance);
     if (announce) setText(instance.status, instance.view.readout);
+    schedule();
   };
   const stop = instance => {
-    if (instance.state.playing) instance.state = instance.model.reduce(instance.state, { type: 'pause' });
-    update(instance);
+    if (instance.kind === 'together' && instance.state.playing) instance.state = instance.model.reduce(instance.state, { type: 'pause' });
+    paint(instance);
   };
   function tick(now) {
     frameId = 0;
     const elapsed = lastFrame ? Math.min(0.1, (now - lastFrame) / 1000) : 0;
     lastFrame = now;
     for (const instance of instances) {
-      if (!canMove(instance)) continue;
-      if (instance.state.playing) {
-        instance.state = instance.model.reduce(instance.state, { type: 'tick', value: elapsed });
-        instance.view = instance.model.view(instance.state);
-        paintControls(instance);
-        paintParts(instance, Object.fromEntries(Object.entries(instance.view.parts).map(([name, target]) => [name, target.fraction])), true);
-      } else if (instance.animation) {
-        const animation = instance.animation;
-        const progress = Math.min(1, (now - animation.start) / 420);
-        const ease = 1 - Math.pow(1 - progress, 3);
-        const fractions = Object.fromEntries(Object.entries(animation.to).map(([name, value]) => [name, (animation.from[name] ?? value) + (value - (animation.from[name] ?? value)) * ease]));
-        paintParts(instance, fractions, progress === 1);
-        if (progress === 1) {
-          instance.animation = null;
-          paintControls(instance);
-        }
-      }
+      if (instance.kind !== 'together' || !instance.state.playing || !canPlay(instance)) continue;
+      instance.state = instance.model.reduce(instance.state, { type: 'tick', value: elapsed });
+      paint(instance);
     }
     schedule();
   }
   for (const figure of figures) {
-    const model = registry[figure.getAttribute('data-working-model')];
+    const kind = figure.getAttribute('data-working-model');
+    const model = registry[kind];
     const controls = figure.querySelector('[data-model-controls]');
     const readout = figure.querySelector('[data-model-readout]');
     const status = figure.querySelector('[data-model-status]');
     if (!model || !controls || !readout || !status) continue;
-    readout.setAttribute('aria-live', 'off');
     const bounds = figure.getBoundingClientRect();
-    const instance = { figure, model, controls, readout, status, state: model.initial(), parts: new Map(), fractions: {}, animation: null, visible: bounds.bottom > 0 && bounds.top < window.innerHeight };
-    for (const node of figure.querySelectorAll('[data-model-part]')) {
-      const name = node.getAttribute('data-model-part');
-      if (!instance.parts.has(name)) instance.parts.set(name, []);
-      instance.parts.get(name).push(node);
-    }
+    readout.setAttribute('aria-live', 'off');
+    const instance = {
+      kind, figure, model, controls, readout, status, state: model.initial(),
+      visible: bounds.bottom > 0 && bounds.top < window.innerHeight,
+      texts: bindings(figure, 'data-model-text'), regions: bindings(figure, 'data-model-region'),
+      values: bindings(figure, 'data-model-value'), progress: bindings(figure, 'data-model-progress'),
+      actions: [...figure.querySelectorAll('[data-model-action]')],
+      motionNotes: [...figure.querySelectorAll('[data-model-motion-note]')],
+      rows: new Map([...figure.querySelectorAll('[data-project-row]')].map(row => [row.getAttribute('data-project-row'), row])),
+      globe: figure.querySelector('[data-globe]'), rowOrder: ''
+    };
     instances.push(instance);
-    update(instance);
+    paint(instance);
     controls.hidden = false;
-    controls.addEventListener('click', event => {
+    figure.addEventListener('click', event => {
       const control = event.target.closest('button[data-model-action]');
-      if (control && controls.contains(control) && !control.disabled) dispatch(instance, control.getAttribute('data-model-action'));
+      if (control && figure.contains(control) && !control.disabled) dispatch(instance, control.getAttribute('data-model-action'), control.getAttribute('data-model-value'));
     });
-    controls.addEventListener('input', event => {
+    figure.addEventListener('input', event => {
       const control = event.target;
       if (control.matches('input[type="range"][data-model-action]')) dispatch(instance, control.getAttribute('data-model-action'), control.value, false);
     });
-    controls.addEventListener('change', event => {
+    figure.addEventListener('change', event => {
       const control = event.target;
       if (control.matches('select[data-model-action]')) dispatch(instance, control.getAttribute('data-model-action'), control.value);
       else if (control.matches('input[type="range"][data-model-action]')) setText(status, instance.view.readout);
@@ -305,11 +467,10 @@
     schedule();
   }, { threshold: 0 }) : null;
   for (const instance of instances) observer?.observe(instance.figure);
-  const motionChanged = () => {
+  motionPreference.addEventListener('change', () => {
     for (const instance of instances) stop(instance);
     schedule();
-  };
-  motionPreference.addEventListener('change', motionChanged);
+  });
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) for (const instance of instances) stop(instance);
     schedule();

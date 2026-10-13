@@ -1,0 +1,15 @@
+{
+  "source": "Natural Earth 1:10m Admin 0 Map Units",
+  "sourceVersion": "5.1.1",
+  "sourceSHA256": "45bebe2aaf8bf42b9daf4428594925bcb11eabd32fe9dc6e0acf681438053eb5",
+  "atlasSHA256": "647fba0ec8d9d81a8244d959d0cc761796ae012c8bd8f5f18b6c809edac02a33",
+  "license": "Public domain",
+  "credit": "Made with Natural Earth",
+  "sourceURL": "https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
+  "termsURL": "https://www.naturalearthdata.com/about/terms-of-use/",
+  "nativeParticleCount": 1048576,
+  "nativeFeatureCount": 298,
+  "previewParticleCount": 4096,
+  "previewBoundarySegmentCount": 4094,
+  "sampling": "First 4096 native particles in atlas rank order. Actual LOD 0 boundary segments with length at least 0.7 degrees."
+}
