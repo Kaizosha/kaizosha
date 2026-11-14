@@ -101,6 +101,26 @@ body[data-document-frame]::before,
   position: static;
 }
 
+@media (max-width: 640px) {
+  .document-frame > .document-statusbar {
+    padding-inline: 0.5rem;
+    column-gap: 0.35rem;
+  }
+
+  .document-statusbar .home-legal {
+    gap: 0 0.15rem;
+  }
+
+  .document-statusbar .home-legal a {
+    min-width: 24px;
+    padding-inline: 0.125rem;
+  }
+
+  .document-statusbar__end {
+    gap: 0.25rem;
+  }
+}
+
 @media (max-height: 300px), print {
   body[data-document-frame] {
     overflow: visible;
