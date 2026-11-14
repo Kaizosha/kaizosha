@@ -81,8 +81,6 @@
   const productStatus = document.querySelector("[data-products-status]");
   const homeMain = productGrid?.closest(".home-main");
   const homeLogo = document.querySelector(".home-logo");
-  const storyTeaser = document.querySelector("#i-coming-soon");
-  const storyScrollCue = document.querySelector("[data-story-scroll-cue]");
 
   if (
     !productGrid ||
@@ -90,9 +88,7 @@
     !previousButton ||
     !nextButton ||
     !homeMain ||
-    !homeLogo ||
-    !storyTeaser ||
-    !storyScrollCue
+    !homeLogo
   ) {
     return;
   }
@@ -494,7 +490,6 @@
   const canHandoffToWebsite = (record, target) =>
     Boolean(
       record &&
-        !isStory(record) &&
         !intro?.open &&
         !isNavigatingToProduct &&
         getDestinationLabel(record.nameLink.href) === "website" &&
@@ -617,12 +612,6 @@
     record.nameLink.setAttribute("aria-expanded", "false");
     record.detail.setAttribute("aria-hidden", "true");
     record.cell.classList.remove("is-active");
-    if (isStory(record)) {
-      storyTeaser.hidden = true;
-      storyScrollCue.hidden = true;
-      record.content.removeAttribute("tabindex");
-      record.content.scrollTop = 0;
-    }
     productGrid.classList.remove("has-active");
     delete homeMain.dataset.activeProduct;
     delete homeMain.dataset.activeSlot;
@@ -663,14 +652,6 @@
     productGrid.classList.add("has-active");
     record.cell.classList.add("is-active");
     record.nameLink.setAttribute("aria-expanded", "true");
-    if (isStory(record)) {
-      record.content.append(storyTeaser);
-      record.detail.append(storyScrollCue);
-      storyTeaser.hidden = false;
-      storyScrollCue.hidden = false;
-      record.content.setAttribute("tabindex", "0");
-      record.content.scrollTop = 0;
-    }
 
     if (announce && productStatus) {
       productStatus.textContent = `${record.cell.dataset.productName} details shown.`;
@@ -679,7 +660,7 @@
 
   const renderCell = (record, product) => {
     const destinationLabel = getDestinationLabel(product.url);
-    const hasWebsiteHandoff = product.kind !== "story" && destinationLabel === "website";
+    const hasWebsiteHandoff = destinationLabel === "website";
 
     record.cell.dataset.productName = product.name;
     record.cell.dataset.productKind = product.kind;

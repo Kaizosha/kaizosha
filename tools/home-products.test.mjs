@@ -61,17 +61,12 @@ function harness({ fine = true, reduced = false, seed = 1 } = {}) {
     record.nameLink.textContent = m[3]; record.nameLink.href = na.href; record.description.textContent = m[4]; record.meta.textContent = m[5]; record.nameLink.target = '_blank'; record.exploreLink.target = '_blank';
     return record;
   });
-  const teaser = records[3].content.append(new Element("section"));
-  teaser.hidden = true;
-  teaser.textContent = html.match(/id="i-coming-soon"[^>]*>\s*<h2>([^<]+)<\/h2>/)?.[1];
-  const storyCue = records[3].detail.append(new Element("a"));
-  storyCue.hidden = true;
   grid.selectorLists = { '.product-cell[data-product-slot]': records.map(r => r.cell) };
   const templateItems = [...html.matchAll(/<span\s+(data-product-catalog-item[\s\S]*?)><\/span>/g)].map(m => { const e = new Element('span'); const a = attrs(m[1]); for (const [key,value] of Object.entries(a)) { e.setAttribute(key,value); if (key.startsWith('data-')) e.dataset[key.slice(5).replace(/-([a-z])/g,(_m,c)=>c.toUpperCase())] = value; } return e; });
   const template = { content: { querySelectorAll: () => templateItems } };
   const controls = new Element(), previous = new Element('button'), next = new Element('button'), status = new Element(), body = new Element('body');
   const document = new Target(); document.body = body; document.activeElement = null; document.documentElement = { clientWidth: 390, clientHeight: 844 };
-  const query = { '.home-products[data-products]': grid, '[data-product-controls]': controls, '[data-products-previous]': previous, '[data-products-next]': next, '[data-products-status]': status, '.home-logo': logo, '[data-home-intro-open]': logo, 'template[data-product-catalog]': template, '#i-coming-soon': teaser, '[data-story-scroll-cue]': storyCue };
+  const query = { '.home-products[data-products]': grid, '[data-product-controls]': controls, '[data-products-previous]': previous, '[data-products-next]': next, '[data-products-status]': status, '.home-logo': logo, '[data-home-intro-open]': logo, 'template[data-product-catalog]': template };
   document.querySelector = s => query[s] || null;
   const window = new Target(); window.innerHeight = 844; window.visualViewport = Object.assign(new Target(), { width: 390, height: 844 });
   const assignments = [], frames = new Map(), timers = new Map(); let serial = 1;
@@ -92,7 +87,7 @@ function harness({ fine = true, reduced = false, seed = 1 } = {}) {
   const hover = r => r.cell.emit('pointerenter', { pointerType: 'mouse' });
   const wheel = (r,dy,dx=0,target=r.description) => main.emit('wheel',{target,deltaY:dy,deltaX:dx,deltaMode:0});
   const touch = (type,r,x,y,count=1) => main.emit(type,{ target:r.description, touches:Array.from({length:count},()=>({clientX:x,clientY:y})) });
-  return { records, main, previous, next, story, websiteProduct, teaser, storyCue, hover, wheel, touch, window, document, body, assignments, flush, flushFrame, frames, timers };
+  return { records, main, previous, next, story, websiteProduct, hover, wheel, touch, window, document, body, assignments, flush, flushFrame, frames, timers };
 }
 
 test('i appears on every first arrangement; all six stable identities remain in rotation',()=>{
@@ -112,46 +107,35 @@ test('explicit story navigation continues same-tab with slot and mark, without t
 test('modified mouse clicks preserve default new-tab behavior',()=>{
   for(const props of [{ctrlKey:true},{metaKey:true},{shiftKey:true},{button:1}]) { const h=harness(),r=h.story(); assert.equal(r.exploreLink.click(props).defaultPrevented,false); assert.equal(r.nameLink.click(props).defaultPrevented,false);h.flush();assert.equal(h.assignments.length,0); }
 });
-test('i keeps native wheel and touch scrolling and never navigates from a gesture', () => {
-  for (const fine of [true, false]) {
-    const h = harness({ fine }), r = h.story();
-    if (fine) h.hover(r);
-    else assert(r.nameLink.click().defaultPrevented);
-    assert.equal(h.teaser.textContent, 'coming soon to scare you');
-    assert.equal(h.teaser.hidden, false);
-    assert.equal(h.storyCue.hidden, false);
-    assert.equal(r.content.contains(h.teaser), true);
-    assert.equal(r.content.getAttribute('tabindex'), '0');
-    assert.equal(h.wheel(r, 600).defaultPrevented, false);
+test('i uses the product scroll cue and opens the separate story site', () => {
+  const h = harness(), r = h.story();
+  assert.doesNotMatch(html, /coming soon to scare you/i);
+  h.hover(r);
+  assert.equal(r.scrollCue.hidden, false);
+  assert.equal(r.scrollCue.textContent, '[ SCROLL TO OPEN i ↓ ]');
+  assert.equal(h.wheel(r, 110).defaultPrevented, true);
+  assert(h.main.classList.contains('is-handoff-preview'));
+  assert.equal(h.wheel(r, 110).defaultPrevented, true);
+  h.flush();
+  assert.equal(new URL(h.assignments[0]).origin, 'https://i.kaizosha.org');
+});
+
+test('a short story preview scrolls to its end before an upward swipe opens i', () => {
+  const h = harness({ fine: false }), r = h.story();
+  assert(r.nameLink.click().defaultPrevented);
+  r.content.scrollHeight = 800;
+  r.content.clientHeight = 300;
+  const swipe = () => {
     h.touch('touchstart', r, 10, 300);
     h.touch('touchmove', r, 10, 140);
     h.touch('touchend', r, 10, 140, 0);
     h.flush();
-    assert.deepEqual(h.assignments, []);
-    r.closeButton.click();
-    assert.equal(h.teaser.hidden, true);
-    assert.equal(h.storyCue.hidden, true);
-    assert.equal(r.content.getAttribute('tabindex'), null);
-  }
-});
-
-test('i keeps its teaser after moving to a different slot', () => {
-  const h = harness();
-  const previous = h.story();
-  h.hover(previous);
-  let current;
-  for (let index = 0; index < 12; index++) {
-    h.next.click();
-    h.flush();
-    current = h.story();
-    if (current && current !== previous) break;
-  }
-  assert.ok(current && current !== previous);
-  h.hover(current);
-  assert.equal(current.content.contains(h.teaser), true);
-  assert.equal(current.detail.contains(h.storyCue), true);
-  assert.equal(previous.content.contains(h.teaser), false);
-  assert.equal(h.teaser.hidden, false);
+  };
+  swipe();
+  assert.equal(h.assignments.length, 0);
+  r.content.scrollTop = 500;
+  swipe();
+  assert.equal(new URL(h.assignments[0]).origin, 'https://i.kaizosha.org');
 });
 
 test('product wheel expands then opens; reverse wheel cancels preview',()=>{
