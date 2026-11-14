@@ -18,13 +18,35 @@
     <link rel="stylesheet" href="/assets/styles/site-language.css?v=20260922-code-only-1">
     <script src="/assets/scripts/site-language.js?v=20260922-code-only-1" defer></script>
     <script src="/assets/scripts/site-motion.js?v=20260818-dynamic-grid" defer></script>
+    <link rel="stylesheet" href="/assets/styles/document-frame.css?v=92738ed6fc47">
 </head>
-<body data-page-family="error" data-page="not-found">
+<body data-page-family="document" data-page="not-found" data-document-frame>
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <main class="error-main" id="main-content" data-file="404.md" tabindex="-1">
-        <h1>Page not found</h1>
-        <p>Error 404. The requested page could not be found.</p>
-        <p><a href="/">Return to Kaizōsha</a></p>
+    <main class="main document-frame" data-file="404.md">
+      <header class="home-toolbar document-toolbar">
+        <span class="home-toolbar__file">[ 404.md ]</span>
+        <a class="document-back" href="/" aria-label="Back to Kaizōsha">← Back</a>
+      </header>
+      <div class="document-scroll" id="main-content" role="region" aria-label="Document content" tabindex="0">
+        <div id="top" tabindex="-1"></div>
+        <section class="section">
+          <header class="section-head"><h1 class="section-title">Page not found</h1></header>
+          <div class="body-lines">
+            <p>Error 404. The requested page could not be found.</p>
+            <p><a href="/">Return to Kaizōsha</a></p>
+          </div>
+        </section>
+      </div>
+      <footer class="home-statusbar document-statusbar">
+        <nav class="home-legal" aria-label="Related pages">
+          <a href="/terms" aria-label="Terms"><span class="home-legal__full">Terms</span><span class="home-legal__compact" aria-hidden="true">T</span></a>
+          <span aria-hidden="true">/</span>
+          <a href="/privacy" aria-label="Privacy"><span class="home-legal__full">Privacy</span><span class="home-legal__compact" aria-hidden="true">P</span></a>
+          <span aria-hidden="true">/</span>
+          <a href="/contact" aria-label="Contact"><span class="home-legal__full">Contact</span><span class="home-legal__compact" aria-hidden="true">C</span></a>
+        </nav>
+        <div class="document-statusbar__end"><span data-language-slot></span><span aria-hidden="true">EOF</span></div>
+      </footer>
     </main>
 </body>
 </html>

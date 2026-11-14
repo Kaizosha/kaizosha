@@ -1,0 +1,122 @@
+body[data-document-frame] {
+  min-height: 100dvh;
+  padding: var(--directory-edge);
+  overflow: hidden;
+}
+
+body[data-document-frame]::before,
+.main.document-frame::before {
+  content: none;
+}
+
+.main.document-frame {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: 100%;
+  height: calc(100vh - 2 * var(--directory-edge));
+  height: calc(100dvh - 2 * var(--directory-edge));
+  min-height: 0;
+  border: 1px solid var(--line);
+  box-shadow:
+    0 0 0 1px var(--surface),
+    0 0 0 2px var(--line-soft);
+}
+
+.document-frame > .document-toolbar,
+.document-frame > .document-statusbar {
+  position: static;
+  z-index: auto;
+  min-height: var(--home-bar-height);
+  height: auto;
+  flex-wrap: wrap;
+  column-gap: 0.75rem;
+}
+
+.document-toolbar .home-toolbar__file {
+  flex: 1 1 auto;
+}
+
+.document-toolbar .document-back {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  padding-inline: 0.25rem;
+}
+
+.document-toolbar .document-back::before,
+.document-toolbar .document-back::after {
+  white-space: pre;
+}
+
+.document-statusbar .home-legal {
+  flex: 0 1 auto;
+  flex-wrap: wrap;
+  gap: 0 0.45rem;
+  white-space: normal;
+}
+
+.main .document-statusbar a::before {
+  content: "[ ";
+  white-space: pre;
+}
+
+.main .document-statusbar a::after {
+  content: " ]";
+  white-space: pre;
+  opacity: 1;
+}
+
+.document-statusbar a[aria-current="page"] {
+  background: var(--panel);
+  color: var(--ink);
+}
+
+.document-statusbar__end {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.5rem;
+  margin-inline-start: auto;
+}
+
+.document-scroll {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  overflow-wrap: anywhere;
+  scroll-behavior: auto;
+}
+
+.document-scroll:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+}
+
+.document-scroll .section {
+  scroll-margin-top: 0;
+}
+
+.document-scroll .section-head {
+  position: static;
+}
+
+@media (max-height: 300px), print {
+  body[data-document-frame] {
+    overflow: visible;
+  }
+
+  .main.document-frame {
+    height: auto;
+  }
+
+  .document-scroll {
+    overflow: visible;
+  }
+}
+
+@media (forced-colors: active), print {
+  .main.document-frame {
+    box-shadow: none;
+  }
+}

@@ -11,9 +11,9 @@ without becoming visually empty.
    operating-system theme; muted states use opacity, not extra colors.
 2. Build visual hierarchy with one-pixel frames, drafting grids, guide lines,
    numbered sections, file bars, and markdown grammar.
-3. Use one outer document frame. Section bands span that frame, while copy sits
-   in a centered, unboxed `96ch` maximum reading measure. Long documents keep a
-   sticky back row and one current section band visible while scrolling.
+3. Use the same viewport frame for product, document, and error pages. Put the
+   file bar above the document scroll pane and the status bar below it. Section
+   bands fill the pane, while copy sits in a centered `96ch` reading measure.
 4. Open the homepage with a compact company-introduction panel above the
    centered Kaizōsha mark. Four equal product cells fill the canvas behind it;
    a hovered, focused, or tapped product expands across that canvas and exposes
@@ -35,15 +35,13 @@ without becoming visually empty.
 | Element | Treatment |
 | --- | --- |
 | Canvas | 48px two-tone drafting grid with continuous motion and subtle pointer drift |
-| File bar | Inverted off-white row with `[ filename.md ]` |
-| Reading shell | One 76rem maximum outer frame |
-| Document navigation | Sticky `[ ← Back ]` row with the current document name |
+| File bar | Product-style toolbar with `[ filename.md ]` and a back link |
+| Reading shell | One viewport frame with equal outer insets and a native scroll pane |
 | Section | Full-width ruled band, markdown heading, two-digit counter |
-| Current section | One sticky inverted section band beneath document navigation |
 | Data row | Bordered `-` entry with optional `>` support row |
 | Link | Literal `[label](href)`, inverted on hover/focus |
 | Metadata | Rendered like an HTML comment |
-| Footer | Four equal related-link cells; text reveals on fine-pointer hover |
+| Footer | Status bar with visible, bracketed related links |
 | Homepage grid | Four equal product cells on shared animated tracks; the selected cell pushes its siblings to the edges |
 | Homepage mark | Centered fenced-code button whose three text units form a non-repeating mixed-language phonetic sequence while the page is visible, then moves toward the selected cell's expansion corner |
 | Homepage introduction | Centered `COMPANY.md` panel with legal identity and `[ EXPLORE ]` |
@@ -54,8 +52,7 @@ without becoming visually empty.
 | Family | Pages | Visible structure |
 | --- | --- | --- |
 | `directory` | Homepage | Company introduction, equal product grid, centered Kaizōsha mark |
-| `document` | Terms, Privacy, Contact | File bar, breadcrumb, full-width sections, related links |
-| `error` | 404 | Framed `404.md` panel and one home link |
+| `document` | Terms, Privacy, Contact, 404 | File bar, scroll pane, numbered sections, related links |
 | `story` | i / Prologue | Equal-edge frame, real-time illustrated relief, numbered narrative, accessible reading mode |
 
 Story pages preserve the system-theme file bars, one-pixel rules, real-text
@@ -80,13 +77,12 @@ reading mode, and a still-image fallback preserve access to every public word.
 - Type: system monospace stack
 - Base size: `13px`; `12px` below 640px
 - Reading width: `96ch` maximum, without a visible inner container
-- Shell width: `76rem`
+- Document frame: viewport minus the shared outer inset on each edge
 - Grid unit: `48px`
 - Transition duration: `180ms`
 - Product takeover duration: `560ms` with a shared spring-like ease for the
   expanding cell and moving mark
-- Wide-screen sticky document rows: `2.75rem` file bar + `3rem` navigation +
-  `3.25rem` current section
+- File and status bars: the same minimum heights as product chrome
 
 The homepage first presents the legal company identity, location, focused
 software profile, domain email, and one Explore action in a dismissible markdown
@@ -128,14 +124,14 @@ remains available on every page, and the homepage frame yields to short or
 magnified viewports without clipping. If the catalog has fewer products than
 cells, names repeat in balanced batches.
 
-Document footer geometry uses four equal columns on desktop and two equal
-columns on small screens. Fine-pointer devices reveal footer link text on
-hover or keyboard focus; touch devices keep it visible.
+Document and 404 pages keep all four edges of the product frame on mobile and
+desktop. The file and status bars stay visible as the middle pane scrolls.
+Footer links wrap when space is tight. Very short views and print layouts
+let the entire document flow so no content is clipped.
 
-Document pages keep equal outer spacing above and below the frame. On wide,
-scrolling documents, the file bar, navigation, and current section remain one
-continuous sticky stack beneath the fixed grid gutter. Below 860px, only the
-inline gutter is removed; the balanced block gutter remains.
+To sync the document frame, run `python3 tools/sync-document-frame.py` from
+the company repository in the shared workspace. Add `--check` to verify the
+public markup and versioned stylesheet without writing files.
 
 ## Responsive and accessibility contract
 
@@ -149,17 +145,14 @@ inline gutter is removed; the balanced block gutter remains.
   least a 24px target in each axis.
 - Browser zoom remains available on every page through at least 200%.
 - Every page remains readable without hover, animation, or JavaScript.
-- Every page loads the same native language picker. On the homepage its compact
-  language-code control shows only the active code immediately before the edition status; document
-  pages keep the same picker at the viewport edge. Country detection runs in
+- Pages that load the native language picker place its compact control inside
+  the status bar. Country detection runs in
   the background on each visit only to order native option groups. Selecting a
   language applies it immediately, and the saved choice follows the visitor across
   Kaizōsha subdomains. India exposes English plus all 22 scheduled languages;
   Japanese and the supported global languages use the same menu.
-- Keep the language control on the logical viewport edge so it does not compete
-  with page-specific top or bottom bars. Its native picker remains keyboard
-  operable and preserves native language names while the resting control shows
-  only the active language code.
+- Keep the language control inside the status bar. The native picker remains
+  keyboard operable and the resting control shows only the active language code.
 - The multilingual mark cycle uses real text from Japanese and India’s 22
   scheduled languages, including Sanskrit. It keeps all three unit widths fixed
   and shows three different languages and scripts at once. It changes one unit
@@ -188,8 +181,8 @@ inline gutter is removed; the balanced block gutter remains.
 2. Add a descriptive `data-file` value to the framed `<main>`.
 3. Load `markdown.css` and the deferred `site-motion.js`. For the Kaizōsha
    mark, load `brand.css` and put the static Japanese characters 改, 造, and 社
-   under the three bars. Load `home-products.js` only on the homepage and
-   `document-navigation.js` only on document pages.
+   under the three bars. Load `home-products.js` only on the homepage. For
+   framed documents, load `document-frame.css` after the shared styles.
 4. Use semantic headings, paragraphs, navigation, links, a main landmark, and a
    keyboard-accessible skip link.
 5. Keep content inside the balanced shell and shared reading measure.

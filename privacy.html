@@ -105,15 +105,17 @@
     <link rel="stylesheet" href="/assets/styles/site-language.css?v=20260922-code-only-1" />
     <script src="/assets/scripts/site-language.js?v=20260922-code-only-1" defer></script>
     <script src="/assets/scripts/site-motion.js?v=20260818-dynamic-grid" defer></script>
-    <script src="/assets/scripts/document-navigation.js?v=20260814-scroll-gutter" defer></script>
+    <link rel="stylesheet" href="/assets/styles/document-frame.css?v=92738ed6fc47">
   </head>
-  <body id="top" data-page-family="document" data-page="privacy">
+  <body data-page-family="document" data-page="privacy" data-document-frame>
     <a class="skip-link" href="#main-content">Skip to content</a>
-    <main class="main" id="main-content" data-file="privacy.md" tabindex="-1">
-          <nav class="document-nav" aria-label="Document navigation">
-            <a class="document-back" href="/" aria-label="Back to Kaizōsha homepage">← Back</a>
-            <span>/ Privacy Policy</span>
-          </nav>
+    <main class="main document-frame" data-file="privacy.md">
+      <header class="home-toolbar document-toolbar">
+        <span class="home-toolbar__file">[ privacy.md ]</span>
+        <a class="document-back" href="/" aria-label="Back to Kaizōsha homepage">← Back</a>
+      </header>
+      <div class="document-scroll" id="main-content" role="region" aria-label="Document content" tabindex="0">
+        <div id="top" tabindex="-1"></div>
 
           <section class="section" id="name">
             <header class="section-head">
@@ -466,13 +468,19 @@
               </div>
             </div>
           </section>
-
-          <footer class="document-footer">
-            <a href="/terms">Terms</a>
-            <a href="/privacy" aria-current="page">Privacy</a>
-            <a href="/contact">Contact</a>
-            <a href="#top">Back to top</a>
-          </footer>
+      </div>
+      <footer class="home-statusbar document-statusbar">
+        <nav class="home-legal" aria-label="Related pages">
+          <a href="/terms" aria-label="Terms"><span class="home-legal__full">Terms</span><span class="home-legal__compact" aria-hidden="true">T</span></a>
+          <span aria-hidden="true">/</span>
+          <a href="/privacy" aria-current="page" aria-label="Privacy"><span class="home-legal__full">Privacy</span><span class="home-legal__compact" aria-hidden="true">P</span></a>
+          <span aria-hidden="true">/</span>
+          <a href="/contact" aria-label="Contact"><span class="home-legal__full">Contact</span><span class="home-legal__compact" aria-hidden="true">C</span></a>
+          <span aria-hidden="true">/</span>
+          <a href="#top" aria-label="Back to top"><span class="home-legal__full">Back to top</span><span class="home-legal__compact" aria-hidden="true">↑</span></a>
+        </nav>
+        <div class="document-statusbar__end"><span data-language-slot></span><span aria-hidden="true">EOF</span></div>
+      </footer>
     </main>
 
   </body>
