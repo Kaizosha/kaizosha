@@ -127,9 +127,9 @@
     <link rel="stylesheet" href="/assets/styles/markdown.css?v=20260921-status-language-1">
     <link rel="stylesheet" href="/assets/styles/site-language.css?v=20260922-code-only-1">
     <script src="/assets/scripts/site-language.js?v=20260922-code-only-1" defer></script>
-    <link rel="stylesheet" href="/assets/styles/story-entry.css?v=20260831-reader-2">
+    <link rel="stylesheet" href="/assets/styles/story-entry.css?v=20261114-native-scroll">
     <script src="/assets/scripts/site-motion.js?v=20260818-dynamic-grid" defer></script>
-    <script src="/assets/scripts/home-products.js?v=20260831-story-handoff-2" defer></script>
+    <script src="/assets/scripts/home-products.js?v=20261114-native-scroll" defer></script>
   </head>
   <body data-page-family="directory" data-page="home">
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -178,7 +178,7 @@
 
       <header class="home-toolbar story-handoff-chrome">
         <span class="home-toolbar__file">[ i / README.md ]</span>
-        <nav class="story-entry-return" aria-label="Story navigation"><a href="https://i.kaizosha.org/characters">[ CAST ]</a><a href="https://kaizosha.org/">[ ← KAIZŌSHA ]</a></nav>
+        <nav class="story-entry-return" aria-label="Story navigation"><a href="https://kaizosha.org/">[ ← KAIZŌSHA ]</a></nav>
       </header>
 
       <div
@@ -189,70 +189,82 @@
       >
         <div class="product-cell" data-product-slot="top-left" role="listitem">
           <div class="product-cell__content">
-            <h2 class="product-cell__heading">
-              <a class="product-cell__name" href="https://together.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="View Together website (opens in a new tab)" aria-controls="product-detail-1" aria-expanded="false">Together</a>
-            </h2>
-            <div class="product-cell__detail" id="product-detail-1" hidden>
-              <p class="product-cell__eyebrow" aria-hidden="true">product / 01</p>
-              <p class="product-cell__description">A Kaizōsha software product currently being prepared for public release.</p>
-              <p class="product-cell__meta">Software product / In development</p>
-              <div class="product-cell__actions">
-                <button type="button" data-product-close aria-label="Close Together details">[ CLOSE ]</button>
-                <a class="product-cell__explore" href="https://together.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="Explore Together website (opens in a new tab)">[ EXPLORE ↗ ]</a>
+            <div class="product-cell__lead">
+              <h2 class="product-cell__heading">
+                <a class="product-cell__name" href="https://together.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="View Together website (opens in a new tab)" aria-controls="product-detail-1" aria-expanded="false">Together</a>
+              </h2>
+              <div class="product-cell__detail" id="product-detail-1" hidden>
+                <p class="product-cell__eyebrow" aria-hidden="true">product / 01</p>
+                <p class="product-cell__description">A Kaizōsha software product currently being prepared for public release.</p>
+                <p class="product-cell__meta">Software product / In development</p>
+                <div class="product-cell__actions">
+                  <button type="button" data-product-close aria-label="Close Together details">[ CLOSE ]</button>
+                  <a class="product-cell__explore" href="https://together.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="Explore Together website (opens in a new tab)">[ EXPLORE ↗ ]</a>
+                </div>
+                <p class="product-cell__scroll-cue" data-product-scroll-cue aria-hidden="true" hidden></p>
               </div>
-              <p class="product-cell__scroll-cue" data-product-scroll-cue aria-hidden="true" hidden></p>
             </div>
           </div>
         </div>
         <div class="product-cell" data-product-slot="top-right" role="listitem">
           <div class="product-cell__content">
-            <h2 class="product-cell__heading">
-              <a class="product-cell__name" href="https://sekai.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="View Sekai website (opens in a new tab)" aria-controls="product-detail-2" aria-expanded="false">Sekai</a>
-            </h2>
-            <div class="product-cell__detail" id="product-detail-2" hidden>
-              <p class="product-cell__eyebrow" aria-hidden="true">product / 02</p>
-              <p class="product-cell__description">An offline-first native globe package for SwiftUI, rendered with Metal and built for every Apple platform.</p>
-              <p class="product-cell__meta">SwiftUI package / Swift + Metal</p>
-              <div class="product-cell__actions">
-                <button type="button" data-product-close aria-label="Close Sekai details">[ CLOSE ]</button>
-                <a class="product-cell__explore" href="https://sekai.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="Explore Sekai website (opens in a new tab)">[ EXPLORE ↗ ]</a>
+            <div class="product-cell__lead">
+              <h2 class="product-cell__heading">
+                <a class="product-cell__name" href="https://sekai.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="View Sekai website (opens in a new tab)" aria-controls="product-detail-2" aria-expanded="false">Sekai</a>
+              </h2>
+              <div class="product-cell__detail" id="product-detail-2" hidden>
+                <p class="product-cell__eyebrow" aria-hidden="true">product / 02</p>
+                <p class="product-cell__description">An offline-first native globe package for SwiftUI, rendered with Metal and built for every Apple platform.</p>
+                <p class="product-cell__meta">SwiftUI package / Swift + Metal</p>
+                <div class="product-cell__actions">
+                  <button type="button" data-product-close aria-label="Close Sekai details">[ CLOSE ]</button>
+                  <a class="product-cell__explore" href="https://sekai.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="Explore Sekai website (opens in a new tab)">[ EXPLORE ↗ ]</a>
+                </div>
+                <p class="product-cell__scroll-cue" data-product-scroll-cue aria-hidden="true" hidden></p>
               </div>
-              <p class="product-cell__scroll-cue" data-product-scroll-cue aria-hidden="true" hidden></p>
             </div>
           </div>
         </div>
         <div class="product-cell" data-product-slot="bottom-left" role="listitem">
           <div class="product-cell__content">
-            <h2 class="product-cell__heading">
-              <a class="product-cell__name" href="https://hush.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="View Hush website (opens in a new tab)" aria-controls="product-detail-3" aria-expanded="false">Hush</a>
-            </h2>
-            <div class="product-cell__detail" id="product-detail-3" hidden>
-              <p class="product-cell__eyebrow" aria-hidden="true">product / 03</p>
-              <p class="product-cell__description">A native macOS assistant for live audio, text, screen capture, and the context you choose to keep.</p>
-              <p class="product-cell__meta">macOS application / Swift + SwiftUI / In active development</p>
-              <div class="product-cell__actions">
-                <button type="button" data-product-close aria-label="Close Hush details">[ CLOSE ]</button>
-                <a class="product-cell__explore" href="https://hush.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="Explore Hush website (opens in a new tab)">[ EXPLORE ↗ ]</a>
+            <div class="product-cell__lead">
+              <h2 class="product-cell__heading">
+                <a class="product-cell__name" href="https://hush.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="View Hush website (opens in a new tab)" aria-controls="product-detail-3" aria-expanded="false">Hush</a>
+              </h2>
+              <div class="product-cell__detail" id="product-detail-3" hidden>
+                <p class="product-cell__eyebrow" aria-hidden="true">product / 03</p>
+                <p class="product-cell__description">A native macOS assistant for live audio, text, screen capture, and the context you choose to keep.</p>
+                <p class="product-cell__meta">macOS application / Swift + SwiftUI / In active development</p>
+                <div class="product-cell__actions">
+                  <button type="button" data-product-close aria-label="Close Hush details">[ CLOSE ]</button>
+                  <a class="product-cell__explore" href="https://hush.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="Explore Hush website (opens in a new tab)">[ EXPLORE ↗ ]</a>
+                </div>
+                <p class="product-cell__scroll-cue" data-product-scroll-cue aria-hidden="true" hidden></p>
               </div>
-              <p class="product-cell__scroll-cue" data-product-scroll-cue aria-hidden="true" hidden></p>
             </div>
           </div>
         </div>
         <div class="product-cell" data-product-slot="bottom-right" data-product-kind="story" data-product-sequence="06" data-product-featured role="listitem">
           <div class="product-cell__content">
-            <h2 class="product-cell__heading">
-              <a class="product-cell__name" href="https://i.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="View i story website (opens in a new tab)" aria-controls="product-detail-4" aria-expanded="false">i</a>
-            </h2>
-            <div class="product-cell__detail" id="product-detail-4" hidden>
-              <p class="product-cell__eyebrow" aria-hidden="true">story / 06</p>
-              <p class="product-cell__description">A life before language. A scroll-driven 3D manhwa by Kaizō Konpaku: one enclosed world, a girl growing up, and her father's silence.</p>
-              <p class="product-cell__meta">Story / Interactive art / In development</p>
-              <div class="product-cell__actions">
-                <button type="button" data-product-close aria-label="Close i details">[ CLOSE ]</button>
-                <a class="product-cell__explore" href="https://i.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="Explore i story website (opens in a new tab)">[ EXPLORE ↗ ]</a>
+            <div class="product-cell__lead">
+              <h2 class="product-cell__heading">
+                <a class="product-cell__name" href="https://i.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="View i story website (opens in a new tab)" aria-controls="product-detail-4" aria-expanded="false">i</a>
+              </h2>
+              <div class="product-cell__detail" id="product-detail-4" hidden>
+                <p class="product-cell__eyebrow" aria-hidden="true">story / 06</p>
+                <p class="product-cell__description">A life before language. A scroll-driven 3D manhwa by Kaizō Konpaku: one enclosed world, a girl growing up, and her father's silence.</p>
+                <p class="product-cell__meta">Story / Interactive art / In development</p>
+                <div class="product-cell__actions">
+                  <button type="button" data-product-close aria-label="Close i details">[ CLOSE ]</button>
+                  <a class="product-cell__explore" href="https://i.kaizosha.org" target="_blank" rel="noopener noreferrer" aria-label="Explore i story website (opens in a new tab)">[ EXPLORE ↗ ]</a>
+                </div>
+                <p class="product-cell__scroll-cue" data-product-scroll-cue aria-hidden="true" hidden></p>
+                <a class="product-cell__scroll-cue story-scroll-cue" href="#i-coming-soon" data-story-scroll-cue hidden>[ SCROLL DOWN ↓ ]</a>
               </div>
-              <p class="product-cell__scroll-cue" data-product-scroll-cue aria-hidden="true" hidden></p>
             </div>
+            <section class="story-teaser" id="i-coming-soon" tabindex="-1" hidden>
+              <h2>coming soon to scare you</h2>
+            </section>
           </div>
         </div>
       </div>
@@ -317,7 +329,7 @@
         </span>
       </footer>
       <footer class="home-statusbar story-handoff-chrome">
-        <nav class="home-legal" aria-label="Story information"><a href="https://i.kaizosha.org/rights" aria-label="Rights and credits">[ R ]</a><span aria-hidden="true">/</span><a href="https://i.kaizosha.org/privacy" aria-label="Privacy">[ P ]</a><span aria-hidden="true">/</span><a href="https://kaizosha.org/contact" aria-label="Contact">[ C ]</a></nav>
+        <nav class="home-legal" aria-label="Story information"><a href="https://i.kaizosha.org/terms" aria-label="Terms">[ T ]</a><span aria-hidden="true">/</span><a href="https://i.kaizosha.org/privacy" aria-label="Privacy">[ P ]</a><span aria-hidden="true">/</span><a href="https://i.kaizosha.org/contact" aria-label="Contact">[ C ]</a></nav>
         <span class="home-statusbar__product">006 / i / STORY</span>
       </footer>
     </main>

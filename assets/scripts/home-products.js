@@ -81,6 +81,8 @@
   const productStatus = document.querySelector("[data-products-status]");
   const homeMain = productGrid?.closest(".home-main");
   const homeLogo = document.querySelector(".home-logo");
+  const storyTeaser = document.querySelector("#i-coming-soon");
+  const storyScrollCue = document.querySelector("[data-story-scroll-cue]");
 
   if (
     !productGrid ||
@@ -88,7 +90,9 @@
     !previousButton ||
     !nextButton ||
     !homeMain ||
-    !homeLogo
+    !homeLogo ||
+    !storyTeaser ||
+    !storyScrollCue
   ) {
     return;
   }
@@ -485,9 +489,12 @@
     return { hasScrollableContent, isAtContentEnd };
   };
 
+  const isStory = (record) => record.cell.dataset.productKind === "story";
+
   const canHandoffToWebsite = (record, target) =>
     Boolean(
       record &&
+        !isStory(record) &&
         !intro?.open &&
         !isNavigatingToProduct &&
         getDestinationLabel(record.nameLink.href) === "website" &&
@@ -507,7 +514,7 @@
     clearScrollHandoffReset();
     setScrollHandoffProgress(record, 1);
     homeMain.classList.add("is-navigating-product");
-    if (record.cell.dataset.productKind === "story") {
+    if (isStory(record)) {
       brandMotionBeforeHandoff = document.body.dataset.motionPaused ?? null;
       document.body.dataset.motionPaused = "true";
       document.dispatchEvent(new Event("kaizosha:motionchange"));
@@ -525,11 +532,9 @@
         destination.hostname.endsWith(".kaizosha.org") &&
         destination.hostname !== "kaizosha.org"
       ) {
-        const handoffScrollTop = Math.max(0, record.content.scrollTop);
-
         destination.searchParams.set("slot", record.cell.dataset.productSlot);
 
-        if (record.cell.dataset.productKind === "story") {
+        if (isStory(record)) {
           destination.searchParams.set("from", "kaizosha");
           const mark = Array.from(homeLogo.querySelectorAll(".brand-lockup__glyph")).map((glyph) => ({
             text: glyph.textContent,
@@ -538,12 +543,10 @@
             width: glyph.dataset.brandTokenWidth || "",
           }));
           destination.searchParams.set("mark", JSON.stringify(mark));
-        }
-
-        if (handoffScrollTop > 0) {
+        } else if (record.content.scrollTop > 0) {
           destination.searchParams.set(
             "scroll",
-            String(Math.round(handoffScrollTop * 100) / 100),
+            String(Math.round(record.content.scrollTop * 100) / 100),
           );
         }
       }
@@ -614,6 +617,12 @@
     record.nameLink.setAttribute("aria-expanded", "false");
     record.detail.setAttribute("aria-hidden", "true");
     record.cell.classList.remove("is-active");
+    if (isStory(record)) {
+      storyTeaser.hidden = true;
+      storyScrollCue.hidden = true;
+      record.content.removeAttribute("tabindex");
+      record.content.scrollTop = 0;
+    }
     productGrid.classList.remove("has-active");
     delete homeMain.dataset.activeProduct;
     delete homeMain.dataset.activeSlot;
@@ -654,6 +663,14 @@
     productGrid.classList.add("has-active");
     record.cell.classList.add("is-active");
     record.nameLink.setAttribute("aria-expanded", "true");
+    if (isStory(record)) {
+      record.content.append(storyTeaser);
+      record.detail.append(storyScrollCue);
+      storyTeaser.hidden = false;
+      storyScrollCue.hidden = false;
+      record.content.setAttribute("tabindex", "0");
+      record.content.scrollTop = 0;
+    }
 
     if (announce && productStatus) {
       productStatus.textContent = `${record.cell.dataset.productName} details shown.`;
@@ -662,7 +679,7 @@
 
   const renderCell = (record, product) => {
     const destinationLabel = getDestinationLabel(product.url);
-    const hasWebsiteHandoff = destinationLabel === "website";
+    const hasWebsiteHandoff = product.kind !== "story" && destinationLabel === "website";
 
     record.cell.dataset.productName = product.name;
     record.cell.dataset.productKind = product.kind;
@@ -777,12 +794,8 @@
       const record = activeRecord;
 
       if (
-        !record ||
-        intro?.open ||
-        isNavigatingToProduct ||
         !finePointer.matches ||
-        getDestinationLabel(record.nameLink.href) !== "website" ||
-        event.target.closest?.("a, button")
+        !canHandoffToWebsite(record, event.target)
       ) {
         return;
       }
