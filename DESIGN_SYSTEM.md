@@ -186,9 +186,9 @@ inline gutter is removed; the balanced block gutter remains.
 
 1. Add a supported `data-page-family` value to `<body>`.
 2. Add a descriptive `data-file` value to the framed `<main>`.
-3. Load `markdown.css` and the deferred `site-motion.js`; when the constructed
-   Kaizōsha mark appears, load both `brand.css` and the deferred
-   `brand-language-intro.js`. Load `home-products.js` only on the homepage and
+3. Load `markdown.css` and the deferred `site-motion.js`. For the Kaizōsha
+   mark, load `brand.css` and put the static Japanese characters 改, 造, and 社
+   under the three bars. Load `home-products.js` only on the homepage and
    `document-navigation.js` only on document pages.
 4. Use semantic headings, paragraphs, navigation, links, a main landmark, and a
    keyboard-accessible skip link.
