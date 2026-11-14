@@ -293,8 +293,9 @@
   const touchHandoffThreshold = 120;
   const handoffFrameCompletion = 0.82;
   const handoffNavigationDelay = 160;
+  const documentNavigationRecoveryDelay = 2000;
   let activeRecord = null;
-  let isNavigatingToProduct = false;
+  let isNavigating = false;
   let navigationFrame = null;
   let navigationTimer = null;
   let brandMotionBeforeHandoff;
@@ -461,7 +462,7 @@
   const scheduleScrollHandoffReset = (record, delay = 1100) => {
     clearScrollHandoffReset();
     scrollHandoffResetTimer = window.setTimeout(() => {
-      if (activeRecord === record && !isNavigatingToProduct) {
+      if (activeRecord === record && !isNavigating) {
         resetScrollHandoff(record);
       }
     }, delay);
@@ -491,19 +492,19 @@
     Boolean(
       record &&
         !intro?.open &&
-        !isNavigatingToProduct &&
+        !isNavigating &&
         getDestinationLabel(record.nameLink.href) === "website" &&
         record.cell.contains(target) &&
         !target.closest?.("a, button"),
     );
 
   const openProductWebsite = (record) => {
-    if (isNavigatingToProduct) {
+    if (isNavigating) {
       return;
     }
 
     const destination = new URL(record.nameLink.href);
-    isNavigatingToProduct = true;
+    isNavigating = true;
     cancelNavigation();
     clearTouchHandoff();
     clearScrollHandoffReset();
@@ -522,7 +523,7 @@
 
     const navigate = () => {
       navigationFrame = navigationTimer = null;
-      if (!isNavigatingToProduct) return;
+      if (!isNavigating) return;
       if (
         destination.hostname.endsWith(".kaizosha.org") &&
         destination.hostname !== "kaizosha.org"
@@ -551,7 +552,7 @@
 
     navigationFrame = window.requestAnimationFrame(() => {
       navigationFrame = null;
-      if (!isNavigatingToProduct) return;
+      if (!isNavigating) return;
       if (reducedMotion.matches) {
         navigationFrame = window.requestAnimationFrame(navigate);
         return;
@@ -596,7 +597,7 @@
   } = {}) => {
     const record = activeRecord;
 
-    if (!record || isNavigatingToProduct) {
+    if (!record || isNavigating) {
       return;
     }
 
@@ -631,7 +632,7 @@
   closeProductDetails = deactivateProduct;
 
   const activateProduct = (record, { announce = false } = {}) => {
-    if (intro?.open || activeRecord === record || isNavigatingToProduct) {
+    if (intro?.open || activeRecord === record || isNavigating) {
       return;
     }
 
@@ -721,6 +722,43 @@
   const isPlainActivation = (event) =>
     (event.button ?? 0) === 0 && !event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey;
 
+  homeMain.querySelector("[data-document-links]")?.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (
+      !link || event.defaultPrevented || !isPlainActivation(event) ||
+      link.hasAttribute("download") || (link.target && link.target !== "_self")
+    ) return;
+
+    if (isNavigating) {
+      event.preventDefault();
+      return;
+    }
+
+    if (
+      reducedMotion.matches || window.matchMedia("(max-height: 300px)").matches ||
+      typeof homeMain.getAnimations !== "function"
+    ) return;
+
+    event.preventDefault();
+    isNavigating = true;
+    const destination = link.href;
+    clearTouchHandoff();
+    clearScrollHandoffReset();
+    clearHandoffFrameReset();
+    setScrollHandoffProgress(activeRecord, 0);
+    homeMain.classList.remove("is-wheel-handoff", "is-handoff-resetting");
+    homeMain.classList.add("is-navigating-document");
+
+    const expansion = homeMain.getAnimations().map((animation) => animation.finished);
+    Promise.allSettled(expansion).then(() => {
+      if (isNavigating && homeMain.classList.contains("is-navigating-document")) {
+        // A stopped navigation leaves the original document in place.
+        navigationTimer = window.setTimeout(restoreHomeFrame, documentNavigationRecoveryDelay);
+        window.location.assign(destination);
+      }
+    });
+  });
+
   cellRecords.forEach((record) => {
     record.cell.addEventListener("pointerenter", (event) => {
       if (finePointer.matches && event.pointerType !== "touch") {
@@ -762,7 +800,7 @@
     if (
       finePointer.matches &&
       activeRecord &&
-      !isNavigatingToProduct &&
+      !isNavigating &&
       !activeRecord.cell.contains(document.activeElement)
     ) {
       deactivateProduct();
@@ -865,7 +903,7 @@
         record !== activeRecord ||
         !canHandoffToWebsite(record, event.target)
       ) {
-        if (record && !isNavigatingToProduct) {
+        if (record && !isNavigating) {
           resetScrollHandoff(record);
         }
         clearTouchHandoff();
@@ -897,7 +935,7 @@
 
     if (shouldOpen) {
       openProductWebsite(record);
-    } else if (record && !isNavigatingToProduct) {
+    } else if (record && !isNavigating) {
       resetScrollHandoff(record);
     }
   });
@@ -907,7 +945,7 @@
 
     clearTouchHandoff();
 
-    if (record && !isNavigatingToProduct) {
+    if (record && !isNavigating) {
       resetScrollHandoff(record);
     }
   });
@@ -927,15 +965,11 @@
 
   window.addEventListener("pagehide", () => {
     cancelNavigation();
-    isNavigatingToProduct = false;
+    isNavigating = false;
   });
 
-  window.addEventListener("pageshow", (event) => {
-    if (!event.persisted && !isNavigatingToProduct) {
-      return;
-    }
-
-    isNavigatingToProduct = false;
+  const restoreHomeFrame = () => {
+    isNavigating = false;
     cancelNavigation();
     restoreBrandMotion();
     clearTouchHandoff();
@@ -948,6 +982,7 @@
       "is-handoff-resetting",
       "is-wheel-handoff",
       "is-navigating-product",
+      "is-navigating-document",
       "is-story-handoff",
     );
     homeMain.style.removeProperty("--handoff-frame-width");
@@ -964,6 +999,10 @@
     if (productStatus) {
       productStatus.textContent = "";
     }
+  };
+
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted || isNavigating) restoreHomeFrame();
   });
 
   productGrid.addEventListener("focusout", () => {
@@ -981,7 +1020,7 @@
   });
 
   homeMain.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && activeRecord && !isNavigatingToProduct) {
+    if (event.key === "Escape" && activeRecord && !isNavigating) {
       event.preventDefault();
       deactivateProduct({ focus: true, announce: true });
     }
@@ -1023,7 +1062,7 @@
   };
 
   previousButton.addEventListener("click", () => {
-    if (isNavigatingToProduct) return;
+    if (isNavigating) return;
     if (historyIndex > 0) {
       historyIndex -= 1;
     } else {
@@ -1034,7 +1073,7 @@
   });
 
   nextButton.addEventListener("click", () => {
-    if (isNavigatingToProduct) return;
+    if (isNavigating) return;
     if (historyIndex < history.length - 1) {
       historyIndex += 1;
     } else {
