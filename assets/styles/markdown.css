@@ -1197,13 +1197,24 @@ h2.section-title::before {
 }
 
 .document-footer a {
-  display: grid;
+  display: flex;
   min-height: 3.25rem;
   align-items: center;
+  justify-content: center;
+  gap: 0.4ch;
   margin-inline: 0;
   padding: 0.65rem;
   border-left: 1px solid var(--line);
   text-align: center;
+}
+
+.main .document-footer a::before {
+  content: "[";
+}
+
+.main .document-footer a::after {
+  content: "]";
+  opacity: 1;
 }
 
 .document-footer a:first-of-type {
@@ -1375,15 +1386,6 @@ body[data-page-family="error"] {
 
   .section:hover > .section-head::after {
     color: rgba(var(--surface-rgb), 0.62);
-  }
-
-  .document-footer a {
-    opacity: 0;
-  }
-
-  .document-footer:hover a,
-  .document-footer:focus-within a {
-    opacity: 1;
   }
 }
 
@@ -1669,10 +1671,6 @@ body[data-page-family="error"] {
   .main,
   .error-main {
     box-shadow: none;
-  }
-
-  .document-footer a {
-    opacity: 1;
   }
 }
 
