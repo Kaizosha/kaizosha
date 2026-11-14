@@ -1,0 +1,194 @@
+.not-found {
+  display: grid;
+  min-height: 100%;
+  align-content: center;
+  justify-items: center;
+  gap: clamp(0.5rem, 3svh, 2.25rem);
+  padding: clamp(0.5rem, 2.75svh, 2rem) 1rem;
+  text-align: center;
+}
+
+.not-found__message h1 {
+  margin: 0;
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  font-weight: 600;
+}
+
+.metal-mark__hint {
+  margin: 0.4rem 0 0;
+  color: var(--ink-muted);
+  font-size: 0.75rem;
+}
+
+.metal-mark {
+  --mark-width: min(67vw, 17rem, max(9rem, 43svh));
+  --pillar-width: calc(var(--mark-width) * 0.25);
+  --pillar-height: calc(var(--mark-width) * 0.65625);
+  --depth: calc(var(--mark-width) * 0.071);
+  --edge-radius: calc(var(--mark-width) * 0.0125);
+  width: var(--mark-width);
+  padding: calc(var(--mark-width) * 0.04);
+  perspective: 720px;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.metal-mark[data-interactive] {
+  cursor: grab;
+  touch-action: none;
+}
+
+.metal-mark:focus-visible:not([data-dragging]) {
+  outline: 1px dashed var(--ink);
+  outline-offset: 0.65rem;
+}
+
+.metal-mark[data-dragging] {
+  cursor: grabbing;
+}
+
+.metal-mark__artwork,
+.metal-mark__column,
+.metal-mark__pillar {
+  transform-style: preserve-3d;
+}
+
+.metal-mark__artwork {
+  display: grid;
+  grid-template-columns: repeat(3, var(--pillar-width));
+  justify-content: space-between;
+  transform:
+    translate3d(var(--shift-x, 0px), var(--shift-y, 0px), 0)
+    rotateX(var(--pitch, -12deg))
+    rotateY(var(--yaw, -19deg));
+  transition: transform 420ms cubic-bezier(0.22, 1.22, 0.45, 1);
+}
+
+.metal-mark[data-dragging] .metal-mark__artwork {
+  transition: none;
+}
+
+.metal-mark__column {
+  display: grid;
+  gap: calc(var(--mark-width) * 0.05625);
+}
+
+.metal-mark__column:first-child {
+  --reflection-offset: -5%;
+}
+
+.metal-mark__column:last-child {
+  --reflection-offset: 5%;
+}
+
+.metal-mark__pillar {
+  position: relative;
+  width: var(--pillar-width);
+  height: var(--pillar-height);
+}
+
+.metal-mark__pillar > span {
+  position: absolute;
+  display: block;
+  backface-visibility: hidden;
+}
+
+.metal-mark__face,
+.metal-mark__back {
+  inset: 0;
+  border-radius: var(--edge-radius);
+  background:
+    repeating-linear-gradient(0deg, #f5f9ff15 0 0.6px, #202c3912 0.6px 1.2px, transparent 1.2px 2.4px),
+    linear-gradient(108deg, #59616a 16%, #b1bac4 28%, #d7dce1 36%, #fbfdff 45%, #abb6c0 51%, #58626e 61%, #8c99a5 76%, #d9e0e7 90%);
+  background-size: auto, 220% 140%;
+  background-position: center, calc(var(--reflection, 53%) + var(--reflection-offset, 0%)) center;
+  box-shadow:
+    inset 0 1px 1px #fff,
+    inset 1px 0 2px #f3f8ff,
+    inset -1px 0 1px #e4effcaa,
+    inset 0 -2px 3px #151c25bf;
+}
+
+.metal-mark__face {
+  transform: translateZ(calc(var(--depth) / 2));
+}
+
+.metal-mark__back {
+  transform: rotateY(180deg) translateZ(calc(var(--depth) / 2));
+}
+
+.metal-mark__left,
+.metal-mark__right {
+  top: 0;
+  left: calc((var(--pillar-width) - var(--depth) - 0.6px) / 2);
+  width: calc(var(--depth) + 0.6px);
+  height: 100%;
+  background:
+    repeating-linear-gradient(0deg, #e8f4ff20 0 1px, transparent 1px 3px),
+    linear-gradient(90deg, #2b333d, #5c6a77 30%, #1a222b 65%, #56616a 93%, #e7f0f8);
+}
+
+.metal-mark__left {
+  transform: rotateY(-90deg) translateZ(calc(var(--pillar-width) / 2));
+}
+
+.metal-mark__right {
+  transform: rotateY(90deg) translateZ(calc(var(--pillar-width) / 2));
+  background:
+    repeating-linear-gradient(0deg, #e8f4ff26 0 1px, transparent 1px 3px),
+    linear-gradient(90deg, #b3c0ca, #5b6673 18%, #232c36 56%, #515c67 83%, #b9c7d4);
+}
+
+.metal-mark__top,
+.metal-mark__bottom {
+  top: calc((var(--pillar-height) - var(--depth) - 0.6px) / 2);
+  left: 0;
+  width: 100%;
+  height: calc(var(--depth) + 0.6px);
+  background: linear-gradient(#4f5862, #a4afba 25%, #e2e9f2 78%, #f8fcff);
+}
+
+.metal-mark__top {
+  transform: rotateX(90deg) translateZ(calc(var(--pillar-height) / 2));
+}
+
+.metal-mark__bottom {
+  transform: rotateX(-90deg) translateZ(calc(var(--pillar-height) / 2));
+  background: linear-gradient(#65717d, #303b46 28%, #141c23 78%, #727e8b);
+}
+
+.metal-mark__glyph {
+  color: #515d68;
+  font-family: system-ui, sans-serif;
+  font-size: calc(var(--mark-width) * 0.19375);
+  font-weight: 600;
+  line-height: 1;
+  text-shadow: 0 1px #f5fcff;
+  transform: translateZ(calc(var(--depth) / 2));
+}
+
+@media (prefers-color-scheme: dark) {
+  .metal-mark__glyph {
+    color: #c2ccd6;
+    text-shadow: 0 1px #303a45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metal-mark__artwork {
+    transition: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .metal-mark__pillar > span {
+    forced-color-adjust: none;
+    background: CanvasText;
+    box-shadow: none;
+  }
+
+  .metal-mark__glyph {
+    color: CanvasText;
+    text-shadow: none;
+  }
+}

@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="/assets/styles/site-language.css?v=20260922-code-only-1">
     <script src="/assets/scripts/site-language.js?v=20260922-code-only-1" defer></script>
     <script src="/assets/scripts/site-motion.js?v=20260818-dynamic-grid" defer></script>
+    <link rel="stylesheet" href="/assets/styles/metal-mark.css?v=20261114-1">
+    <script src="/assets/scripts/metal-mark.js?v=20261114-1" defer></script>
     <link rel="stylesheet" href="/assets/styles/document-frame.css?v=3e4959a0bffb">
 </head>
 <body data-page-family="document" data-page="not-found" data-document-frame>
@@ -29,11 +31,38 @@
       </header>
       <div class="document-scroll" id="main-content" role="region" aria-label="Document content" tabindex="0">
         <div id="top" tabindex="-1"></div>
-        <section class="section">
-          <header class="section-head"><h1 class="section-title">Page not found</h1></header>
-          <div class="body-lines">
-            <p>Error 404. The requested page could not be found.</p>
-            <p><a href="/">Return to Kaizōsha</a></p>
+        <section class="not-found" aria-labelledby="not-found-title">
+          <div class="metal-mark" data-metal-mark data-no-translate translate="no" role="img" aria-label="Kaizōsha">
+            <div class="metal-mark__artwork" aria-hidden="true">
+              <span class="metal-mark__column">
+                <span class="metal-mark__pillar">
+                  <span class="metal-mark__face"></span><span class="metal-mark__back"></span>
+                  <span class="metal-mark__left"></span><span class="metal-mark__right"></span>
+                  <span class="metal-mark__top"></span><span class="metal-mark__bottom"></span>
+                </span>
+                <span class="metal-mark__glyph" lang="ja">改</span>
+              </span>
+              <span class="metal-mark__column">
+                <span class="metal-mark__pillar">
+                  <span class="metal-mark__face"></span><span class="metal-mark__back"></span>
+                  <span class="metal-mark__left"></span><span class="metal-mark__right"></span>
+                  <span class="metal-mark__top"></span><span class="metal-mark__bottom"></span>
+                </span>
+                <span class="metal-mark__glyph" lang="ja">造</span>
+              </span>
+              <span class="metal-mark__column">
+                <span class="metal-mark__pillar">
+                  <span class="metal-mark__face"></span><span class="metal-mark__back"></span>
+                  <span class="metal-mark__left"></span><span class="metal-mark__right"></span>
+                  <span class="metal-mark__top"></span><span class="metal-mark__bottom"></span>
+                </span>
+                <span class="metal-mark__glyph" lang="ja">社</span>
+              </span>
+            </div>
+          </div>
+          <div class="not-found__message">
+            <h1 id="not-found-title">Page not found</h1>
+            <p id="metal-mark-hint" class="metal-mark__hint" hidden>Drag or use the arrow keys to turn the mark.<span class="u-screen-reader"> Press Escape or Home to reset.</span></p>
           </div>
         </section>
       </div>
